@@ -5,13 +5,15 @@
  */
 package barsystems.produtos;
 
-import barsystems.conexaoBanco.ConexaoBanco;
+import barsystems.conexaoBanco.Class_Conexao_Banco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -27,9 +29,9 @@ public class CadastroProdutos extends javax.swing.JFrame {
         initComponents();
     }
     
-    public void refreshTabela(){
-      Class_Realiza_operacoes enviar = new Class_Realiza_operacoes();
-      tabela_produto.setModel(enviar.carregaTabela());
+    public void refreshLista(){
+      Class_produtos carrega = new Class_produtos();
+        ArrayList lista = carrega.carregaLista();
     }
 
     /**
@@ -274,7 +276,7 @@ public class CadastroProdutos extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Nao pode haver campos vazios");
         }
         else{
-            Class_Realiza_operacoes enviar = new Class_Realiza_operacoes(
+            Class_produtos enviar = new Class_produtos(
                   codigo_produto.getText(),
                   nome_produto.getText(), 
                   qtd_caixa_produto.getText(), 
@@ -291,11 +293,10 @@ public class CadastroProdutos extends javax.swing.JFrame {
               tipo_produto.setText("");
               valor_compra_produto.setText("");
               valor_venda_produto.setText("");
-              refreshTabela();
           }
           else{
               JOptionPane.showMessageDialog(null, "Falha ao cadastrar produto");
-              refreshTabela();
+              refreshLista();
           }
         }
     }//GEN-LAST:event_jButton8ActionPerformed

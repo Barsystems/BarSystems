@@ -5,8 +5,8 @@
  */
 package barsystems;
 
-import barsystems.conexaoBanco.ConexaoBanco;
-import barsystems.produtos.CadastroProdutos;
+import barsystems.conexaoBanco.Class_Conexao_Banco;
+import barsystems.produtos.Painel_Produtos;
 
 /**
  *
@@ -33,6 +33,7 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        painel_principal = new javax.swing.JTabbedPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -90,11 +91,11 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 814, Short.MAX_VALUE)
+            .addComponent(painel_principal, javax.swing.GroupLayout.DEFAULT_SIZE, 814, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 479, Short.MAX_VALUE)
+            .addComponent(painel_principal, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
         );
 
         pack();
@@ -105,8 +106,9 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        CadastroProdutos cadastraProdutos = new CadastroProdutos();
-        cadastraProdutos.refreshTabela();
+        Painel_Produtos cadastraProdutos = new Painel_Produtos();
+        painel_principal.add(cadastraProdutos);
+        cadastraProdutos.setBounds(0, 0, 500, 500);
         cadastraProdutos.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
@@ -157,5 +159,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JTabbedPane painel_principal;
     // End of variables declaration//GEN-END:variables
 }

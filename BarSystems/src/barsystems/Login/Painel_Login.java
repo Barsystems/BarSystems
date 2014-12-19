@@ -6,8 +6,8 @@
 
 package Login;
 
-import Classes.Class_Fechar_Sistema;
-import Classes.Class_Login;
+import barsystems.Class_Fechar_Sistema;
+import barsystems.Login.Class_Login;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
