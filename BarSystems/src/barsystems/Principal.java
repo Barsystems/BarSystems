@@ -110,6 +110,8 @@ public class Principal extends javax.swing.JFrame {
         painel_principal.add(cadastraProdutos);
         cadastraProdutos.setBounds(0, 0, 500, 500);
         cadastraProdutos.setVisible(true);
+        cadastraProdutos.refreshList();
+        
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**

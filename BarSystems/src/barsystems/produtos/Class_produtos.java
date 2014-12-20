@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListModel;
@@ -38,6 +39,31 @@ public class Class_produtos {
         this.valor_compra_unidade = valor_compra;
         this.valor_unidade_venda = valor_venda;
     }
+    public String getCodigo(){
+        return codigo;
+    }
+    
+    public String getDescricao(){
+        return descricao;
+    }
+    
+    public String getQuantidade(){
+        return quantidade_por_caixa;
+    }
+    
+    public String getTipo(){
+        return tipo;
+    }
+    
+    public String getValor_Compra(){
+        return valor_compra_unidade;
+    }
+    
+    public String getValor_Venda(){
+        return valor_unidade_venda;
+    }
+    
+    
     
     /** Cadastra
      *  Realiza cadastro de produtos no banco de dados
@@ -73,25 +99,108 @@ public class Class_produtos {
         } 
     } // Fim Cadastra
     
-    public ListModel carregaLista(){
-        ListModel lista = new ListModel();
+    /**
+     * Edita dados de produtos
+     * @param codigo
+     * @param descricao
+     * @param quantidade
+     * @param tipo
+     * @param valor_compra
+     * @param valor_venda
+     * @return true se conseguiu atualizar o valor do produto
+     */
+    public boolean edita(
+            String codigo, 
+            String descricao, 
+            String quantidade, 
+            String tipo, 
+            String valor_compra, 
+            String valor_venda){
+        
+        String sql = "Update produtos set descricao='"+descricao+
+                "',quantidade_por_caixa='"+Integer.parseInt(quantidade)+
+                "',tipo='"+tipo+"',valor_compra_unidade="+
+                Float.parseFloat(valor_compra)+
+                ",valor_venda_unidade="+Float.parseFloat(valor_venda)+" WHERE id_produto = "+codigo;
+    
+            try {    
+                PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);    
+                
+    
+                stmt.executeUpdate();
+                    stmt.close();
+                    return true;
+                
+                    
+                }
+             catch (SQLException u) {    
+                throw new RuntimeException(u);   
+                
+        } 
+    }
+    
+    /**
+     * carregaLista
+     * @return lista com o campo descricao de todos os produtos cadastrados
+     */
+    
+    public DefaultListModel carregaLista(){
+        DefaultListModel listModel = new DefaultListModel();
+        
+        //ListModel lista = new ListModel();
         try{
             
-            String sql = "SELECT descricao FROM produtos";  
+           String sql = "SELECT descricao FROM produtos where excluido = 0";  
             PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
    
             ResultSet rs = stmt.executeQuery();  
               
             while(rs.next()){  
-                lista.a
+               listModel.addElement(rs.getString(1));
             }              
             rs.close();  
             stmt.close();
             
+        
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
-        return lista;
-    }
+        return listModel;
+    }// FIM CARREGA LISTA
+    
+    
+    /**
+     * CarregaProduto
+     * Retorna o prduto selecionado na Jlist do formulario Painel_Produtos!
+     * OBS: NAO USAR SE NAO ESTIVER COM JList SELECIONADO!
+     * @param nome 
+     */
+    public void carregaProduto(String nome){
+        try{
+            
+           String sql = "SELECT id_produto, descricao, quantidade_por_caixa, tipo, valor_compra_unidade, valor_venda_unidade FROM produtos where excluido = 0 and descricao = '"+nome+"'";  
+            PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
+   
+            ResultSet rs = stmt.executeQuery();  
+              
+            while(rs.next()){  
+               this.codigo = rs.getString(1);
+               this.descricao = rs.getString(2);
+               this.quantidade_por_caixa = rs.getString(3);
+               this.tipo = rs.getString(4);
+               this.valor_compra_unidade = rs.getString(5);
+               this.valor_unidade_venda = rs.getString(6);
+            }              
+            rs.close();  
+            stmt.close();
+            
+        
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    } // FIM CARREGA PRODUTOS
+    
     
 }
