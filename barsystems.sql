@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 18-Dez-2014 às 22:00
+-- Generation Time: 20-Dez-2014 às 03:45
 -- Versão do servidor: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -27,11 +27,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `centros_estoque` (
-  `codigo_centro_estoque` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_centro_estoque` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL DEFAULT '',
   `excluido` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `Data_Cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`codigo_centro_estoque`) USING BTREE
+  PRIMARY KEY (`id_centro_estoque`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `centros_estoque` (
 --
 
 CREATE TABLE IF NOT EXISTS `compras` (
-  `Codigo_Compra` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_compra` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Descricao` varchar(45) NOT NULL,
   `Codigo_Fornecedor` int(10) unsigned NOT NULL,
   `Numero_Nota` varchar(80) DEFAULT NULL,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS `compras` (
   `Parcelas` int(11) NOT NULL,
   `Excluido` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `Data_Cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`Codigo_Compra`) USING BTREE
+  PRIMARY KEY (`id_compra`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `compras` (
 --
 
 CREATE TABLE IF NOT EXISTS `despesas` (
-  `Codigo_Despesa` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_Despesa` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Codigo_Compra` int(11) DEFAULT NULL,
   `Descricao` text NOT NULL,
   `Responsavel` varchar(50) DEFAULT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `despesas` (
   `Codigo_Usuario` int(10) unsigned NOT NULL,
   `Excluido` tinyint(3) unsigned NOT NULL,
   `Data_Cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`Codigo_Despesa`) USING BTREE
+  PRIMARY KEY (`id_Despesa`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -90,7 +90,7 @@ CREATE TABLE IF NOT EXISTS `despesas` (
 --
 
 CREATE TABLE IF NOT EXISTS `fornecedores` (
-  `Codigo_Fornecedor` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_Fornecedor` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Razao_Social` varchar(45) NOT NULL,
   `Nome_Fantasia` varchar(45) NOT NULL,
   `CNPJ` varchar(20) NOT NULL,
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `fornecedores` (
   `Observacoes` text NOT NULL,
   `Foto` text,
   `Excluido` tinyint(3) unsigned NOT NULL,
-  PRIMARY KEY (`Codigo_Fornecedor`) USING BTREE
+  PRIMARY KEY (`id_Fornecedor`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -119,8 +119,10 @@ CREATE TABLE IF NOT EXISTS `produtos` (
   `descricao` varchar(70) NOT NULL DEFAULT '',
   `quantidade_por_caixa` int(10) unsigned NOT NULL DEFAULT '0',
   `tipo` varchar(25) NOT NULL DEFAULT '',
-  `excluido` tinyint(1) NOT NULL DEFAULT '0',
-  `data_cadastro` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `excluido` tinyint(1) DEFAULT NULL,
+  `data_cadastro` timestamp NULL DEFAULT NULL,
+  `valor_compra_unidade` float NOT NULL DEFAULT '0',
+  `valor_venda_unidade` float NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_produto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -128,8 +130,9 @@ CREATE TABLE IF NOT EXISTS `produtos` (
 -- Extraindo dados da tabela `produtos`
 --
 
-INSERT INTO `produtos` (`id_produto`, `descricao`, `quantidade_por_caixa`, `tipo`, `excluido`, `data_cadastro`) VALUES
-(1, 'cerveja', 12, 'cervejao', 0, '2014-12-17 00:00:00');
+INSERT INTO `produtos` (`id_produto`, `descricao`, `quantidade_por_caixa`, `tipo`, `excluido`, `data_cadastro`, `valor_compra_unidade`, `valor_venda_unidade`) VALUES
+(1010, 'Apia', 19, 'Cerveja', 0, NULL, 8.5, 14.7),
+(1011, 'Antartica', 10, 'Cerveja', 0, NULL, 3.5, 5.1);
 
 -- --------------------------------------------------------
 
@@ -138,10 +141,10 @@ INSERT INTO `produtos` (`id_produto`, `descricao`, `quantidade_por_caixa`, `tipo
 --
 
 CREATE TABLE IF NOT EXISTS `produtos_centro_estoque` (
-  `Codigo_Produto` int(10) unsigned NOT NULL,
-  `Nome` varchar(30) NOT NULL,
+  `id_Produto` int(10) unsigned NOT NULL DEFAULT '0',
   `Codigo_Centro_Estoque` tinyint(3) unsigned NOT NULL,
-  `Quantidade` int(10) unsigned NOT NULL
+  `Quantidade` int(10) unsigned NOT NULL,
+  KEY `FK_produtos_centro_estoque_1` (`id_Produto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -154,22 +157,14 @@ CREATE TABLE IF NOT EXISTS `produtos_compra` (
   `id_produtos_compra` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_produtos` int(10) unsigned NOT NULL DEFAULT '0',
   `valor_compra` float NOT NULL DEFAULT '0',
-  `valor_unidade` float NOT NULL DEFAULT '0',
-  `valor_venda_unidade` float NOT NULL DEFAULT '0',
   `data_compra` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `quantidade` int(10) unsigned NOT NULL DEFAULT '0',
   `data_cadastro` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `id_centro_estoque` int(10) unsigned NOT NULL DEFAULT '0',
+  `id_compras_fk` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_produtos_compra`),
   KEY `id_produtos` (`id_produtos`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 PACK_KEYS=1 AUTO_INCREMENT=2 ;
-
---
--- Extraindo dados da tabela `produtos_compra`
---
-
-INSERT INTO `produtos_compra` (`id_produtos_compra`, `id_produtos`, `valor_compra`, `valor_unidade`, `valor_venda_unidade`, `data_compra`, `quantidade`, `data_cadastro`, `id_centro_estoque`) VALUES
-(1, 1, 3, 4, 5, '2014-12-17 00:00:00', 20, '2014-12-17 02:00:00', 0);
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 PACK_KEYS=1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -191,6 +186,12 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Limitadores para a tabela `produtos_centro_estoque`
+--
+ALTER TABLE `produtos_centro_estoque`
+  ADD CONSTRAINT `FK_produtos_centro_estoque_1` FOREIGN KEY (`id_Produto`) REFERENCES `produtos` (`id_produto`);
 
 --
 -- Limitadores para a tabela `produtos_compra`
