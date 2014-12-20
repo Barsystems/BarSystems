@@ -257,6 +257,8 @@ public class Painel_Produtos extends javax.swing.JPanel {
                 .addGap(24, 24, 24))
         );
 
+        editar_produtos.setModal(true);
+
         jLabel25.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel25.setText("Codigo: ");
 

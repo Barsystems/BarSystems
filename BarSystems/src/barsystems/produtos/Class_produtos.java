@@ -151,9 +151,9 @@ public class Class_produtos {
         try{
             
            String sql = "SELECT descricao FROM produtos where excluido = 0";  
-            PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
-   
-            ResultSet rs = stmt.executeQuery();  
+           PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
+           
+           ResultSet rs = stmt.executeQuery();  
               
             while(rs.next()){  
                listModel.addElement(rs.getString(1));
