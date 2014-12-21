@@ -27,10 +27,14 @@ public class Class_Login {
             {
                 rs.close();
                 stmt.close();
+                banco.FecharConexao();
                 return true;
             } 
             else 
             {
+                rs.close();
+                stmt.close();
+                banco.FecharConexao();
                 return false;
             }
             

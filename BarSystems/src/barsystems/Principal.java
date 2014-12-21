@@ -21,6 +21,12 @@ public class Principal extends javax.swing.JFrame {
     public Principal() {
         initComponents();
     }
+    
+    public void gerarTamanhoTela() {
+        
+        
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,6 +44,7 @@ public class Principal extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -47,13 +54,27 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuItem4.setText("jMenuItem4");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("BarSystem - Sistem gerenciador de bares e restaurantes - Versão 0.1.1");
+        setExtendedState(MAXIMIZED_BOTH);
         setName("Principal"); // NOI18N
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
-        jMenu1.setText("Arquivo");
+        jMenuBar1.setToolTipText("Selecione um menu para iniciar");
 
-        jMenuItem1.setText("SubMenu");
+        jMenu1.setText("Configurações");
+        jMenu1.setToolTipText("Menu configurações");
+        jMenu1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItem1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/11988_16x16.png"))); // NOI18N
+        jMenuItem1.setText("Configurações do sistema");
+        jMenuItem1.setToolTipText("Alterar as configurações do sistema");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem1ActionPerformed(evt);
@@ -63,10 +84,21 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Produtos");
+        jMenu2.setText("Cadastros");
+        jMenu2.setToolTipText("Menu cadastros");
+        jMenu2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jMenu2.setName("menu_Produto"); // NOI18N
 
-        jMenuItem3.setText("Cadastro de Produtos");
+        jMenuItem5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/11983_16x16.png"))); // NOI18N
+        jMenuItem5.setText("Usuários");
+        jMenuItem5.setToolTipText("Cadastrar usuários");
+        jMenu2.add(jMenuItem5);
+
+        jMenuItem3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/7394_16x16.png"))); // NOI18N
+        jMenuItem3.setText("Produtos");
+        jMenuItem3.setToolTipText("Cadastrar produtos");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem3ActionPerformed(evt);
@@ -77,12 +109,15 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Compra");
+        jMenu3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jMenuBar1.add(jMenu3);
 
         jMenu4.setText("Estoque");
+        jMenu4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Fornecedores");
+        jMenu5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -99,6 +134,7 @@ public class Principal extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -113,6 +149,13 @@ public class Principal extends javax.swing.JFrame {
         cadastraProdutos.refreshList();
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        
+        Class_Fechar_Sistema exit = new Class_Fechar_Sistema();
+        exit.fecharSistema();
+        
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -161,6 +204,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JTabbedPane painel_principal;
     // End of variables declaration//GEN-END:variables
 }
