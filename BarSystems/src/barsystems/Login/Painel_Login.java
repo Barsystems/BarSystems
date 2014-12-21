@@ -1,29 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
-package Login;
+package barsystems.Login;
 
 import barsystems.Class_Fechar_Sistema;
-import barsystems.Login.Class_Login;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import barsystems.Principal;
+import java.awt.Event;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author Marcos
- */
 public class Painel_Login extends javax.swing.JPanel {
 
+    protected JFrame Frm_Login;
+    
     /**
      * Creates new form Login
+     * @param Frm_Login
      */
-    public Painel_Login() {
+    public Painel_Login(JFrame Frm_Login) {
         initComponents();
+        
+        this.Frm_Login = Frm_Login;
     }
 
     /**
@@ -60,6 +55,11 @@ public class Painel_Login extends javax.swing.JPanel {
 
         txtUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtUsuario.setToolTipText("Insira o nome de usuário");
+        txtUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtUsuarioKeyPressed(evt);
+            }
+        });
         add(txtUsuario);
         txtUsuario.setBounds(90, 100, 270, 30);
 
@@ -70,6 +70,11 @@ public class Painel_Login extends javax.swing.JPanel {
 
         txtSenha.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtSenha.setToolTipText("Insira a senha");
+        txtSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtSenhaKeyPressed(evt);
+            }
+        });
         add(txtSenha);
         txtSenha.setBounds(90, 150, 270, 30);
 
@@ -117,7 +122,25 @@ public class Painel_Login extends javax.swing.JPanel {
         if (!txtUsuario.getText().isEmpty() || !txtSenha.getText().isEmpty())
         {
             Class_Login login = new Class_Login();
-            login.verificaLoginSenha(txtUsuario.getText(), txtSenha.getText());
+            if (login.verificaLoginSenha(txtUsuario.getText(), txtSenha.getText()) == true) 
+            {
+                Principal principal = new Principal();
+                principal.setVisible(true);
+                
+                Frm_Login.dispose();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos! Tente novamente!", "Atenção", JOptionPane.ERROR_MESSAGE);
+                if (txtUsuario.getText().length() == 0)
+                {
+                    txtUsuario.grabFocus();
+                }
+                else
+                {
+                    txtSenha.grabFocus();
+                }
+            }
         }
         else
         {
@@ -133,6 +156,24 @@ public class Painel_Login extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_btnEntrarActionPerformed
+
+    private void txtUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtUsuarioKeyPressed
+        
+        if (evt.getKeyChar() == Event.ENTER) 
+        {
+            btnEntrarActionPerformed(null);
+        }
+        
+    }//GEN-LAST:event_txtUsuarioKeyPressed
+
+    private void txtSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSenhaKeyPressed
+        
+        if (evt.getKeyChar() == Event.ENTER) 
+        {
+            btnEntrarActionPerformed(null);
+        }
+        
+    }//GEN-LAST:event_txtSenhaKeyPressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
