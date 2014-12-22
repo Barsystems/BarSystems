@@ -6,6 +6,7 @@
 package barsystems;
 
 import barsystems.conexaoBanco.Class_Conexao_Banco;
+import barsystems.fornecedores.Painel_Fornecedores;
 import barsystems.produtos.Painel_Produtos;
 
 /**
@@ -118,6 +119,16 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu5.setText("Fornecedores");
         jMenu5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu5MouseClicked(evt);
+            }
+        });
+        jMenu5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu5ActionPerformed(evt);
+            }
+        });
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -156,6 +167,18 @@ public class Principal extends javax.swing.JFrame {
         exit.fecharSistema();
         
     }//GEN-LAST:event_formWindowClosing
+
+    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
+        
+    }//GEN-LAST:event_jMenu5ActionPerformed
+
+    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
+        Painel_Fornecedores cadastraFornecedores = new Painel_Fornecedores();
+        painel_principal.add(cadastraFornecedores);
+        cadastraFornecedores.setBounds(0, 0, 500, 500);
+        cadastraFornecedores.setVisible(true);
+        cadastraFornecedores.refreshList();
+    }//GEN-LAST:event_jMenu5MouseClicked
 
     /**
      * @param args the command line arguments

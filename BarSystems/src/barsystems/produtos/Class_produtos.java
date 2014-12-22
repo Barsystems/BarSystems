@@ -9,12 +9,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.ListModel;
-import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -86,11 +83,13 @@ public class Class_produtos {
     
                 if(!stmt.execute()){
                     stmt.close();
+                    conexaoMySQL.close();
                     return false;
                 }
                 else{
                     stmt.execute();
                     stmt.close();
+                    conexaoMySQL.close();
                     JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
                     return true;
                 }
@@ -129,6 +128,7 @@ public class Class_produtos {
     
                 stmt.executeUpdate();
                     stmt.close();
+                    conexaoMySQL.close();
                     return true;
                 
                     
@@ -136,6 +136,34 @@ public class Class_produtos {
              catch (SQLException u) {    
                 throw new RuntimeException(u);   
                 
+        } 
+    }
+    
+    /**
+     * Exclui produto com codigo do parametro recebido
+     * @param codigo
+     * @return true se a operacao foi efetuada com sucesso
+     */
+    
+    public boolean exclui(String codigo){
+        String sql = "UPDATE produtos set excluido = 1 where id_produto = '"+codigo+"'";    
+    
+            try {    
+                PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);    
+                if(!stmt.execute()){
+                    stmt.close();
+                    conexaoMySQL.close();
+                    return false;
+                }
+                else{
+                    stmt.execute();
+                    stmt.close();
+                    conexaoMySQL.close();
+                    JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
+                    return true;
+                }
+            } catch (SQLException u) {    
+                throw new RuntimeException(u);    
         } 
     }
     
@@ -160,7 +188,7 @@ public class Class_produtos {
             }              
             rs.close();  
             stmt.close();
-            
+            conexaoMySQL.close();
         
             
         }catch(Exception e){
@@ -194,13 +222,38 @@ public class Class_produtos {
             }              
             rs.close();  
             stmt.close();
-            
+            conexaoMySQL.close();
         
             
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
     } // FIM CARREGA PRODUTOS
+    
+    public DefaultListModel pesquisa(String pesquisa){
+        DefaultListModel listModel = new DefaultListModel();
+        
+        //ListModel lista = new ListModel();
+        try{
+            
+           String sql = "SELECT descricao FROM produtos where excluido = 0 and descricao like'%"+pesquisa+"%'";  
+           PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
+           
+           ResultSet rs = stmt.executeQuery();  
+              
+            while(rs.next()){  
+               listModel.addElement(rs.getString(1));
+            }              
+            rs.close();  
+            stmt.close();
+            conexaoMySQL.close();
+        
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return listModel;
+    }// FIM PESQUISA
     
     
 }
