@@ -6,6 +6,7 @@
 package barsystems;
 
 import barsystems.conexaoBanco.Class_Conexao_Banco;
+import barsystems.estoque.Painel_estoque;
 import barsystems.fornecedores.Painel_Fornecedores;
 import barsystems.produtos.Painel_Produtos;
 
@@ -115,6 +116,11 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu4.setText("Estoque");
         jMenu4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu4MouseClicked(evt);
+            }
+        });
         jMenuBar1.add(jMenu4);
 
         jMenu5.setText("Fornecedores");
@@ -179,6 +185,14 @@ public class Principal extends javax.swing.JFrame {
         cadastraFornecedores.setVisible(true);
         cadastraFornecedores.refreshList();
     }//GEN-LAST:event_jMenu5MouseClicked
+
+    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+        Painel_estoque estoque = new Painel_estoque();
+        painel_principal.add(estoque);
+        estoque.setBounds(0, 0, 500, 500);
+        estoque.setVisible(true);
+        estoque.refreshList();
+    }//GEN-LAST:event_jMenu4MouseClicked
 
     /**
      * @param args the command line arguments
