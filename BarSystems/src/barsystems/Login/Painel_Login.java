@@ -44,9 +44,11 @@ public class Painel_Login extends javax.swing.JPanel {
         setLayout(null);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/cutlery6 (1).png"))); // NOI18N
         jLabel2.setText("BarSystem");
         add(jLabel2);
-        jLabel2.setBounds(140, 30, 130, 29);
+        jLabel2.setBounds(0, 30, 400, 29);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Usuário");
@@ -79,6 +81,7 @@ public class Painel_Login extends javax.swing.JPanel {
         txtSenha.setBounds(90, 150, 270, 30);
 
         btnEntrar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnEntrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
         btnEntrar.setText("Entrar");
         btnEntrar.setToolTipText("Entrar no sistema");
         btnEntrar.addActionListener(new java.awt.event.ActionListener() {
@@ -87,9 +90,10 @@ public class Painel_Login extends javax.swing.JPanel {
             }
         });
         add(btnEntrar);
-        btnEntrar.setBounds(90, 230, 100, 30);
+        btnEntrar.setBounds(100, 230, 100, 30);
 
         btnSair.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
         btnSair.setText("Sair");
         btnSair.setToolTipText("Sair do sistema");
         btnSair.addActionListener(new java.awt.event.ActionListener() {
@@ -98,7 +102,7 @@ public class Painel_Login extends javax.swing.JPanel {
             }
         });
         add(btnSair);
-        btnSair.setBounds(210, 230, 100, 30);
+        btnSair.setBounds(220, 230, 100, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -134,10 +138,12 @@ public class Painel_Login extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Usuário ou senha inválidos! Tente novamente!", "Atenção", JOptionPane.ERROR_MESSAGE);
                 if (txtUsuario.getText().length() == 0)
                 {
+                    txtUsuario.selectAll();
                     txtUsuario.grabFocus();
                 }
                 else
                 {
+                    txtSenha.selectAll();
                     txtSenha.grabFocus();
                 }
             }
@@ -147,10 +153,12 @@ public class Painel_Login extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Insira o usuário e a senha!", "Atenção", JOptionPane.WARNING_MESSAGE);
             if (txtUsuario.getText().length() == 0)
             {
+                txtUsuario.selectAll();
                 txtUsuario.grabFocus();
             }
             else
             {
+                txtSenha.selectAll();
                 txtSenha.grabFocus();
             }
         }

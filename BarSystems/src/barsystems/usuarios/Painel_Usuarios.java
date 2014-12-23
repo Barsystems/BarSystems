@@ -93,21 +93,25 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         jTextField2.setBounds(290, 200, 230, 30);
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
         jButton3.setText("Excluir");
         add(jButton3);
         jButton3.setBounds(280, 430, 100, 30);
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plus24.png"))); // NOI18N
         jButton1.setText("Novo");
         add(jButton1);
         jButton1.setBounds(60, 430, 100, 30);
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
         jButton2.setText("Alterar");
         add(jButton2);
         jButton2.setBounds(170, 430, 100, 30);
 
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
         jButton4.setText("Sair");
         add(jButton4);
         jButton4.setBounds(390, 430, 100, 30);

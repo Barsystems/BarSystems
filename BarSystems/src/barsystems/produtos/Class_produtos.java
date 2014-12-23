@@ -9,6 +9,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -21,6 +22,7 @@ import javax.swing.JOptionPane;
 public class Class_produtos {
     protected Class_Conexao_Banco banco = new Class_Conexao_Banco();
     protected Connection conexaoMySQL = banco.getConexaoMySQL();
+    protected DecimalFormat dffloat = new DecimalFormat("##,###.00");
     
     protected String descricao, quantidade_por_caixa, tipo, valor_compra_unidade,valor_unidade_venda, codigo;
     
@@ -178,7 +180,7 @@ public class Class_produtos {
         //ListModel lista = new ListModel();
         try{
             
-           String sql = "SELECT descricao FROM produtos where excluido = 0";  
+           String sql = "SELECT descricao FROM produtos where excluido = 0 order by descricao";  
            PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
            
            ResultSet rs = stmt.executeQuery();  
@@ -210,15 +212,23 @@ public class Class_produtos {
            String sql = "SELECT id_produto, descricao, quantidade_por_caixa, tipo, valor_compra_unidade, valor_venda_unidade FROM produtos where excluido = 0 and descricao = '"+nome+"'";  
             PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
    
-            ResultSet rs = stmt.executeQuery();  
-              
-            while(rs.next()){  
-               this.codigo = rs.getString(1);
-               this.descricao = rs.getString(2);
-               this.quantidade_por_caixa = rs.getString(3);
-               this.tipo = rs.getString(4);
-               this.valor_compra_unidade = rs.getString(5);
-               this.valor_unidade_venda = rs.getString(6);
+            ResultSet rs = stmt.executeQuery();              
+            while(rs.next()){
+                
+                String valorCompra = dffloat.format(rs.getFloat(5));
+                if (valorCompra.equals(",00")) {
+                    valorCompra = "0,00";
+                }
+                String valorVenda = dffloat.format(rs.getFloat(6));
+                if (valorVenda.equals(",00")) {
+                    valorVenda = "0,00";
+                }
+                this.codigo = rs.getString(1);
+                this.descricao = rs.getString(2);
+                this.quantidade_por_caixa = rs.getString(3);
+                this.tipo = rs.getString(4);
+                this.valor_compra_unidade = valorCompra;
+                this.valor_unidade_venda = valorVenda;
             }              
             rs.close();  
             stmt.close();

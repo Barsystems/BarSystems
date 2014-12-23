@@ -39,8 +39,6 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem4 = new javax.swing.JMenuItem();
         painel_principal = new javax.swing.JTabbedPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -48,33 +46,34 @@ public class Principal extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu5 = new javax.swing.JMenu();
-
-        jMenuItem2.setText("jMenuItem2");
-
-        jMenuItem4.setText("jMenuItem4");
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setTitle("BarSystem - Sistem gerenciador de bares e restaurantes - Versão 0.1.1");
+        setTitle("BarSystem - Sistema gerenciador de bares e restaurantes - Versão 0.1.1");
         setExtendedState(MAXIMIZED_BOTH);
         setName("Principal"); // NOI18N
-        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
-        jMenuBar1.setToolTipText("Selecione um menu para iniciar");
+        painel_principal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuBar1.setToolTipText("");
 
         jMenu1.setText("Configurações");
-        jMenu1.setToolTipText("Menu configurações");
+        jMenu1.setToolTipText("");
         jMenu1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jMenuItem1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/11988_16x16.png"))); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/three115.png"))); // NOI18N
         jMenuItem1.setText("Configurações do sistema");
         jMenuItem1.setToolTipText("Alterar as configurações do sistema");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -87,18 +86,18 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Cadastros");
-        jMenu2.setToolTipText("Menu cadastros");
+        jMenu2.setToolTipText("");
         jMenu2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jMenu2.setName("menu_Produto"); // NOI18N
 
         jMenuItem5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/11983_16x16.png"))); // NOI18N
+        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/business60.png"))); // NOI18N
         jMenuItem5.setText("Usuários");
         jMenuItem5.setToolTipText("Cadastrar usuários");
         jMenu2.add(jMenuItem5);
 
         jMenuItem3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/7394_16x16.png"))); // NOI18N
+        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/hot51.png"))); // NOI18N
         jMenuItem3.setText("Produtos");
         jMenuItem3.setToolTipText("Cadastrar produtos");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -108,33 +107,63 @@ public class Principal extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem3);
 
+        jMenuItem6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/grocery10.png"))); // NOI18N
+        jMenuItem6.setText("Fornecedores");
+        jMenuItem6.setToolTipText("Cadastrar fornecedores");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
+
         jMenuBar1.add(jMenu2);
 
-        jMenu3.setText("Compra");
+        jMenu3.setText("Estoque");
+        jMenu3.setToolTipText("");
         jMenu3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItem2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/boxes2.png"))); // NOI18N
+        jMenuItem2.setText("Centros de estoque");
+        jMenuItem2.setToolTipText("Cadastrar e controlar centros de estoque");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem2);
+
+        jMenuItem4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/add17.png"))); // NOI18N
+        jMenuItem4.setText("Compras");
+        jMenuItem4.setToolTipText("Realizar uma compra");
+        jMenu3.add(jMenuItem4);
+
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("Estoque");
-        jMenu4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenu4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu4MouseClicked(evt);
-            }
-        });
-        jMenuBar1.add(jMenu4);
-
-        jMenu5.setText("Fornecedores");
+        jMenu5.setText("Sistema");
+        jMenu5.setToolTipText("");
         jMenu5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenu5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu5MouseClicked(evt);
-            }
-        });
-        jMenu5.addActionListener(new java.awt.event.ActionListener() {
+
+        jMenuItem7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/group12.png"))); // NOI18N
+        jMenuItem7.setText("Trocar de usuário");
+        jMenuItem7.setToolTipText("Abre a tela de login para escolher um usuário");
+        jMenu5.add(jMenuItem7);
+
+        jMenuItem9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
+        jMenuItem9.setText("Sair");
+        jMenuItem9.setToolTipText("Sair do sistema");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu5ActionPerformed(evt);
+                jMenuItem9ActionPerformed(evt);
             }
         });
+        jMenu5.add(jMenuItem9);
+
         jMenuBar1.add(jMenu5);
 
         setJMenuBar(jMenuBar1);
@@ -147,7 +176,7 @@ public class Principal extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(painel_principal, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
+            .addComponent(painel_principal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 479, Short.MAX_VALUE)
         );
 
         pack();
@@ -160,9 +189,10 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         Painel_Produtos cadastraProdutos = new Painel_Produtos();
-        painel_principal.add(cadastraProdutos);
+        painel_principal.add("Produtos", cadastraProdutos);
         cadastraProdutos.setBounds(0, 0, 500, 500);
         cadastraProdutos.setVisible(true);
+        cadastraProdutos.getIndexTabela(painel_principal, painel_principal.getSelectedIndex());
         cadastraProdutos.refreshList();
         
     }//GEN-LAST:event_jMenuItem3ActionPerformed
@@ -174,25 +204,32 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formWindowClosing
 
-    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         
-    }//GEN-LAST:event_jMenu5ActionPerformed
-
-    private void jMenu5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu5MouseClicked
         Painel_Fornecedores cadastraFornecedores = new Painel_Fornecedores();
         painel_principal.add(cadastraFornecedores);
         cadastraFornecedores.setBounds(0, 0, 500, 500);
         cadastraFornecedores.setVisible(true);
         cadastraFornecedores.refreshList();
-    }//GEN-LAST:event_jMenu5MouseClicked
+        
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
-    private void jMenu4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu4MouseClicked
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        
+        Class_Fechar_Sistema exit = new Class_Fechar_Sistema();
+        exit.fecharSistema();
+        
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        
         Painel_estoque estoque = new Painel_estoque();
         painel_principal.add(estoque);
         estoque.setBounds(0, 0, 500, 500);
         estoque.setVisible(true);
         estoque.refreshList();
-    }//GEN-LAST:event_jMenu4MouseClicked
+        
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -234,7 +271,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
@@ -242,6 +278,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JTabbedPane painel_principal;
     // End of variables declaration//GEN-END:variables
 }
