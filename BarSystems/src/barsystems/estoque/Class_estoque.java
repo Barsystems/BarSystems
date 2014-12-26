@@ -61,8 +61,8 @@ public class Class_estoque {
                    + "quantidade_em_unidade, "
                    + "valor_compra_unidade, "
                    + "valor_venda_unidade "
-                   + "from produtos, produtos_centro_estoque "
-                   + "where produtos.id_produto = produtos_centro_estoque.id_produto and id_centro_estoque ='"+codigo+"' and produtos.excluido = 0";  
+                   + "from produtos, produtos_centro_estoque, produtos_compra "
+                   + "where produtos.id_produto = produtos_centro_estoque.id_produto and produtos_centro_estoque.id_centro_estoque ='"+codigo+"' and  produtos.id_produto = produtos_compra.id_produtos  and produtos.excluido = 0";  
            PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
            
            ResultSet rs = stmt.executeQuery();  
@@ -106,6 +106,10 @@ public class Class_estoque {
         }
         
        return codigo;
+    }
+    
+    public void carregaDetalhes(String nome){
+        
     }
     
 }

@@ -39,7 +39,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
         seleciona.carregaProduto((String) lista_produtos.getSelectedValue());
         codigo_produto1.setText(seleciona.getCodigo());
         nome_produto1.setText(seleciona.getDescricao());
-        qtd_caixa_produto1.setText(seleciona.getQuantidade());
         tipo_produto1.setText(seleciona.getTipo());
         valor_compra_produto1.setText(seleciona.getValor_Compra());
         valor_venda_produto1.setText(seleciona.getValor_Venda());
@@ -50,7 +49,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
         seleciona.carregaProduto((String) lista_produtos.getSelectedValue());
         codigo_produto2.setText(seleciona.getCodigo());
         nome_produto2.setText(seleciona.getDescricao());
-        qtd_caixa_produto2.setText(seleciona.getQuantidade());
         tipo_produto2.setText(seleciona.getTipo());
         valor_compra_produto2.setText(seleciona.getValor_Compra());
         valor_venda_produto2.setText(seleciona.getValor_Venda());
@@ -76,8 +74,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
         codigo_produto = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         nome_produto = new javax.swing.JTextField();
-        qtd_caixa_produto = new javax.swing.JTextField();
-        jLabel14 = new javax.swing.JLabel();
         tipo_produto = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -93,8 +89,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
         codigo_produto2 = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
         nome_produto2 = new javax.swing.JTextField();
-        qtd_caixa_produto2 = new javax.swing.JTextField();
-        jLabel27 = new javax.swing.JLabel();
         tipo_produto2 = new javax.swing.JTextField();
         jLabel28 = new javax.swing.JLabel();
         jLabel29 = new javax.swing.JLabel();
@@ -115,8 +109,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
         codigo_produto1 = new javax.swing.JTextField();
         nome_produto1 = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        qtd_caixa_produto1 = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         tipo_produto1 = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
@@ -154,41 +146,32 @@ public class Painel_Produtos extends javax.swing.JPanel {
         cadastro_produtos.getContentPane().add(nome_produto);
         nome_produto.setBounds(180, 110, 160, 30);
 
-        qtd_caixa_produto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        cadastro_produtos.getContentPane().add(qtd_caixa_produto);
-        qtd_caixa_produto.setBounds(180, 150, 160, 30);
-
-        jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel14.setText("Quant. por Caixa");
-        cadastro_produtos.getContentPane().add(jLabel14);
-        jLabel14.setBounds(60, 160, 110, 17);
-
         tipo_produto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cadastro_produtos.getContentPane().add(tipo_produto);
-        tipo_produto.setBounds(180, 190, 160, 30);
+        tipo_produto.setBounds(180, 150, 160, 30);
 
         jLabel18.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel18.setText(" Tipo ");
         cadastro_produtos.getContentPane().add(jLabel18);
-        jLabel18.setBounds(130, 200, 36, 17);
+        jLabel18.setBounds(130, 160, 36, 17);
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel13.setText("Valor de compra");
         cadastro_produtos.getContentPane().add(jLabel13);
-        jLabel13.setBounds(60, 240, 112, 17);
+        jLabel13.setBounds(60, 200, 112, 17);
 
         valor_compra_produto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cadastro_produtos.getContentPane().add(valor_compra_produto);
-        valor_compra_produto.setBounds(180, 230, 160, 30);
+        valor_compra_produto.setBounds(180, 190, 160, 30);
 
         valor_venda_produto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cadastro_produtos.getContentPane().add(valor_venda_produto);
-        valor_venda_produto.setBounds(180, 270, 160, 30);
+        valor_venda_produto.setBounds(180, 230, 160, 30);
 
         jLabel16.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel16.setText("Valor de venda");
         cadastro_produtos.getContentPane().add(jLabel16);
-        jLabel16.setBounds(70, 280, 104, 17);
+        jLabel16.setBounds(70, 240, 104, 17);
 
         jButton8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
@@ -259,41 +242,32 @@ public class Painel_Produtos extends javax.swing.JPanel {
         editar_produtos.getContentPane().add(nome_produto2);
         nome_produto2.setBounds(180, 110, 160, 30);
 
-        qtd_caixa_produto2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        editar_produtos.getContentPane().add(qtd_caixa_produto2);
-        qtd_caixa_produto2.setBounds(180, 150, 160, 30);
-
-        jLabel27.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel27.setText("Quant. por Caixa");
-        editar_produtos.getContentPane().add(jLabel27);
-        jLabel27.setBounds(60, 160, 110, 17);
-
         tipo_produto2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         editar_produtos.getContentPane().add(tipo_produto2);
-        tipo_produto2.setBounds(180, 190, 160, 30);
+        tipo_produto2.setBounds(180, 150, 160, 30);
 
         jLabel28.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel28.setText(" Tipo ");
         editar_produtos.getContentPane().add(jLabel28);
-        jLabel28.setBounds(130, 200, 36, 17);
+        jLabel28.setBounds(130, 160, 36, 17);
 
         jLabel29.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel29.setText("Valor de compra");
         editar_produtos.getContentPane().add(jLabel29);
-        jLabel29.setBounds(60, 240, 112, 17);
+        jLabel29.setBounds(60, 200, 112, 17);
 
         valor_compra_produto2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         editar_produtos.getContentPane().add(valor_compra_produto2);
-        valor_compra_produto2.setBounds(180, 230, 160, 30);
+        valor_compra_produto2.setBounds(180, 190, 160, 30);
 
         valor_venda_produto2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         editar_produtos.getContentPane().add(valor_venda_produto2);
-        valor_venda_produto2.setBounds(180, 270, 160, 30);
+        valor_venda_produto2.setBounds(180, 230, 160, 30);
 
         jLabel30.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel30.setText("Valor de venda");
         editar_produtos.getContentPane().add(jLabel30);
-        jLabel30.setBounds(70, 280, 104, 17);
+        jLabel30.setBounds(70, 240, 104, 17);
 
         jButton11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
@@ -414,45 +388,35 @@ public class Painel_Produtos extends javax.swing.JPanel {
         add(jLabel20);
         jLabel20.setBounds(360, 170, 36, 17);
 
-        qtd_caixa_produto1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        qtd_caixa_produto1.setEnabled(false);
-        add(qtd_caixa_produto1);
-        qtd_caixa_produto1.setBounds(410, 200, 160, 30);
-
-        jLabel21.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel21.setText("Quant. por Caixa");
-        add(jLabel21);
-        jLabel21.setBounds(290, 210, 110, 17);
-
         jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel22.setText("  Tipo ");
         add(jLabel22);
-        jLabel22.setBounds(360, 250, 40, 17);
+        jLabel22.setBounds(360, 210, 40, 17);
 
         tipo_produto1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         tipo_produto1.setEnabled(false);
         add(tipo_produto1);
-        tipo_produto1.setBounds(410, 240, 160, 30);
+        tipo_produto1.setBounds(410, 200, 160, 30);
 
         jLabel23.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel23.setText("Valor de compra");
         add(jLabel23);
-        jLabel23.setBounds(290, 290, 110, 17);
+        jLabel23.setBounds(290, 250, 110, 17);
 
         valor_compra_produto1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         valor_compra_produto1.setEnabled(false);
         add(valor_compra_produto1);
-        valor_compra_produto1.setBounds(410, 280, 160, 30);
+        valor_compra_produto1.setBounds(410, 240, 160, 30);
 
         valor_venda_produto1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         valor_venda_produto1.setEnabled(false);
         add(valor_venda_produto1);
-        valor_venda_produto1.setBounds(410, 320, 160, 30);
+        valor_venda_produto1.setBounds(410, 280, 160, 30);
 
         jLabel24.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel24.setText("Valor de venda");
         add(jLabel24);
-        jLabel24.setBounds(300, 330, 104, 17);
+        jLabel24.setBounds(300, 290, 104, 17);
 
         jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
@@ -473,7 +437,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         if(codigo_produto.getText().equals("") ||
             nome_produto.getText().equals("") ||
-            qtd_caixa_produto.getText().equals("") ||
             tipo_produto.getText().equals("") ||
             valor_compra_produto.getText().equals("") ||
             valor_venda_produto.getText().equals("")){
@@ -484,7 +447,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
             Class_produtos enviar = new Class_produtos(
                 codigo_produto.getText(),
                 nome_produto.getText(),
-                qtd_caixa_produto.getText(),
                 tipo_produto.getText(),
                 valor_compra_produto.getText(),
                 valor_venda_produto.getText()); //Instancia classe de cadastrar produtos
@@ -494,7 +456,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
                 codigo_produto.setText("");
                 nome_produto.setText("");
-                qtd_caixa_produto.setText("");
                 tipo_produto.setText("");
                 valor_compra_produto.setText("");
                 valor_venda_produto.setText("");
@@ -533,7 +494,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         if(codigo_produto2.getText().equals("") ||
             nome_produto2.getText().equals("") ||
-            qtd_caixa_produto2.getText().equals("") ||
             tipo_produto2.getText().equals("") ||
             valor_compra_produto2.getText().equals("") ||
             valor_venda_produto2.getText().equals("")){
@@ -544,7 +504,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
         Class_produtos editar = new Class_produtos();
         boolean result = editar.edita(codigo_produto2.getText(),
                      nome_produto2.getText(),
-                     qtd_caixa_produto2.getText(),
                      tipo_produto2.getText(),
                      valor_compra_produto2.getText(),
                      valor_venda_produto2.getText());
@@ -578,7 +537,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         codigo_produto.setText("");
                 nome_produto.setText("");
-                qtd_caixa_produto.setText("");
                 tipo_produto.setText("");
                 valor_compra_produto.setText("");
                 valor_venda_produto.setText("");
@@ -620,7 +578,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -628,13 +585,11 @@ public class Painel_Produtos extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
@@ -645,9 +600,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
     private javax.swing.JTextField nome_produto;
     private javax.swing.JTextField nome_produto1;
     private javax.swing.JTextField nome_produto2;
-    private javax.swing.JTextField qtd_caixa_produto;
-    private javax.swing.JTextField qtd_caixa_produto1;
-    private javax.swing.JTextField qtd_caixa_produto2;
     private javax.swing.JTextField tipo_produto;
     private javax.swing.JTextField tipo_produto1;
     private javax.swing.JTextField tipo_produto2;
