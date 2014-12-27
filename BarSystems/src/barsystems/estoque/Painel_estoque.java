@@ -8,6 +8,8 @@ package barsystems.estoque;
 import barsystems.fornecedores.Class_Fornecedores;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -66,13 +68,13 @@ public class Painel_estoque extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lbl_produto = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        lbl_fornecedor = new javax.swing.JLabel();
+        lbl_data = new javax.swing.JLabel();
+        lbl_cod_compra = new javax.swing.JLabel();
 
         subir_produto.setModal(true);
         subir_produto.getContentPane().setLayout(null);
@@ -198,10 +200,15 @@ public class Painel_estoque extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tabela_estoque.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabela_estoqueMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(tabela_estoque);
 
         add(jScrollPane2);
-        jScrollPane2.setBounds(180, 80, 630, 210);
+        jScrollPane2.setBounds(180, 80, 770, 210);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Produtos em centro de estoque");
@@ -220,36 +227,38 @@ public class Painel_estoque extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Detalhes do produto:");
         add(jLabel4);
-        jLabel4.setBounds(190, 300, 140, 17);
+        jLabel4.setBounds(190, 300, 140, 20);
 
-        jLabel5.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel5.setText("Produto");
-        add(jLabel5);
-        jLabel5.setBounds(330, 300, 90, 20);
-
-        jLabel6.setText("Quantidade em estoque:");
-        add(jLabel6);
-        jLabel6.setBounds(190, 330, 130, 14);
-
-        jLabel8.setText("Valor de compra unitario:");
-        add(jLabel8);
-        jLabel8.setBounds(190, 360, 120, 14);
-
-        jLabel9.setText("Valor de venda unitario: ");
-        add(jLabel9);
-        jLabel9.setBounds(190, 390, 120, 14);
+        lbl_produto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        add(lbl_produto);
+        lbl_produto.setBounds(330, 300, 340, 20);
 
         jLabel10.setText("Comprado em: ");
         add(jLabel10);
-        jLabel10.setBounds(440, 330, 80, 14);
+        jLabel10.setBounds(190, 330, 110, 14);
 
         jLabel11.setText("Codigo da compra:");
         add(jLabel11);
-        jLabel11.setBounds(440, 360, 100, 14);
+        jLabel11.setBounds(190, 360, 120, 14);
 
         jLabel12.setText("Fornecedor: ");
         add(jLabel12);
-        jLabel12.setBounds(440, 390, 70, 14);
+        jLabel12.setBounds(190, 390, 100, 14);
+
+        lbl_fornecedor.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lbl_fornecedor.setText("      ");
+        add(lbl_fornecedor);
+        lbl_fornecedor.setBounds(300, 390, 310, 17);
+
+        lbl_data.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lbl_data.setText("    ");
+        add(lbl_data);
+        lbl_data.setBounds(310, 330, 220, 17);
+
+        lbl_cod_compra.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lbl_cod_compra.setText("     ");
+        add(lbl_cod_compra);
+        lbl_cod_compra.setBounds(320, 360, 210, 17);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lista_centrosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lista_centrosValueChanged
@@ -274,6 +283,14 @@ public class Painel_estoque extends javax.swing.JPanel {
         subir_produto.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void tabela_estoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabela_estoqueMouseClicked
+        int linha;
+        linha = tabela_estoque.getSelectedRow();
+        TableModel modelo = tabela_estoque.getModel();
+        lbl_produto.setText((String) modelo.getValueAt(linha,0));
+        lbl_data.setText((String) modelo.getValueAt(linha,2));
+    }//GEN-LAST:event_tabela_estoqueMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -292,16 +309,16 @@ public class Painel_estoque extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lbl_cod_compra;
+    private javax.swing.JLabel lbl_data;
+    private javax.swing.JLabel lbl_fornecedor;
+    private javax.swing.JLabel lbl_produto;
     private javax.swing.JList lista_centro2;
     private javax.swing.JList lista_centros;
     private javax.swing.JTextField quantidade;
