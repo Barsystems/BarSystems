@@ -149,23 +149,8 @@ public class Painel_Produtos extends javax.swing.JPanel {
         cadastro_produtos.getContentPane().add(nome_produto);
         nome_produto.setBounds(180, 110, 160, 30);
 
-<<<<<<< HEAD
-        qtd_caixa_produto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        qtd_caixa_produto.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                qtd_caixa_produtoKeyTyped(evt);
-            }
-        });
-        cadastro_produtos.getContentPane().add(qtd_caixa_produto);
-        qtd_caixa_produto.setBounds(180, 150, 160, 30);
+        
 
-        jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel14.setText("Quant. por Caixa");
-        cadastro_produtos.getContentPane().add(jLabel14);
-        jLabel14.setBounds(60, 160, 110, 17);
-
-=======
->>>>>>> 04a570f685f236316062607ab24e94e0722d7db8
         tipo_produto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cadastro_produtos.getContentPane().add(tipo_produto);
         tipo_produto.setBounds(180, 150, 160, 30);
@@ -274,23 +259,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
         editar_produtos.getContentPane().add(nome_produto2);
         nome_produto2.setBounds(180, 110, 160, 30);
 
-<<<<<<< HEAD
-        qtd_caixa_produto2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        qtd_caixa_produto2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                qtd_caixa_produto2KeyTyped(evt);
-            }
-        });
-        editar_produtos.getContentPane().add(qtd_caixa_produto2);
-        qtd_caixa_produto2.setBounds(180, 150, 160, 30);
-
-        jLabel27.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel27.setText("Quant. por Caixa");
-        editar_produtos.getContentPane().add(jLabel27);
-        jLabel27.setBounds(60, 160, 110, 17);
-
-=======
->>>>>>> 04a570f685f236316062607ab24e94e0722d7db8
         tipo_produto2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         editar_produtos.getContentPane().add(tipo_produto2);
         tipo_produto2.setBounds(180, 150, 160, 30);
@@ -645,20 +613,19 @@ public class Painel_Produtos extends javax.swing.JPanel {
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         codigo_produto.setText("");
-<<<<<<< HEAD
         nome_produto.setText("");
-        qtd_caixa_produto.setText("");
+
         tipo_produto.setText("");
         valor_compra_produto.setText("");
         valor_venda_produto.setText("");
         
         codigo_produto.grabFocus();
-=======
+
                 nome_produto.setText("");
                 tipo_produto.setText("");
                 valor_compra_produto.setText("");
                 valor_venda_produto.setText("");
->>>>>>> 04a570f685f236316062607ab24e94e0722d7db8
+
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
