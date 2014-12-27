@@ -5,10 +5,12 @@
  */
 package barsystems;
 
-import barsystems.conexaoBanco.Class_Conexao_Banco;
+import barsystems.Login.Frm_Login;
 import barsystems.estoque.Painel_estoque;
 import barsystems.fornecedores.Painel_Fornecedores;
 import barsystems.produtos.Painel_Produtos;
+import barsystems.usuarios.Painel_Usuarios;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -50,6 +52,9 @@ public class Principal extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
@@ -94,6 +99,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/business60.png"))); // NOI18N
         jMenuItem5.setText("Usuários");
         jMenuItem5.setToolTipText("Cadastrar usuários");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
         jMenuItem3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -143,6 +153,21 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu3);
 
+        jMenu4.setText("Bar");
+        jMenu4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItem8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/covered16.png"))); // NOI18N
+        jMenuItem8.setText("Venda");
+        jMenuItem8.setToolTipText("Realizar uma venda");
+        jMenu4.add(jMenuItem8);
+
+        jMenuBar1.add(jMenu4);
+
+        jMenu6.setText("Relatórios");
+        jMenu6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuBar1.add(jMenu6);
+
         jMenu5.setText("Sistema");
         jMenu5.setToolTipText("");
         jMenu5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -151,6 +176,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/group12.png"))); // NOI18N
         jMenuItem7.setText("Trocar de usuário");
         jMenuItem7.setToolTipText("Abre a tela de login para escolher um usuário");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu5.add(jMenuItem7);
 
         jMenuItem9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -188,10 +218,13 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        
         Painel_Produtos cadastraProdutos = new Painel_Produtos();
         painel_principal.add("Produtos", cadastraProdutos);
         cadastraProdutos.setBounds(0, 0, 500, 500);
         cadastraProdutos.setVisible(true);
+        // select the last tab
+        painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
         cadastraProdutos.getIndexTabela(painel_principal, painel_principal.getSelectedIndex());
         cadastraProdutos.refreshList();
         
@@ -230,6 +263,31 @@ public class Principal extends javax.swing.JFrame {
         estoque.refreshList();
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        
+        if (JOptionPane.showConfirmDialog(null, "Deseja realmente trocar de usuário?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) 
+        {
+            Frm_Login login = new Frm_Login();
+            login.setVisible(true);
+
+            this.dispose();
+        }
+        
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        
+        Painel_Usuarios usuarios = new Painel_Usuarios();
+        painel_principal.add("Usuários", usuarios);
+        usuarios.setBounds(0, 0, 500, 500);
+        usuarios.setVisible(true);
+        // select the last tab
+        painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+        usuarios.getIndexTabela(painel_principal, painel_principal.getSelectedIndex());
+        usuarios.refreshList();
+        
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -271,7 +329,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -280,6 +340,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JTabbedPane painel_principal;
     // End of variables declaration//GEN-END:variables

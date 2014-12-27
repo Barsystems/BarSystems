@@ -46,7 +46,7 @@ public class Class_Usuarios {
         
         try 
         {
-            String sql = "SELECT nome from usuarios WHERE excluido = 0";
+            String sql = "SELECT nome from usuarios WHERE excluido = 0 order by nome";
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
@@ -55,6 +55,7 @@ public class Class_Usuarios {
             
             rs.close();
             st.close();
+            con.close();
         } 
         catch (Exception e) 
         {
