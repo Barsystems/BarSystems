@@ -60,7 +60,7 @@ public class Painel_Produtos extends javax.swing.JPanel {
         Class_produtos carrega = new Class_produtos();
         DefaultListModel lista = carrega.pesquisa(nome);
         lista_produtos.setModel(lista);
-    }
+    }   
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -124,10 +124,11 @@ public class Painel_Produtos extends javax.swing.JPanel {
         cadastro_produtos.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         cadastro_produtos.setTitle("Novo cadastro");
         cadastro_produtos.setModal(true);
+        cadastro_produtos.setPreferredSize(new java.awt.Dimension(400, 400));
         cadastro_produtos.getContentPane().setLayout(null);
 
         jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel15.setText("Código");
+        jLabel15.setText("Codigo");
         cadastro_produtos.getContentPane().add(jLabel15);
         jLabel15.setBounds(120, 80, 45, 17);
 
@@ -135,6 +136,11 @@ public class Painel_Produtos extends javax.swing.JPanel {
         codigo_produto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 codigo_produtoActionPerformed(evt);
+            }
+        });
+        codigo_produto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                codigo_produtoKeyTyped(evt);
             }
         });
         cadastro_produtos.getContentPane().add(codigo_produto);
@@ -148,8 +154,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
         nome_produto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cadastro_produtos.getContentPane().add(nome_produto);
         nome_produto.setBounds(180, 110, 160, 30);
-
-        
 
         tipo_produto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         cadastro_produtos.getContentPane().add(tipo_produto);
@@ -191,38 +195,38 @@ public class Painel_Produtos extends javax.swing.JPanel {
         jButton8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
         jButton8.setText("Salvar");
-        jButton8.setToolTipText("Salvar o cadastro");
+        jButton8.setToolTipText("Salvar o cadastro do produto");
         jButton8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton8ActionPerformed(evt);
             }
         });
         cadastro_produtos.getContentPane().add(jButton8);
-        jButton8.setBounds(40, 340, 100, 30);
+        jButton8.setBounds(40, 300, 100, 30);
 
         jButton9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
         jButton9.setText("Limpar");
-        jButton9.setToolTipText("Limpar todos os campos e começar novamente");
+        jButton9.setToolTipText("Limpar os dados e recomeçar o cadastro");
         jButton9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton9ActionPerformed(evt);
             }
         });
         cadastro_produtos.getContentPane().add(jButton9);
-        jButton9.setBounds(150, 340, 100, 30);
+        jButton9.setBounds(150, 300, 100, 30);
 
         jButton10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
         jButton10.setText("Sair");
-        jButton10.setToolTipText("Cancelar cadastro");
+        jButton10.setToolTipText("Cancelar o cadastro do produto");
         jButton10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton10ActionPerformed(evt);
             }
         });
         cadastro_produtos.getContentPane().add(jButton10);
-        jButton10.setBounds(260, 340, 100, 30);
+        jButton10.setBounds(260, 300, 100, 30);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -234,10 +238,11 @@ public class Painel_Produtos extends javax.swing.JPanel {
         editar_produtos.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editar_produtos.setTitle("Alteração de dados");
         editar_produtos.setModal(true);
+        editar_produtos.setPreferredSize(new java.awt.Dimension(400, 400));
         editar_produtos.getContentPane().setLayout(null);
 
         jLabel25.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel25.setText("Código");
+        jLabel25.setText("Codigo");
         editar_produtos.getContentPane().add(jLabel25);
         jLabel25.setBounds(120, 80, 53, 17);
 
@@ -299,14 +304,14 @@ public class Painel_Produtos extends javax.swing.JPanel {
         jButton11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
         jButton11.setText("Salvar");
-        jButton11.setToolTipText("Salvar alterações no cadastro");
+        jButton11.setToolTipText("Salvar alterações");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton11ActionPerformed(evt);
             }
         });
         editar_produtos.getContentPane().add(jButton11);
-        jButton11.setBounds(100, 340, 100, 30);
+        jButton11.setBounds(100, 310, 100, 30);
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -325,21 +330,21 @@ public class Painel_Produtos extends javax.swing.JPanel {
             }
         });
         editar_produtos.getContentPane().add(jButton5);
-        jButton5.setBounds(210, 340, 100, 30);
+        jButton5.setBounds(210, 310, 100, 30);
 
-        txtPesquisa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtPesquisa.setText("jTextField1");
-        txtPesquisa.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                txtPesquisaFocusLost(evt);
-            }
-        });
+        txtPesquisa.setToolTipText("Digite para procurar um produto específico");
         txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPesquisaKeyReleased(evt);
             }
         });
 
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
         setLayout(null);
 
         lista_produtos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -358,7 +363,7 @@ public class Painel_Produtos extends javax.swing.JPanel {
         jScrollPane1.setViewportView(lista_produtos);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(20, 120, 230, 230);
+        jScrollPane1.setBounds(20, 120, 230, 260);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -375,26 +380,26 @@ public class Painel_Produtos extends javax.swing.JPanel {
         jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plus24.png"))); // NOI18N
         jButton2.setText("Novo");
-        jButton2.setToolTipText("Cadastrar novo produto");
+        jButton2.setToolTipText("Cadastrar um novo produto");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
         add(jButton2);
-        jButton2.setBounds(80, 390, 100, 30);
+        jButton2.setBounds(80, 420, 100, 30);
 
         jButton3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
         jButton3.setText("Alterar");
-        jButton3.setToolTipText("Alterar um produto existente");
+        jButton3.setToolTipText("Alterar as informações de um produto");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
         add(jButton3);
-        jButton3.setBounds(190, 390, 100, 30);
+        jButton3.setBounds(190, 420, 100, 30);
 
         jButton4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
@@ -406,10 +411,10 @@ public class Painel_Produtos extends javax.swing.JPanel {
             }
         });
         add(jButton4);
-        jButton4.setBounds(300, 390, 100, 30);
+        jButton4.setBounds(300, 420, 100, 30);
 
         jLabel19.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel19.setText("Código ");
+        jLabel19.setText("Codigo ");
         add(jLabel19);
         jLabel19.setBounds(350, 130, 50, 17);
 
@@ -431,7 +436,7 @@ public class Painel_Produtos extends javax.swing.JPanel {
         jLabel20.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel20.setText("Nome");
         add(jLabel20);
-        jLabel20.setBounds(360, 170, 36, 17);
+        jLabel20.setBounds(350, 170, 36, 17);
 
         jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel22.setText("  Tipo ");
@@ -466,14 +471,14 @@ public class Painel_Produtos extends javax.swing.JPanel {
         jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
         jButton1.setText("Sair");
-        jButton1.setToolTipText("Sair do cadastro de produtos");
+        jButton1.setToolTipText("Fechar a tela de cadastro de produtos");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
         add(jButton1);
-        jButton1.setBounds(410, 390, 100, 30);
+        jButton1.setBounds(410, 420, 100, 30);
 
         btnPesquisa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/magnifier12.png"))); // NOI18N
         btnPesquisa.setToolTipText("Clique para procurar um produto específico");
@@ -483,7 +488,7 @@ public class Painel_Produtos extends javax.swing.JPanel {
             }
         });
         add(btnPesquisa);
-        btnPesquisa.setBounds(200, 90, 49, 25);
+        btnPesquisa.setBounds(210, 90, 40, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void codigo_produtoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigo_produtoActionPerformed
@@ -497,44 +502,83 @@ public class Painel_Produtos extends javax.swing.JPanel {
             valor_compra_produto.getText().equals("") ||
             valor_venda_produto.getText().equals("")){
 
-            JOptionPane.showMessageDialog(null, "Nao pode haver campos vazios!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Não pode haver campos vazios!", "Atenção", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            
-            //aqui vamos tirar as vírgulas dos txts de valor
-            Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
-            float valorCompra = troca.trocaVirgulaPorPonto(valor_compra_produto.getText());
-            float valorVenda = troca.trocaVirgulaPorPonto(valor_venda_produto.getText());
-            
+            int flagCodigo = 0, flagNome = 0;
             Class_produtos enviar = new Class_produtos(
                 codigo_produto.getText(),
                 nome_produto.getText(),
                 tipo_produto.getText(),
-                String.valueOf(valorCompra),
-                String.valueOf(valorVenda)); //Instancia classe de cadastrar produtos
-            boolean result = enviar.Cadastra();
-            if(!result){
+                valor_compra_produto.getText(),
+                valor_venda_produto.getText()); //Instancia classe de cadastrar produtos
+            
+            //aqui eu verifico se o produto que estou tentando adicionar está usando o mesmo código que outros produtos que estão ativos
+            if (enviar.verificaCodigoProdutosAtivos(codigo_produto.getText()) == false) 
+            {
+                flagCodigo = 1;
+            }
+            
+            if (flagCodigo == 0) 
+            {
+                JOptionPane.showMessageDialog(null,"Já existe um produto cadastrado com este código! Escolha outro código!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                codigo_produto.grabFocus();
+                codigo_produto.selectAll();
+            }
+            else
+            {
+                if (enviar.verificaNomeProdutos(nome_produto.getText()) == true) 
+                {
+                    JOptionPane.showMessageDialog(null,"Já existe um produto cadastrado com este nome! Escolha outro nome!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                    nome_produto.grabFocus();
+                    nome_produto.selectAll();
+                } 
+                else 
+                {
+                    flagNome = 1;
+                }
 
-                JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-                codigo_produto.setText("");
-                nome_produto.setText("");
-                tipo_produto.setText("");
-                valor_compra_produto.setText("");
-                valor_venda_produto.setText("");
-                refreshList();
-                cadastro_produtos.dispose();
+                if(flagCodigo == 1 && flagNome == 1)
+                {
+                    //aqui eu verifico se o produto que estou tentando adicionar está usando o mesmo código que outros produtos que já foram excluidos
+                    //se o produto já foi excluido e tem o mesmo código, eu o excluo e crio outro
+                    if (enviar.verificaCodigoProdutosExcluidos(codigo_produto.getText()) == true)
+                    {
+                        enviar.excluiDefinitivo(codigo_produto.getText());
+                    }
+                    
+                    boolean result = enviar.Cadastra();
+                    if(!result)
+                    {
+                        JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                        codigo_produto.setText("");
+                        nome_produto.setText("");
+                        tipo_produto.setText("");
+                        valor_compra_produto.setText("");
+                        valor_venda_produto.setText("");
+                        refreshList();
+                        cadastro_produtos.dispose();
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "Falha ao cadastrar produto!", "Atenção", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
             }
-            else{
-                JOptionPane.showMessageDialog(null, "Falha ao cadastrar produto!", "Atenção", JOptionPane.ERROR_MESSAGE);
-            }
+            
         }
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        cadastro_produtos.setBounds(0, 0, 410, 430);
+        
+        Class_produtos produtos = new Class_produtos();
+        codigo_produto.setText(String.valueOf(produtos.retornaMaiorIdProduto()+1));
+        
+        cadastro_produtos.setBounds(0, 0, 410, 400);
         cadastro_produtos.setLocationRelativeTo(null);  
         cadastro_produtos.setVisible(true);
         codigo_produto.grabFocus();
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void codigo_produto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigo_produto1ActionPerformed
@@ -563,31 +607,67 @@ public class Painel_Produtos extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Nao pode haver campos vazios!", "Atenção", JOptionPane.WARNING_MESSAGE);
         }
         else{
-            
-            //aqui vamos tirar as vírgulas dos txts de valor
-            Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
-            float valorCompra2 = troca.trocaVirgulaPorPonto(valor_compra_produto2.getText());
-            float valorVenda2 = troca.trocaVirgulaPorPonto(valor_venda_produto2.getText());
-            
+            int flagCodigo = 0, flagNome = 0;
             Class_produtos editar = new Class_produtos();
-            boolean result = editar.edita(codigo_produto2.getText(),
-                     nome_produto2.getText(),
-                     tipo_produto2.getText(),
-                     String.valueOf(valorCompra2),
-                String.valueOf(valorVenda2));
-        if(result){
-            JOptionPane.showMessageDialog(null,"Produto editado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-            refreshList();
-            editar_produtos.setVisible(false);
-        }
-        else{
-                JOptionPane.showMessageDialog(null, "Falha ao editar produto!", "Atenção", JOptionPane.ERROR_MESSAGE);
+            if (codigo_produto1.getText().equals(codigo_produto2.getText()) == false) 
+            {
+                if (editar.verificaCodigoProdutosAtivos(codigo_produto2.getText()) == true) 
+                {
+                    JOptionPane.showMessageDialog(null,"Já existe um produto cadastrado com este código! Escolha outro código!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                    codigo_produto2.grabFocus();
+                    codigo_produto2.selectAll();
+                }
+                else
+                {
+                    flagCodigo = 1;
+                }
+            }
+            else
+            {
+                flagCodigo = 1;
+            }
+            
+            if (nome_produto1.getText().equals(nome_produto2.getText()) == false)
+            {
+                if (editar.verificaNomeProdutos(nome_produto2.getText()) == true) 
+                {
+                    JOptionPane.showMessageDialog(null,"Já existe um produto cadastrado com este nome! Escolha outro nome!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                    nome_produto2.grabFocus();
+                    nome_produto2.selectAll();
+                } 
+                else 
+                {
+                    flagNome = 1;
+                }
+            }
+            else
+            {
+                flagNome = 1;
+            }
+            
+            if (flagCodigo == 1 && flagNome == 1) 
+            {
+                boolean result = editar.edita(codigo_produto2.getText(),
+                    nome_produto2.getText(),
+                    tipo_produto2.getText(),
+                    valor_compra_produto2.getText(),
+                    valor_venda_produto2.getText());
+                if(result)
+                {
+                    JOptionPane.showMessageDialog(null,"Produto editado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                    refreshList();
+                    editar_produtos.setVisible(false);
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Falha ao editar produto!", "Atenção", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }//GEN-LAST:event_jButton11ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       
+        
         if (lista_produtos.getSelectedIndex() < 0) 
         {
             JOptionPane.showMessageDialog(null, "Selecione um produto para alterar!", "Atenção", JOptionPane.WARNING_MESSAGE);
@@ -595,7 +675,7 @@ public class Painel_Produtos extends javax.swing.JPanel {
         else 
         {
             carregaEditar();
-            editar_produtos.setBounds(0, 0, 410, 430);
+            editar_produtos.setBounds(0, 0, 410, 400);
             editar_produtos.setLocationRelativeTo(null);
             editar_produtos.setVisible(true);
             codigo_produto2.grabFocus();
@@ -621,14 +701,15 @@ public class Painel_Produtos extends javax.swing.JPanel {
         
         codigo_produto.grabFocus();
 
-                nome_produto.setText("");
-                tipo_produto.setText("");
-                valor_compra_produto.setText("");
-                valor_venda_produto.setText("");
+        nome_produto.setText("");
+        tipo_produto.setText("");
+        valor_compra_produto.setText("");
+        valor_venda_produto.setText("");
 
     }//GEN-LAST:event_jButton9ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
         if(!codigo_produto1.getText().equals(""))
         {
             if (JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o produto "+nome_produto1.getText()+"?", "Atenção", JOptionPane.YES_NO_OPTION)==0)
@@ -654,7 +735,7 @@ public class Painel_Produtos extends javax.swing.JPanel {
     private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
         
         this.add(txtPesquisa);
-        txtPesquisa.setBounds(20, 85, 160, 30);
+        txtPesquisa.setBounds(20, 90, 180, 30);
         txtPesquisa.setVisible(true);
         txtPesquisa.setText("");
         txtPesquisa.grabFocus();
@@ -667,14 +748,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
         refreshPesquisa(txtPesquisa.getText());
         
     }//GEN-LAST:event_txtPesquisaKeyReleased
-
-    private void txtPesquisaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtPesquisaFocusLost
-        
-        txtPesquisa.setVisible(false);
-        lblProdutosCadastrados.setVisible(true);
-        refreshList();
-        
-    }//GEN-LAST:event_txtPesquisaFocusLost
 
     private void qtd_caixa_produtoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_qtd_caixa_produtoKeyTyped
         
@@ -717,6 +790,23 @@ public class Painel_Produtos extends javax.swing.JPanel {
         consome.consome("1234567890,.", evt);
         
     }//GEN-LAST:event_valor_venda_produto2KeyTyped
+
+    private void codigo_produtoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_codigo_produtoKeyTyped
+        
+        Class_Consumir_Letras consome = new Class_Consumir_Letras();
+        consome.consome("1234567890", evt);
+        
+    }//GEN-LAST:event_codigo_produtoKeyTyped
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        
+        if (!lblProdutosCadastrados.isVisible()) {
+            txtPesquisa.setVisible(false);
+            lblProdutosCadastrados.setVisible(true);
+            refreshList();
+        }
+        
+    }//GEN-LAST:event_formMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

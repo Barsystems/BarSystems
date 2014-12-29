@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 package barsystems.produtos;
+import barsystems.Class_Troca_Virgula_Por_Ponto;
 import barsystems.conexaoBanco.Class_Conexao_Banco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -21,7 +21,6 @@ import javax.swing.JOptionPane;
  */
 public class Class_produtos {
     protected Class_Conexao_Banco banco = new Class_Conexao_Banco();
-    protected Connection conexaoMySQL = banco.getConexaoMySQL();
     protected DecimalFormat dffloat = new DecimalFormat("##,###.00");
     
     protected String descricao, tipo, valor_compra_unidade,valor_unidade_venda, codigo;
@@ -68,29 +67,30 @@ public class Class_produtos {
         String sql = "INSERT INTO produtos(id_produto, descricao, tipo,excluido,valor_compra_unidade,valor_venda_unidade)"+
                 "VALUES(?,?,?,?,?,?)";    
     
-            try {    
-                PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);    
-                stmt.setInt(1, Integer.parseInt(codigo));
-                stmt.setString(2, descricao);        
-                stmt.setString(3, tipo); 
-                stmt.setBoolean(4, false);
-                stmt.setFloat(5, Float.parseFloat(valor_compra_unidade));
-                stmt.setFloat(6, Float.parseFloat(valor_unidade_venda));
-    
-                if(!stmt.execute()){
-                    stmt.close();
-                    conexaoMySQL.close();
-                    return false;
-                }
-                else{
-                    stmt.execute();
-                    stmt.close();
-                    conexaoMySQL.close();
-                    JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
-                    return true;
-                }
-            } catch (SQLException u) {    
-                throw new RuntimeException(u);    
+        Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
+        try {    
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);    
+            stmt.setInt(1, Integer.parseInt(codigo));
+            stmt.setString(2, descricao);        
+            stmt.setString(3, tipo); 
+            stmt.setBoolean(4, false);
+            stmt.setFloat(5, troca.trocaVirgulaPorPonto(valor_compra_unidade));
+            stmt.setFloat(6, troca.trocaVirgulaPorPonto(valor_unidade_venda));
+
+            if(!stmt.execute()){
+                stmt.close();
+                banco.FecharConexao();
+                return false;
+            }
+            else{
+                stmt.execute();
+                stmt.close();
+                banco.FecharConexao();
+                JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
+                return true;
+            }
+        } catch (SQLException u) {    
+            throw new RuntimeException(u);    
         } 
     } // Fim Cadastra
     
@@ -108,20 +108,22 @@ public class Class_produtos {
             String descricao,  
             String tipo, 
             String valor_compra, 
-            String valor_venda){
+            String valor_venda) {
+        
+        Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
         
         String sql = "Update produtos set descricao='"+descricao+
                 "',tipo='"+tipo+"',valor_compra_unidade="+
-                Float.parseFloat(valor_compra)+
-                ",valor_venda_unidade="+Float.parseFloat(valor_venda)+" WHERE id_produto = "+codigo;
+                troca.trocaVirgulaPorPonto(valor_compra)+
+                ",valor_venda_unidade="+troca.trocaVirgulaPorPonto(valor_venda)+" WHERE id_produto = "+codigo;
     
             try {    
-                PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);    
+                PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);    
                 
     
                 stmt.executeUpdate();
                     stmt.close();
-                    conexaoMySQL.close();
+                    banco.FecharConexao();
                     return true;
                 
                     
@@ -142,17 +144,39 @@ public class Class_produtos {
         String sql = "UPDATE produtos set excluido = 1 where id_produto = '"+codigo+"'";    
     
             try {    
-                PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);    
+                PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);    
                 if(!stmt.execute()){
                     stmt.close();
-                    conexaoMySQL.close();
+                    banco.FecharConexao();
                     return false;
                 }
                 else{
                     stmt.execute();
                     stmt.close();
-                    conexaoMySQL.close();
-                    JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
+                    banco.FecharConexao();
+                    JOptionPane.showMessageDialog(null,"Produto excluído com sucesso!");
+                    return true;
+                }
+            } catch (SQLException u) {    
+                throw new RuntimeException(u);    
+        } 
+    }
+    
+    public boolean excluiDefinitivo(String codigo){
+        String sql = "DELETE FROM produtos where id_produto = '"+codigo+"'";    
+    
+            try {    
+                PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);    
+                if(!stmt.execute()){
+                    stmt.close();
+                    banco.FecharConexao();
+                    return false;
+                }
+                else{
+                    stmt.execute();
+                    stmt.close();
+                    banco.FecharConexao();
+                    JOptionPane.showMessageDialog(null,"Produto excluído com sucesso!");
                     return true;
                 }
             } catch (SQLException u) {    
@@ -172,7 +196,7 @@ public class Class_produtos {
         try{
             
            String sql = "SELECT descricao FROM produtos where excluido = 0 order by descricao";  
-           PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
+           PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
            
            ResultSet rs = stmt.executeQuery();  
               
@@ -181,7 +205,7 @@ public class Class_produtos {
             }              
             rs.close();  
             stmt.close();
-            conexaoMySQL.close();
+            banco.FecharConexao();
         
             
         }catch(Exception e){
@@ -201,7 +225,7 @@ public class Class_produtos {
         try{
             
            String sql = "SELECT id_produto, descricao, tipo, valor_compra_unidade, valor_venda_unidade FROM produtos where excluido = 0 and descricao = '"+nome+"'";  
-            PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
    
             ResultSet rs = stmt.executeQuery();              
             while(rs.next()){
@@ -222,7 +246,7 @@ public class Class_produtos {
             }              
             rs.close();  
             stmt.close();
-            conexaoMySQL.close();
+            banco.FecharConexao();
         
             
         }catch(Exception e){
@@ -237,7 +261,7 @@ public class Class_produtos {
         try{
             
            String sql = "SELECT descricao FROM produtos where excluido = 0 and descricao like'%"+pesquisa+"%'";  
-           PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
+           PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
            
            ResultSet rs = stmt.executeQuery();  
               
@@ -246,7 +270,7 @@ public class Class_produtos {
             }              
             rs.close();  
             stmt.close();
-            conexaoMySQL.close();
+            banco.FecharConexao();
         
             
         }catch(Exception e){
@@ -255,5 +279,108 @@ public class Class_produtos {
         return listModel;
     }// FIM PESQUISA
     
+    //esta clase vai verificar se já existe um produto cadastrado com o mesmo codigo
+    public boolean verificaCodigoProdutosAtivos(String Codigo) {
+        
+        boolean flag = false;
+        try{
+
+           String sql = "SELECT id_produto FROM produtos where excluido = 0 and id_produto = '"+Codigo+"'";  
+           PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+
+           ResultSet rs = stmt.executeQuery();  
+
+            while(rs.next()){  
+               flag = true;
+            }
+            rs.close();  
+            stmt.close();
+            banco.FecharConexao();
+
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        return flag;
+    }
+    
+    //esta clase vai verificar se já existe um produto cadastrado com o mesmo codigo mas que ja tenha sido excluido
+    public boolean verificaCodigoProdutosExcluidos(String Codigo) {
+        
+        boolean flag = false;
+        try{
+
+           String sql = "SELECT id_produto FROM produtos where excluido = 1 and id_produto = '"+Codigo+"'";  
+           PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+
+           ResultSet rs = stmt.executeQuery();  
+
+            while(rs.next()){  
+               flag = true;
+            }
+            rs.close();  
+            stmt.close();
+            banco.FecharConexao();
+
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        return flag;
+    }
+    
+    //esta clase vai verificar se já existe um produto cadastrado com o mesmo nome
+    public boolean verificaNomeProdutos(String nome) {
+        boolean flag = false;
+        try{
+
+            String sql = "SELECT descricao FROM produtos where excluido = 0 and descricao = '"+nome+"'";  
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+
+            ResultSet rs = stmt.executeQuery();  
+
+            while(rs.next()){  
+               flag = true;
+            }
+            rs.close();  
+            stmt.close();
+            banco.FecharConexao();
+
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        
+        return flag;
+    }
+    
+    public int retornaMaiorIdProduto() {
+        
+        int idProduto = 0;
+        
+        try
+        {
+            String sql = "SELECT MAX(id_produto) as maiorCodigo FROM produtos";  
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+
+            ResultSet rs = stmt.executeQuery();  
+
+            if(rs.next()){  
+               idProduto = rs.getInt(1);
+            }
+            rs.close();  
+            stmt.close();
+            banco.FecharConexao();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            e.getMessage();
+        }
+        
+        return idProduto;
+    }
     
 }
