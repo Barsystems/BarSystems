@@ -5,9 +5,9 @@
  */
 package barsystems.fornecedores;
 
-import barsystems.produtos.Class_produtos;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 
 /**
  *
@@ -16,11 +16,18 @@ import javax.swing.JOptionPane;
 public class Painel_Fornecedores extends javax.swing.JPanel {
 
     private String id_fornecedor;
+    protected JTabbedPane tabela;
+    protected int IndexTabela = 0;
     /**
      * Creates new form Painel_Fornecedores
      */
     public Painel_Fornecedores() {
         initComponents();
+    }
+    
+    public void getIndexTabela(JTabbedPane tabela, int IndexTabela) {
+        this.tabela = tabela;
+        this.IndexTabela = IndexTabela;
     }
     
     public void setId_fornecedor(String id){
@@ -33,12 +40,12 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
     public void refreshList(){
         Class_Fornecedores carrega = new Class_Fornecedores();
         DefaultListModel lista = carrega.carregaLista();
-        lista_produtos.setModel(lista);
+        lista_fornecedores.setModel(lista);
     }
     
     public void refreshCampos(){
         Class_Fornecedores seleciona = new Class_Fornecedores();
-        seleciona.carregaFornecedor((String) lista_produtos.getSelectedValue());
+        seleciona.carregaFornecedor((String) lista_fornecedores.getSelectedValue());
         nome_fornecedor.setText(seleciona.getRazao_social());
         fantasia_fornecedor.setText(seleciona.getNome_fantasia());
         cnpj_fornecedor.setText(seleciona.getCnpj());
@@ -49,13 +56,12 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         telefone_fornecedor.setText(seleciona.getTelefone());
         email_fornecedor.setText(seleciona.getEmail());
         inscricao_fornecedor2.setText(seleciona.getInscricao_estadual());
-        obs_fornecedor.setText(seleciona.getObservacoes());
         setId_fornecedor(seleciona.getId_fornecedor());
     }
     
     public void carregaEditar(){
         Class_Fornecedores seleciona = new Class_Fornecedores();
-        seleciona.carregaFornecedor((String) lista_produtos.getSelectedValue());
+        seleciona.carregaFornecedor((String) lista_fornecedores.getSelectedValue());
         nome_fornecedor2.setText(seleciona.getRazao_social());
         fantasia_fornecedor2.setText(seleciona.getNome_fantasia());
         cnpj_fornecedor2.setText(seleciona.getCnpj());
@@ -72,7 +78,7 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
     public void refreshPesquisa(String nome){
         Class_Fornecedores carrega = new Class_Fornecedores();
         DefaultListModel lista = carrega.pesquisa(nome);
-        lista_produtos.setModel(lista);
+        lista_fornecedores.setModel(lista);
     }
 
     /**
@@ -108,9 +114,9 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         obs_fornecedor1 = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        btnLimpar = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
         edita_fornecedor = new javax.swing.JDialog();
         email_fornecedor2 = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
@@ -136,845 +142,579 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         jLabel35 = new javax.swing.JLabel();
         jLabel36 = new javax.swing.JLabel();
         jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
         jButton13 = new javax.swing.JButton();
+        txtPesquisa = new javax.swing.JTextField();
         lbl_fornecedores = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        pesquisa_fornecedor = new javax.swing.JTextField();
+        lblFornecedoresCadastrados = new javax.swing.JLabel();
         pesquisa_fornecedores = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        lista_produtos = new javax.swing.JList();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        email_fornecedor = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        telefone_fornecedor = new javax.swing.JTextField();
-        bairro_fornecedor = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        endereco_fornecedor = new javax.swing.JTextField();
-        cidade_fornecedor = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        estado_fornecedor = new javax.swing.JTextField();
-        cnpj_fornecedor = new javax.swing.JTextField();
-        jLabel22 = new javax.swing.JLabel();
+        lista_fornecedores = new javax.swing.JList();
+        btnNovo = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        jLabel20 = new javax.swing.JLabel();
+        nome_fornecedor = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
         fantasia_fornecedor = new javax.swing.JTextField();
-        nome_fornecedor = new javax.swing.JTextField();
-        jLabel20 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        cnpj_fornecedor = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        estado_fornecedor = new javax.swing.JTextField();
+        cidade_fornecedor = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        endereco_fornecedor = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        bairro_fornecedor = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        telefone_fornecedor = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        email_fornecedor = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        obs_fornecedor = new javax.swing.JTextField();
         inscricao_fornecedor2 = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        btnObservacoes = new javax.swing.JButton();
+        btnFecharTela = new javax.swing.JButton();
 
+        Novo_fornecedor.setTitle("Novo cadastro");
         Novo_fornecedor.setModal(true);
+        Novo_fornecedor.setResizable(false);
+        Novo_fornecedor.getContentPane().setLayout(null);
 
-        email_fornecedor1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                email_fornecedor1ActionPerformed(evt);
-            }
-        });
+        email_fornecedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_fornecedor.getContentPane().add(email_fornecedor1);
+        email_fornecedor1.setBounds(160, 360, 290, 30);
 
         jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel10.setText("Email:");
+        jLabel10.setText("Email");
+        Novo_fornecedor.getContentPane().add(jLabel10);
+        jLabel10.setBounds(110, 370, 38, 17);
 
         jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel11.setText("Telefone:");
+        jLabel11.setText("Telefone");
+        Novo_fornecedor.getContentPane().add(jLabel11);
+        jLabel11.setBounds(90, 330, 60, 17);
 
-        telefone_fornecedor1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                telefone_fornecedor1ActionPerformed(evt);
-            }
-        });
+        telefone_fornecedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_fornecedor.getContentPane().add(telefone_fornecedor1);
+        telefone_fornecedor1.setBounds(160, 320, 290, 30);
 
-        bairro_fornecedor1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bairro_fornecedor1ActionPerformed(evt);
-            }
-        });
+        bairro_fornecedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_fornecedor.getContentPane().add(bairro_fornecedor1);
+        bairro_fornecedor1.setBounds(160, 280, 290, 30);
 
         jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel12.setText("Bairro:");
+        jLabel12.setText("  Bairro");
+        Novo_fornecedor.getContentPane().add(jLabel12);
+        jLabel12.setBounds(100, 290, 50, 17);
 
         jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel13.setText("Endereco:");
+        jLabel13.setText(" Endereço");
+        Novo_fornecedor.getContentPane().add(jLabel13);
+        jLabel13.setBounds(80, 250, 65, 17);
 
-        endereco_fornecedor1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                endereco_fornecedor1ActionPerformed(evt);
-            }
-        });
+        endereco_fornecedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_fornecedor.getContentPane().add(endereco_fornecedor1);
+        endereco_fornecedor1.setBounds(160, 240, 290, 30);
 
-        cidade_fornecedor1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cidade_fornecedor1ActionPerformed(evt);
-            }
-        });
+        cidade_fornecedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_fornecedor.getContentPane().add(cidade_fornecedor1);
+        cidade_fornecedor1.setBounds(160, 200, 200, 30);
 
         jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel14.setText("Cidade:");
+        jLabel14.setText("Cidade");
+        Novo_fornecedor.getContentPane().add(jLabel14);
+        jLabel14.setBounds(100, 210, 45, 17);
 
         jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel15.setText("Estado:");
+        jLabel15.setText("UF");
+        Novo_fornecedor.getContentPane().add(jLabel15);
+        jLabel15.setBounds(380, 210, 20, 17);
 
-        estado_fornecedor1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estado_fornecedor1ActionPerformed(evt);
-            }
-        });
+        estado_fornecedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_fornecedor.getContentPane().add(estado_fornecedor1);
+        estado_fornecedor1.setBounds(410, 200, 40, 30);
+
+        cnpj_fornecedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_fornecedor.getContentPane().add(cnpj_fornecedor1);
+        cnpj_fornecedor1.setBounds(160, 160, 120, 30);
 
         jLabel23.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel23.setText("CNPJ:");
+        jLabel23.setText("CNPJ");
+        Novo_fornecedor.getContentPane().add(jLabel23);
+        jLabel23.setBounds(110, 170, 34, 17);
 
         jLabel24.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel24.setText("Nome Fantasia:");
+        jLabel24.setText("Nome Fantasia");
+        Novo_fornecedor.getContentPane().add(jLabel24);
+        jLabel24.setBounds(50, 130, 95, 17);
 
-        fantasia_fornecedor1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fantasia_fornecedor1ActionPerformed(evt);
-            }
-        });
+        fantasia_fornecedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_fornecedor.getContentPane().add(fantasia_fornecedor1);
+        fantasia_fornecedor1.setBounds(160, 120, 290, 30);
+
+        nome_fornecedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_fornecedor.getContentPane().add(nome_fornecedor1);
+        nome_fornecedor1.setBounds(160, 80, 290, 30);
 
         jLabel25.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel25.setText("Nome: ");
+        jLabel25.setText("Razão Social");
+        Novo_fornecedor.getContentPane().add(jLabel25);
+        jLabel25.setBounds(60, 90, 82, 17);
 
-        inscricao_fornecedor1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inscricao_fornecedor1ActionPerformed(evt);
-            }
-        });
+        inscricao_fornecedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_fornecedor.getContentPane().add(inscricao_fornecedor1);
+        inscricao_fornecedor1.setBounds(330, 160, 120, 30);
 
         jLabel16.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel16.setText("Inscricao Estadual:");
+        jLabel16.setText("I.E.");
+        Novo_fornecedor.getContentPane().add(jLabel16);
+        jLabel16.setBounds(300, 170, 30, 17);
 
-        obs_fornecedor1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                obs_fornecedor1ActionPerformed(evt);
-            }
-        });
+        obs_fornecedor1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_fornecedor.getContentPane().add(obs_fornecedor1);
+        obs_fornecedor1.setBounds(160, 400, 290, 30);
 
         jLabel17.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel17.setText("Observacoes:");
+        jLabel17.setText("Observacoes");
+        Novo_fornecedor.getContentPane().add(jLabel17);
+        jLabel17.setBounds(60, 410, 90, 17);
 
         jLabel18.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/cargo3 (1).png"))); // NOI18N
         jLabel18.setText("Cadastrar novo fornecedor");
+        Novo_fornecedor.getContentPane().add(jLabel18);
+        jLabel18.setBounds(0, 30, 580, 29);
 
-        jButton8.setText("Salvar");
-        jButton8.addActionListener(new java.awt.event.ActionListener() {
+        btnSalvar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.setToolTipText("Salvar o cadastro do fornecedor");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton8ActionPerformed(evt);
+                btnSalvarActionPerformed(evt);
             }
         });
+        Novo_fornecedor.getContentPane().add(btnSalvar);
+        btnSalvar.setBounds(140, 470, 100, 30);
 
-        jButton9.setText("Limpar");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
+        btnLimpar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
+        btnLimpar.setText("Limpar");
+        btnLimpar.setToolTipText("Limpar os campos e recomeçar o cadastro");
+        btnLimpar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
+                btnLimparActionPerformed(evt);
             }
         });
+        Novo_fornecedor.getContentPane().add(btnLimpar);
+        btnLimpar.setBounds(250, 470, 100, 30);
 
-        jButton10.setText("Cancelar");
-        jButton10.addActionListener(new java.awt.event.ActionListener() {
+        btnSair.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
+        btnSair.setText("Sair");
+        btnSair.setToolTipText("Cancelar cadastro do fornecedor");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton10ActionPerformed(evt);
+                btnSairActionPerformed(evt);
             }
         });
+        Novo_fornecedor.getContentPane().add(btnSair);
+        btnSair.setBounds(360, 470, 100, 30);
 
-        javax.swing.GroupLayout Novo_fornecedorLayout = new javax.swing.GroupLayout(Novo_fornecedor.getContentPane());
-        Novo_fornecedor.getContentPane().setLayout(Novo_fornecedorLayout);
-        Novo_fornecedorLayout.setHorizontalGroup(
-            Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Novo_fornecedorLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Novo_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel25)
-                        .addGap(6, 6, 6)
-                        .addComponent(nome_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Novo_fornecedorLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel24)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fantasia_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Novo_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel23)
-                        .addGap(12, 12, 12)
-                        .addComponent(cnpj_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Novo_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel14)
-                        .addGap(11, 11, 11)
-                        .addComponent(cidade_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(jLabel15)
-                        .addGap(2, 2, 2)
-                        .addComponent(estado_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Novo_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel13)
-                        .addGap(5, 5, 5)
-                        .addComponent(endereco_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Novo_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(8, 8, 8)
-                        .addComponent(bairro_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Novo_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addGap(10, 10, 10)
-                        .addComponent(telefone_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Novo_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(12, 12, 12)
-                        .addComponent(email_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(Novo_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addGap(6, 6, 6)
-                        .addComponent(inscricao_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(Novo_fornecedorLayout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(obs_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(48, 48, 48))
-            .addGroup(Novo_fornecedorLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jButton8)
-                .addGap(6, 6, 6)
-                .addComponent(jButton9)
-                .addGap(6, 6, 6)
-                .addComponent(jButton10)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        Novo_fornecedorLayout.setVerticalGroup(
-            Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Novo_fornecedorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel18)
-                .addGap(36, 36, 36)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel25)
-                    .addComponent(nome_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fantasia_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel24))
-                .addGap(10, 10, 10)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel23)
-                    .addComponent(cnpj_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel14)
-                    .addComponent(cidade_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel15)
-                    .addComponent(estado_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel13)
-                    .addComponent(endereco_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel12)
-                    .addComponent(bairro_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(telefone_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10)
-                    .addComponent(email_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel16)
-                    .addComponent(inscricao_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel17)
-                    .addComponent(obs_fornecedor1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Novo_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton9)
-                        .addComponent(jButton8))
-                    .addComponent(jButton10))
-                .addContainerGap(19, Short.MAX_VALUE))
-        );
-
+        edita_fornecedor.setTitle("Alteração de dados");
         edita_fornecedor.setModal(true);
-
-        email_fornecedor2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                email_fornecedor2ActionPerformed(evt);
-            }
-        });
+        edita_fornecedor.setResizable(false);
+        edita_fornecedor.getContentPane().setLayout(null);
+        edita_fornecedor.getContentPane().add(email_fornecedor2);
+        email_fornecedor2.setBounds(180, 360, 290, 30);
 
         jLabel19.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel19.setText("Email:");
+        jLabel19.setText("Email");
+        edita_fornecedor.getContentPane().add(jLabel19);
+        jLabel19.setBounds(130, 370, 38, 17);
 
         jLabel26.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel26.setText("Telefone:");
-
-        telefone_fornecedor2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                telefone_fornecedor2ActionPerformed(evt);
-            }
-        });
-
-        bairro_fornecedor2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bairro_fornecedor2ActionPerformed(evt);
-            }
-        });
+        jLabel26.setText("Telefone");
+        edita_fornecedor.getContentPane().add(jLabel26);
+        jLabel26.setBounds(110, 330, 56, 17);
+        edita_fornecedor.getContentPane().add(telefone_fornecedor2);
+        telefone_fornecedor2.setBounds(180, 320, 290, 30);
+        edita_fornecedor.getContentPane().add(bairro_fornecedor2);
+        bairro_fornecedor2.setBounds(180, 280, 290, 30);
 
         jLabel27.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel27.setText("Bairro:");
+        jLabel27.setText("  Bairro");
+        edita_fornecedor.getContentPane().add(jLabel27);
+        jLabel27.setBounds(120, 290, 50, 17);
 
         jLabel28.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel28.setText("Endereco:");
-
-        endereco_fornecedor2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                endereco_fornecedor2ActionPerformed(evt);
-            }
-        });
-
-        cidade_fornecedor2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cidade_fornecedor2ActionPerformed(evt);
-            }
-        });
+        jLabel28.setText(" Endereço");
+        edita_fornecedor.getContentPane().add(jLabel28);
+        jLabel28.setBounds(100, 250, 65, 17);
+        edita_fornecedor.getContentPane().add(endereco_fornecedor2);
+        endereco_fornecedor2.setBounds(180, 240, 290, 30);
+        edita_fornecedor.getContentPane().add(cidade_fornecedor2);
+        cidade_fornecedor2.setBounds(180, 200, 200, 30);
 
         jLabel29.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel29.setText("Cidade:");
+        jLabel29.setText("Cidade");
+        edita_fornecedor.getContentPane().add(jLabel29);
+        jLabel29.setBounds(120, 210, 45, 17);
 
         jLabel30.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel30.setText("Estado:");
-
-        estado_fornecedor2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estado_fornecedor2ActionPerformed(evt);
-            }
-        });
+        jLabel30.setText("UF");
+        edita_fornecedor.getContentPane().add(jLabel30);
+        jLabel30.setBounds(400, 210, 20, 17);
+        edita_fornecedor.getContentPane().add(estado_fornecedor2);
+        estado_fornecedor2.setBounds(430, 200, 40, 30);
+        edita_fornecedor.getContentPane().add(cnpj_fornecedor2);
+        cnpj_fornecedor2.setBounds(180, 160, 110, 30);
 
         jLabel31.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel31.setText("CNPJ:");
+        jLabel31.setText("CNPJ");
+        edita_fornecedor.getContentPane().add(jLabel31);
+        jLabel31.setBounds(130, 170, 38, 17);
 
         jLabel32.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel32.setText("Nome Fantasia:");
-
-        fantasia_fornecedor2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fantasia_fornecedor2ActionPerformed(evt);
-            }
-        });
+        jLabel32.setText("Nome Fantasia");
+        edita_fornecedor.getContentPane().add(jLabel32);
+        jLabel32.setBounds(70, 130, 95, 17);
+        edita_fornecedor.getContentPane().add(fantasia_fornecedor2);
+        fantasia_fornecedor2.setBounds(180, 120, 290, 30);
+        edita_fornecedor.getContentPane().add(nome_fornecedor2);
+        nome_fornecedor2.setBounds(180, 80, 290, 30);
 
         jLabel33.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel33.setText("Nome: ");
-
-        inscricao_fornecedor3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inscricao_fornecedor3ActionPerformed(evt);
-            }
-        });
+        jLabel33.setText("Razão Social");
+        edita_fornecedor.getContentPane().add(jLabel33);
+        jLabel33.setBounds(80, 90, 90, 17);
+        edita_fornecedor.getContentPane().add(inscricao_fornecedor3);
+        inscricao_fornecedor3.setBounds(350, 160, 120, 30);
 
         jLabel34.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel34.setText("Inscricao Estadual:");
-
-        obs_fornecedor2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                obs_fornecedor2ActionPerformed(evt);
-            }
-        });
+        jLabel34.setText("I.E.");
+        edita_fornecedor.getContentPane().add(jLabel34);
+        jLabel34.setBounds(320, 170, 30, 17);
+        edita_fornecedor.getContentPane().add(obs_fornecedor2);
+        obs_fornecedor2.setBounds(180, 400, 290, 30);
 
         jLabel35.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel35.setText("Observacoes:");
+        jLabel35.setText("Observacoes");
+        edita_fornecedor.getContentPane().add(jLabel35);
+        jLabel35.setBounds(80, 410, 90, 17);
 
         jLabel36.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel36.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/cargo3 (1).png"))); // NOI18N
         jLabel36.setText("Editar fornecedor");
+        edita_fornecedor.getContentPane().add(jLabel36);
+        jLabel36.setBounds(0, 30, 580, 29);
 
-        jButton11.setText("Editar");
+        jButton11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
+        jButton11.setText("Salvar");
+        jButton11.setToolTipText("Finalizar a edição das informações do fornecedor");
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton11ActionPerformed(evt);
             }
         });
+        edita_fornecedor.getContentPane().add(jButton11);
+        jButton11.setBounds(190, 460, 100, 30);
 
-        jButton12.setText("Limpar");
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
-            }
-        });
-
-        jButton13.setText("Cancelar");
+        jButton13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
+        jButton13.setText("Sair");
+        jButton13.setToolTipText("Cancelar edição das informações do fornecedor");
         jButton13.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton13ActionPerformed(evt);
             }
         });
+        edita_fornecedor.getContentPane().add(jButton13);
+        jButton13.setBounds(300, 460, 100, 30);
 
-        javax.swing.GroupLayout edita_fornecedorLayout = new javax.swing.GroupLayout(edita_fornecedor.getContentPane());
-        edita_fornecedor.getContentPane().setLayout(edita_fornecedorLayout);
-        edita_fornecedorLayout.setHorizontalGroup(
-            edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel36, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, edita_fornecedorLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(edita_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel33)
-                        .addGap(6, 6, 6)
-                        .addComponent(nome_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(edita_fornecedorLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(jLabel32)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(fantasia_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(edita_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel31)
-                        .addGap(12, 12, 12)
-                        .addComponent(cnpj_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(edita_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel29)
-                        .addGap(11, 11, 11)
-                        .addComponent(cidade_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addComponent(jLabel30)
-                        .addGap(2, 2, 2)
-                        .addComponent(estado_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(edita_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel28)
-                        .addGap(5, 5, 5)
-                        .addComponent(endereco_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(edita_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel27)
-                        .addGap(8, 8, 8)
-                        .addComponent(bairro_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(edita_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel26)
-                        .addGap(10, 10, 10)
-                        .addComponent(telefone_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(edita_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel19)
-                        .addGap(12, 12, 12)
-                        .addComponent(email_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(edita_fornecedorLayout.createSequentialGroup()
-                        .addComponent(jLabel34)
-                        .addGap(6, 6, 6)
-                        .addComponent(inscricao_fornecedor3, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel35, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(edita_fornecedorLayout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(obs_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(48, 48, 48))
-            .addGroup(edita_fornecedorLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(jButton11)
-                .addGap(6, 6, 6)
-                .addComponent(jButton12)
-                .addGap(6, 6, 6)
-                .addComponent(jButton13)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        edita_fornecedorLayout.setVerticalGroup(
-            edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, edita_fornecedorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel36)
-                .addGap(36, 36, 36)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel33)
-                    .addComponent(nome_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fantasia_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel32))
-                .addGap(10, 10, 10)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel31)
-                    .addComponent(cnpj_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel29)
-                    .addComponent(cidade_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel30)
-                    .addComponent(estado_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel28)
-                    .addComponent(endereco_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel27)
-                    .addComponent(bairro_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel26)
-                    .addComponent(telefone_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel19)
-                    .addComponent(email_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel34)
-                    .addComponent(inscricao_fornecedor3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(10, 10, 10)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel35)
-                    .addComponent(obs_fornecedor2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(edita_fornecedorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton12)
-                        .addComponent(jButton11))
-                    .addComponent(jButton13))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        txtPesquisa.setText("jTextField1");
+        txtPesquisa.setToolTipText("Digite para procurar um produto específico");
+        txtPesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPesquisaKeyReleased(evt);
+            }
+        });
 
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
         setLayout(null);
 
         lbl_fornecedores.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         lbl_fornecedores.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_fornecedores.setText("Fornecedores");
+        lbl_fornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/cargo3 (1).png"))); // NOI18N
+        lbl_fornecedores.setText("Manutenção do cadastro de fornecedores");
         add(lbl_fornecedores);
-        lbl_fornecedores.setBounds(0, 10, 630, 50);
+        lbl_fornecedores.setBounds(0, 30, 760, 30);
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel2.setText("Fornecedores cadastrados");
-        add(jLabel2);
-        jLabel2.setBounds(20, 60, 180, 17);
+        lblFornecedoresCadastrados.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lblFornecedoresCadastrados.setText("Fornecedores cadastrados");
+        add(lblFornecedoresCadastrados);
+        lblFornecedoresCadastrados.setBounds(20, 100, 180, 17);
 
-        pesquisa_fornecedor.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                pesquisa_fornecedorKeyTyped(evt);
-            }
-        });
-        add(pesquisa_fornecedor);
-        pesquisa_fornecedor.setBounds(20, 80, 160, 30);
-
-        pesquisa_fornecedores.setText("Pesquisar");
+        pesquisa_fornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/magnifier12.png"))); // NOI18N
         pesquisa_fornecedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pesquisa_fornecedoresActionPerformed(evt);
             }
         });
         add(pesquisa_fornecedores);
-        pesquisa_fornecedores.setBounds(190, 80, 130, 30);
+        pesquisa_fornecedores.setBounds(260, 90, 40, 30);
 
-        lista_produtos.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        lista_produtos.addMouseListener(new java.awt.event.MouseAdapter() {
+        lista_fornecedores.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lista_fornecedores.setSelectionBackground(new java.awt.Color(204, 255, 255));
+        lista_fornecedores.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        lista_fornecedores.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lista_produtosMouseClicked(evt);
+                lista_fornecedoresMouseClicked(evt);
             }
         });
-        lista_produtos.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+        lista_fornecedores.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
-                lista_produtosValueChanged(evt);
+                lista_fornecedoresValueChanged(evt);
             }
         });
-        jScrollPane1.setViewportView(lista_produtos);
+        jScrollPane1.setViewportView(lista_fornecedores);
 
         add(jScrollPane1);
-        jScrollPane1.setBounds(20, 120, 295, 330);
+        jScrollPane1.setBounds(20, 120, 280, 310);
 
-        jButton2.setText("Novo");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnNovo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plus24.png"))); // NOI18N
+        btnNovo.setText("Novo");
+        btnNovo.setToolTipText("Cadastrar novo fornecedor");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnNovoActionPerformed(evt);
             }
         });
-        add(jButton2);
-        jButton2.setBounds(330, 420, 80, 30);
+        add(btnNovo);
+        btnNovo.setBounds(170, 480, 100, 30);
 
-        jButton3.setText("Editar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnAlterar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
+        btnAlterar.setText("Alterar");
+        btnAlterar.setToolTipText("Alterar as informações de um fornecedor");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnAlterarActionPerformed(evt);
             }
         });
-        add(jButton3);
-        jButton3.setBounds(410, 420, 80, 30);
+        add(btnAlterar);
+        btnAlterar.setBounds(280, 480, 100, 30);
 
-        jButton4.setText("Excluir");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnExcluir.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.setToolTipText("Excluir o cadastro de um fornecedor");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnExcluirActionPerformed(evt);
             }
         });
-        add(jButton4);
-        jButton4.setBounds(490, 420, 80, 30);
-
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.setLayout(null);
-
-        email_fornecedor.setEnabled(false);
-        email_fornecedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                email_fornecedorActionPerformed(evt);
-            }
-        });
-        jPanel2.add(email_fornecedor);
-        email_fornecedor.setBounds(60, 220, 235, 20);
-
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel7.setText("Email:");
-        jPanel2.add(jLabel7);
-        jLabel7.setBounds(20, 220, 38, 17);
-
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel6.setText("Telefone:");
-        jPanel2.add(jLabel6);
-        jLabel6.setBounds(20, 190, 60, 17);
-
-        telefone_fornecedor.setEnabled(false);
-        telefone_fornecedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                telefone_fornecedorActionPerformed(evt);
-            }
-        });
-        jPanel2.add(telefone_fornecedor);
-        telefone_fornecedor.setBounds(90, 190, 174, 20);
-
-        bairro_fornecedor.setEnabled(false);
-        bairro_fornecedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bairro_fornecedorActionPerformed(evt);
-            }
-        });
-        jPanel2.add(bairro_fornecedor);
-        bairro_fornecedor.setBounds(70, 160, 192, 20);
-
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel5.setText("Bairro:");
-        jPanel2.add(jLabel5);
-        jLabel5.setBounds(20, 160, 42, 17);
-
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel4.setText("Endereco:");
-        jPanel2.add(jLabel4);
-        jLabel4.setBounds(20, 130, 65, 17);
-
-        endereco_fornecedor.setEnabled(false);
-        endereco_fornecedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                endereco_fornecedorActionPerformed(evt);
-            }
-        });
-        jPanel2.add(endereco_fornecedor);
-        endereco_fornecedor.setBounds(90, 130, 208, 20);
-
-        cidade_fornecedor.setEnabled(false);
-        cidade_fornecedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cidade_fornecedorActionPerformed(evt);
-            }
-        });
-        jPanel2.add(cidade_fornecedor);
-        cidade_fornecedor.setBounds(80, 100, 125, 20);
-
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel1.setText("Cidade:");
-        jPanel2.add(jLabel1);
-        jLabel1.setBounds(20, 100, 49, 17);
-
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel3.setText("Estado:");
-        jPanel2.add(jLabel3);
-        jLabel3.setBounds(210, 100, 48, 17);
-
-        estado_fornecedor.setEnabled(false);
-        estado_fornecedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                estado_fornecedorActionPerformed(evt);
-            }
-        });
-        jPanel2.add(estado_fornecedor);
-        estado_fornecedor.setBounds(260, 100, 37, 20);
-
-        cnpj_fornecedor.setEnabled(false);
-        jPanel2.add(cnpj_fornecedor);
-        cnpj_fornecedor.setBounds(70, 70, 125, 20);
-
-        jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel22.setText("CNPJ:");
-        jPanel2.add(jLabel22);
-        jLabel22.setBounds(20, 70, 38, 17);
-
-        jLabel21.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel21.setText("Nome Fantasia:");
-        jPanel2.add(jLabel21);
-        jLabel21.setBounds(20, 40, 99, 17);
-
-        fantasia_fornecedor.setEnabled(false);
-        fantasia_fornecedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fantasia_fornecedorActionPerformed(evt);
-            }
-        });
-        jPanel2.add(fantasia_fornecedor);
-        fantasia_fornecedor.setBounds(130, 40, 125, 20);
-
-        nome_fornecedor.setEnabled(false);
-        jPanel2.add(nome_fornecedor);
-        nome_fornecedor.setBounds(70, 10, 125, 20);
+        add(btnExcluir);
+        btnExcluir.setBounds(390, 480, 100, 30);
 
         jLabel20.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel20.setText("Nome: ");
-        jPanel2.add(jLabel20);
-        jLabel20.setBounds(20, 10, 44, 17);
+        jLabel20.setText("Razão Social");
+        add(jLabel20);
+        jLabel20.setBounds(350, 130, 90, 17);
+
+        nome_fornecedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        nome_fornecedor.setEnabled(false);
+        add(nome_fornecedor);
+        nome_fornecedor.setBounds(450, 120, 290, 30);
+
+        jLabel21.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel21.setText("Nome Fantasia");
+        add(jLabel21);
+        jLabel21.setBounds(340, 170, 99, 17);
+
+        fantasia_fornecedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        fantasia_fornecedor.setEnabled(false);
+        add(fantasia_fornecedor);
+        fantasia_fornecedor.setBounds(450, 160, 290, 30);
+
+        jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel22.setText("CNPJ");
+        add(jLabel22);
+        jLabel22.setBounds(400, 210, 34, 17);
+
+        cnpj_fornecedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cnpj_fornecedor.setEnabled(false);
+        add(cnpj_fornecedor);
+        cnpj_fornecedor.setBounds(450, 200, 120, 30);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setText("UF");
+        add(jLabel3);
+        jLabel3.setBounds(670, 250, 20, 17);
+
+        estado_fornecedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        estado_fornecedor.setEnabled(false);
+        add(estado_fornecedor);
+        estado_fornecedor.setBounds(700, 240, 40, 30);
+
+        cidade_fornecedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        cidade_fornecedor.setEnabled(false);
+        add(cidade_fornecedor);
+        cidade_fornecedor.setBounds(450, 240, 200, 30);
+
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setText("Cidade");
+        add(jLabel1);
+        jLabel1.setBounds(390, 250, 49, 17);
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel4.setText("Endereço");
+        add(jLabel4);
+        jLabel4.setBounds(370, 290, 80, 17);
+
+        endereco_fornecedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        endereco_fornecedor.setEnabled(false);
+        add(endereco_fornecedor);
+        endereco_fornecedor.setBounds(450, 280, 290, 30);
+
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel5.setText(" Bairro");
+        add(jLabel5);
+        jLabel5.setBounds(390, 330, 42, 17);
+
+        bairro_fornecedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        bairro_fornecedor.setEnabled(false);
+        add(bairro_fornecedor);
+        bairro_fornecedor.setBounds(450, 320, 290, 30);
+
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel6.setText("Telefone");
+        add(jLabel6);
+        jLabel6.setBounds(380, 410, 56, 17);
+
+        telefone_fornecedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        telefone_fornecedor.setEnabled(false);
+        add(telefone_fornecedor);
+        telefone_fornecedor.setBounds(450, 400, 120, 30);
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel7.setText("Email");
+        add(jLabel7);
+        jLabel7.setBounds(400, 370, 34, 17);
+
+        email_fornecedor.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        email_fornecedor.setEnabled(false);
+        add(email_fornecedor);
+        email_fornecedor.setBounds(450, 360, 290, 30);
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel8.setText("Inscricao Estadual:");
-        jPanel2.add(jLabel8);
-        jLabel8.setBounds(20, 250, 119, 17);
+        jLabel8.setText("I.E.");
+        add(jLabel8);
+        jLabel8.setBounds(590, 210, 20, 17);
+
+        inscricao_fornecedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        inscricao_fornecedor2.setEnabled(false);
+        add(inscricao_fornecedor2);
+        inscricao_fornecedor2.setBounds(620, 200, 120, 30);
 
         jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel9.setText("Observacoes:");
-        jPanel2.add(jLabel9);
-        jLabel9.setBounds(20, 280, 100, 17);
+        jLabel9.setText("Observações");
+        add(jLabel9);
+        jLabel9.setBounds(600, 410, 90, 17);
 
-        obs_fornecedor.setEnabled(false);
-        obs_fornecedor.addActionListener(new java.awt.event.ActionListener() {
+        btnObservacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/magnifier12.png"))); // NOI18N
+        btnObservacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                obs_fornecedorActionPerformed(evt);
+                btnObservacoesActionPerformed(evt);
             }
         });
-        jPanel2.add(obs_fornecedor);
-        obs_fornecedor.setBounds(110, 280, 150, 20);
+        add(btnObservacoes);
+        btnObservacoes.setBounds(700, 400, 40, 30);
 
-        inscricao_fornecedor2.setEnabled(false);
-        inscricao_fornecedor2.addActionListener(new java.awt.event.ActionListener() {
+        btnFecharTela.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnFecharTela.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
+        btnFecharTela.setText("Sair");
+        btnFecharTela.setToolTipText("Sair da tela de cadastro de fornecedores");
+        btnFecharTela.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inscricao_fornecedor2ActionPerformed(evt);
+                btnFecharTelaActionPerformed(evt);
             }
         });
-        jPanel2.add(inscricao_fornecedor2);
-        inscricao_fornecedor2.setBounds(140, 250, 140, 20);
-
-        add(jPanel2);
-        jPanel2.setBounds(320, 100, 300, 320);
+        add(btnFecharTela);
+        btnFecharTela.setBounds(500, 480, 100, 30);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void pesquisa_fornecedorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pesquisa_fornecedorKeyTyped
-       refreshPesquisa(pesquisa_fornecedor.getText());
-    }//GEN-LAST:event_pesquisa_fornecedorKeyTyped
-
     private void pesquisa_fornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pesquisa_fornecedoresActionPerformed
-        refreshPesquisa(pesquisa_fornecedor.getText());
+        
+        this.add(txtPesquisa);
+        txtPesquisa.setBounds(20, 90, 180, 30);
+        txtPesquisa.setVisible(true);
+        txtPesquisa.setText("");
+        txtPesquisa.grabFocus();
+        lblFornecedoresCadastrados.setVisible(false);
+        
     }//GEN-LAST:event_pesquisa_fornecedoresActionPerformed
 
-    private void lista_produtosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lista_produtosMouseClicked
+    private void lista_fornecedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lista_fornecedoresMouseClicked
         refreshCampos();
-    }//GEN-LAST:event_lista_produtosMouseClicked
+    }//GEN-LAST:event_lista_fornecedoresMouseClicked
 
-    private void lista_produtosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lista_produtosValueChanged
+    private void lista_fornecedoresValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lista_fornecedoresValueChanged
         refreshCampos();
-    }//GEN-LAST:event_lista_produtosValueChanged
+    }//GEN-LAST:event_lista_fornecedoresValueChanged
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
 
-        Novo_fornecedor.setBounds(0, 0, 400, 530);
+        Novo_fornecedor.setBounds(0, 0, 580, 570);
         Novo_fornecedor.setLocationRelativeTo(null);
         Novo_fornecedor.setVisible(true);
-    }//GEN-LAST:event_jButton2ActionPerformed
+        
+    }//GEN-LAST:event_btnNovoActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if(!nome_fornecedor.getText().equals("")){
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        
+        if(!nome_fornecedor.getText().equals(""))
+        {
             carregaEditar();
-            edita_fornecedor.setBounds(0, 0, 400, 530);
+            edita_fornecedor.setBounds(0, 0, 580, 570);
             edita_fornecedor.setLocationRelativeTo(null);
             edita_fornecedor.setVisible(true);
-        }else
-             JOptionPane.showMessageDialog(null, "Selecione um produto!");
-    }//GEN-LAST:event_jButton3ActionPerformed
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Selecione um fornecedor para alterar as informações!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-       if(!nome_fornecedor.getText().equals("")){
-            if (JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o fornecedor "+nome_fornecedor.getText()+"?", "Atenção", JOptionPane.YES_NO_OPTION)==0){
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+       
+        if(!nome_fornecedor.getText().equals(""))
+        {
+            if (JOptionPane.showConfirmDialog(null, "Deseja realmente excluir o fornecedor "+nome_fornecedor.getText()+"?", "Atenção", JOptionPane.YES_NO_OPTION)==0)
+            {
                 Class_Fornecedores exclui = new Class_Fornecedores();
                 exclui.exclui(getId_fornecedor());
                 refreshList();
             }
         }
         else
-            JOptionPane.showMessageDialog(null, "Selecione um produto!");
-    }//GEN-LAST:event_jButton4ActionPerformed
+        {
+            JOptionPane.showMessageDialog(null, "Selecione um fornecedor para excluir!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
-    private void telefone_fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telefone_fornecedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_telefone_fornecedorActionPerformed
-
-    private void bairro_fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bairro_fornecedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bairro_fornecedorActionPerformed
-
-    private void endereco_fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endereco_fornecedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_endereco_fornecedorActionPerformed
-
-    private void estado_fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estado_fornecedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_estado_fornecedorActionPerformed
-
-    private void cidade_fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cidade_fornecedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cidade_fornecedorActionPerformed
-
-    private void fantasia_fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fantasia_fornecedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fantasia_fornecedorActionPerformed
-
-    private void email_fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_email_fornecedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_email_fornecedorActionPerformed
-
-    private void email_fornecedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_email_fornecedor1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_email_fornecedor1ActionPerformed
-
-    private void telefone_fornecedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telefone_fornecedor1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_telefone_fornecedor1ActionPerformed
-
-    private void bairro_fornecedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bairro_fornecedor1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bairro_fornecedor1ActionPerformed
-
-    private void endereco_fornecedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endereco_fornecedor1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_endereco_fornecedor1ActionPerformed
-
-    private void cidade_fornecedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cidade_fornecedor1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cidade_fornecedor1ActionPerformed
-
-    private void estado_fornecedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estado_fornecedor1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_estado_fornecedor1ActionPerformed
-
-    private void fantasia_fornecedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fantasia_fornecedor1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fantasia_fornecedor1ActionPerformed
-
-    private void inscricao_fornecedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscricao_fornecedor1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inscricao_fornecedor1ActionPerformed
-
-    private void obs_fornecedor1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_obs_fornecedor1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_obs_fornecedor1ActionPerformed
-
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        
         if(nome_fornecedor1.getText().equals("") ||
             fantasia_fornecedor1.getText().equals("") ||
             cnpj_fornecedor1.getText().equals("") ||
@@ -985,11 +725,12 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
             telefone_fornecedor1.getText().equals("") ||
             email_fornecedor1.getText().equals("") ||
             inscricao_fornecedor1.getText().equals("") ||
-            obs_fornecedor1.getText().equals("")){
-
-            JOptionPane.showMessageDialog(null, "Nao pode haver campos vazios");
+            obs_fornecedor1.getText().equals(""))
+        {
+            JOptionPane.showMessageDialog(null, "Nao pode haver campos vazios!", "Atenção", JOptionPane.WARNING_MESSAGE);
         }
-        else{
+        else
+        {
             Class_Fornecedores enviar = new Class_Fornecedores(
             nome_fornecedor1.getText(),
             fantasia_fornecedor1.getText(),
@@ -1003,11 +744,11 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
             inscricao_fornecedor1.getText(),
             obs_fornecedor1.getText()
             ); 
-        //Instancia classe de cadastrar produtos
+            //Instancia classe de cadastrar produtos
             boolean result = enviar.Cadastra();
-            if(!result){
-
-                JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
+            if(!result)
+            {
+                JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
                 nome_fornecedor1.setText("");
                 fantasia_fornecedor1.setText("");
                 cnpj_fornecedor1.setText("");
@@ -1019,22 +760,20 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
                 email_fornecedor1.setText("");
                 inscricao_fornecedor1.setText("");
                 obs_fornecedor1.setText("");
-                if (JOptionPane.showConfirmDialog(null, "Produto cadastrado com sucesso! \n Deseja cadastrar outro?", "Atenção", JOptionPane.YES_NO_OPTION)==0){
-                
-                }
-                else{
-                    Novo_fornecedor.setVisible(false);
-                    refreshList();
-                }
-            
+ 
+                Novo_fornecedor.setVisible(false);
+                refreshList();            
             }
-            else{
-                JOptionPane.showMessageDialog(null, "Falha ao cadastrar produto");
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Falha ao cadastrar produto!", "Atenção", JOptionPane.ERROR_MESSAGE);
             }
         }
-    }//GEN-LAST:event_jButton8ActionPerformed
+        
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
+       
         nome_fornecedor1.setText("");
         fantasia_fornecedor1.setText("");
         cnpj_fornecedor1.setText("");
@@ -1046,55 +785,16 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         email_fornecedor1.setText("");
         inscricao_fornecedor1.setText("");
         obs_fornecedor1.setText("");
-    }//GEN-LAST:event_jButton9ActionPerformed
+        
+        nome_fornecedor1.grabFocus();
+        
+    }//GEN-LAST:event_btnLimparActionPerformed
 
-    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        
         Novo_fornecedor.setVisible(false);
-    }//GEN-LAST:event_jButton10ActionPerformed
-
-    private void obs_fornecedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_obs_fornecedorActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_obs_fornecedorActionPerformed
-
-    private void inscricao_fornecedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscricao_fornecedor2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inscricao_fornecedor2ActionPerformed
-
-    private void email_fornecedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_email_fornecedor2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_email_fornecedor2ActionPerformed
-
-    private void telefone_fornecedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_telefone_fornecedor2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_telefone_fornecedor2ActionPerformed
-
-    private void bairro_fornecedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bairro_fornecedor2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_bairro_fornecedor2ActionPerformed
-
-    private void endereco_fornecedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endereco_fornecedor2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_endereco_fornecedor2ActionPerformed
-
-    private void cidade_fornecedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cidade_fornecedor2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cidade_fornecedor2ActionPerformed
-
-    private void estado_fornecedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_estado_fornecedor2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_estado_fornecedor2ActionPerformed
-
-    private void fantasia_fornecedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fantasia_fornecedor2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fantasia_fornecedor2ActionPerformed
-
-    private void inscricao_fornecedor3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inscricao_fornecedor3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_inscricao_fornecedor3ActionPerformed
-
-    private void obs_fornecedor2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_obs_fornecedor2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_obs_fornecedor2ActionPerformed
+        
+    }//GEN-LAST:event_btnSairActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
         if(nome_fornecedor2.getText().equals("") ||
@@ -1139,23 +839,53 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton11ActionPerformed
 
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
-         nome_fornecedor2.setText("");
-        fantasia_fornecedor2.setText("");
-        cnpj_fornecedor2.setText("");
-        cidade_fornecedor2.setText("");
-        estado_fornecedor2.setText("");
-        endereco_fornecedor2.setText("");
-        bairro_fornecedor2.setText("");
-        telefone_fornecedor2.setText("");
-        email_fornecedor2.setText("");
-        inscricao_fornecedor3.setText("");
-        obs_fornecedor2.setText("");
-    }//GEN-LAST:event_jButton12ActionPerformed
-
     private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+        
         edita_fornecedor.setVisible(false);
+        
     }//GEN-LAST:event_jButton13ActionPerformed
+
+    private void btnObservacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnObservacoesActionPerformed
+        
+        if (lista_fornecedores.getSelectedIndex() < 0)
+        {
+            JOptionPane.showMessageDialog(null, "Selecione um fornecedor para visualizar as observações!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        }
+        else
+        {
+            Class_Fornecedores seleciona = new Class_Fornecedores();
+            seleciona.carregaFornecedor((String) lista_fornecedores.getSelectedValue());
+            String observacoes = seleciona.getObservacoes();
+            if (observacoes.equals("")) {
+                JOptionPane.showMessageDialog(this, "Não foi adicionada nenhuma observação.", "Observações do fornecedor", JOptionPane.PLAIN_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, observacoes, "Observações do fornecedor", JOptionPane.PLAIN_MESSAGE);
+            }
+        }
+        
+    }//GEN-LAST:event_btnObservacoesActionPerformed
+
+    private void txtPesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisaKeyReleased
+
+        refreshPesquisa(txtPesquisa.getText());
+
+    }//GEN-LAST:event_txtPesquisaKeyReleased
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        
+        if (!lblFornecedoresCadastrados.isVisible()) {
+            txtPesquisa.setVisible(false);
+            lblFornecedoresCadastrados.setVisible(true);
+            refreshList();
+        }
+        
+    }//GEN-LAST:event_formMousePressed
+
+    private void btnFecharTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharTelaActionPerformed
+        
+        tabela.remove(IndexTabela);
+        
+    }//GEN-LAST:event_btnFecharTelaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1163,6 +893,14 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
     private javax.swing.JTextField bairro_fornecedor;
     private javax.swing.JTextField bairro_fornecedor1;
     private javax.swing.JTextField bairro_fornecedor2;
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnFecharTela;
+    private javax.swing.JButton btnLimpar;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnObservacoes;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JTextField cidade_fornecedor;
     private javax.swing.JTextField cidade_fornecedor1;
     private javax.swing.JTextField cidade_fornecedor2;
@@ -1185,15 +923,8 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
     private javax.swing.JTextField inscricao_fornecedor1;
     private javax.swing.JTextField inscricao_fornecedor2;
     private javax.swing.JTextField inscricao_fornecedor3;
-    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1205,7 +936,6 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -1230,20 +960,19 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblFornecedoresCadastrados;
     private javax.swing.JLabel lbl_fornecedores;
-    private javax.swing.JList lista_produtos;
+    private javax.swing.JList lista_fornecedores;
     private javax.swing.JTextField nome_fornecedor;
     private javax.swing.JTextField nome_fornecedor1;
     private javax.swing.JTextField nome_fornecedor2;
-    private javax.swing.JTextField obs_fornecedor;
     private javax.swing.JTextField obs_fornecedor1;
     private javax.swing.JTextField obs_fornecedor2;
-    private javax.swing.JTextField pesquisa_fornecedor;
     private javax.swing.JButton pesquisa_fornecedores;
     private javax.swing.JTextField telefone_fornecedor;
     private javax.swing.JTextField telefone_fornecedor1;
     private javax.swing.JTextField telefone_fornecedor2;
+    private javax.swing.JTextField txtPesquisa;
     // End of variables declaration//GEN-END:variables
 }

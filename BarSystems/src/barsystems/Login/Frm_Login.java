@@ -13,7 +13,6 @@ public class Frm_Login extends javax.swing.JFrame {
         this.add(login);
         login.setBounds(0, 0, 400, 300);
         login.setVisible(true);
-        
     }
 
     /**

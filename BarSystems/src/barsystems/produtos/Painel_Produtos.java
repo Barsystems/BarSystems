@@ -6,7 +6,7 @@
 package barsystems.produtos;
 
 import barsystems.Class_Consumir_Letras;
-import barsystems.Class_Troca_Virgula_Por_Ponto;
+import barsystems.Principal;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -17,17 +17,11 @@ import javax.swing.JTabbedPane;
  */
 public class Painel_Produtos extends javax.swing.JPanel {
 
-    protected JTabbedPane tabela;
-    protected int IndexTabela = 0;
+    protected JTabbedPane painelPrincipal;
     
-    public Painel_Produtos() {
+    public Painel_Produtos(JTabbedPane painelPrincipal) {
         initComponents();
         
-    }
-    
-    public void getIndexTabela(JTabbedPane tabela, int IndexTabela) {
-        this.tabela = tabela;
-        this.IndexTabela = IndexTabela;
     }
     
     public void refreshList(){
@@ -125,6 +119,7 @@ public class Painel_Produtos extends javax.swing.JPanel {
         cadastro_produtos.setTitle("Novo cadastro");
         cadastro_produtos.setModal(true);
         cadastro_produtos.setPreferredSize(new java.awt.Dimension(400, 400));
+        cadastro_produtos.setResizable(false);
         cadastro_produtos.getContentPane().setLayout(null);
 
         jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -239,6 +234,7 @@ public class Painel_Produtos extends javax.swing.JPanel {
         editar_produtos.setTitle("Alteração de dados");
         editar_produtos.setModal(true);
         editar_produtos.setPreferredSize(new java.awt.Dimension(400, 400));
+        editar_produtos.setResizable(false);
         editar_produtos.getContentPane().setLayout(null);
 
         jLabel25.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -436,7 +432,7 @@ public class Painel_Produtos extends javax.swing.JPanel {
         jLabel20.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel20.setText("Nome");
         add(jLabel20);
-        jLabel20.setBounds(350, 170, 36, 17);
+        jLabel20.setBounds(360, 170, 36, 17);
 
         jLabel22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel22.setText("  Tipo ");
@@ -728,7 +724,9 @@ public class Painel_Produtos extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        tabela.remove(IndexTabela);
+        Principal principal = new Principal();
+        int index = principal.verificaMenuAberto("Produtos");
+        painelPrincipal.remove(index);
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
