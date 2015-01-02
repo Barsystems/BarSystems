@@ -31,6 +31,28 @@ public class Principal extends javax.swing.JFrame {
         
         
     }
+    
+    /**
+     * Este método vai verificar se um determinado menu já está aberto, para não o abrirmos novamente
+     * @param Aba Nome da aba queserá verificada se já está aberta
+     * @return Se retornar >= 0 quer dizer que o menu já foi aberto e o valor de retorno é o index no painel
+     */
+    public int verificaMenuAberto(String Aba) {
+        
+        String nomeAba;
+        int flag = -1;
+        for (int i = 0; i < painel_principal.getTabCount(); i++)
+        {
+            nomeAba = painel_principal.getTitleAt(i);
+            if (nomeAba.equals(Aba))
+            {
+                flag = i;
+                i = painel_principal.getTabCount();
+            }
+        }
+        
+        return flag;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,9 +67,9 @@ public class Principal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        menuCadastros = new javax.swing.JMenu();
+        menuItemCadastroUsuarios = new javax.swing.JMenuItem();
+        menuItemCadastroProdutos = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -90,32 +112,32 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Cadastros");
-        jMenu2.setToolTipText("");
-        jMenu2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenu2.setName("menu_Produto"); // NOI18N
+        menuCadastros.setText("Cadastros");
+        menuCadastros.setToolTipText("");
+        menuCadastros.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuCadastros.setName("menu_Produto"); // NOI18N
 
-        jMenuItem5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenuItem5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/business60.png"))); // NOI18N
-        jMenuItem5.setText("Usuários");
-        jMenuItem5.setToolTipText("Cadastrar usuários");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCadastroUsuarios.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCadastroUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/business60.png"))); // NOI18N
+        menuItemCadastroUsuarios.setText("Usuários");
+        menuItemCadastroUsuarios.setToolTipText("Cadastrar usuários");
+        menuItemCadastroUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                menuItemCadastroUsuariosActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        menuCadastros.add(menuItemCadastroUsuarios);
 
-        jMenuItem3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenuItem3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/hot51.png"))); // NOI18N
-        jMenuItem3.setText("Produtos");
-        jMenuItem3.setToolTipText("Cadastrar produtos");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCadastroProdutos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCadastroProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/hot51.png"))); // NOI18N
+        menuItemCadastroProdutos.setText("Produtos");
+        menuItemCadastroProdutos.setToolTipText("Cadastrar produtos");
+        menuItemCadastroProdutos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                menuItemCadastroProdutosActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem3);
+        menuCadastros.add(menuItemCadastroProdutos);
 
         jMenuItem6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/grocery10.png"))); // NOI18N
@@ -126,9 +148,9 @@ public class Principal extends javax.swing.JFrame {
                 jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem6);
+        menuCadastros.add(jMenuItem6);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menuCadastros);
 
         jMenu3.setText("Estoque");
         jMenu3.setToolTipText("");
@@ -217,18 +239,24 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void menuItemCadastroProdutosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroProdutosActionPerformed
         
-        Painel_Produtos cadastraProdutos = new Painel_Produtos();
-        painel_principal.add("Produtos", cadastraProdutos);
-        cadastraProdutos.setBounds(0, 0, 500, 500);
-        cadastraProdutos.setVisible(true);
-        // select the last tab
-        painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
-        cadastraProdutos.getIndexTabela(painel_principal, painel_principal.getSelectedIndex());
-        cadastraProdutos.refreshList();
+        int index = verificaMenuAberto("Produtos");
+        if (index >= 0)
+        {
+            painel_principal.setSelectedIndex(index);
+        }
+        else
+        {
+            Painel_Produtos cadastraProdutos = new Painel_Produtos(painel_principal);
+            painel_principal.add("Produtos", cadastraProdutos);
+            cadastraProdutos.setBounds(0, 0, 500, 500);
+            cadastraProdutos.setVisible(true);
+            painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+            cadastraProdutos.refreshList();
+        }
         
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_menuItemCadastroProdutosActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         
@@ -239,10 +267,15 @@ public class Principal extends javax.swing.JFrame {
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         
+        
+        
         Painel_Fornecedores cadastraFornecedores = new Painel_Fornecedores();
-        painel_principal.add(cadastraFornecedores);
+        painel_principal.add("Fornecedores", cadastraFornecedores);
         cadastraFornecedores.setBounds(0, 0, 500, 500);
         cadastraFornecedores.setVisible(true);
+        // select the last tab
+        painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+        cadastraFornecedores.getIndexTabela(painel_principal, painel_principal.getSelectedIndex());
         cadastraFornecedores.refreshList();
         
     }//GEN-LAST:event_jMenuItem6ActionPerformed
@@ -276,18 +309,24 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void menuItemCadastroUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroUsuariosActionPerformed
         
-        Painel_Usuarios usuarios = new Painel_Usuarios();
-        painel_principal.add("Usuários", usuarios);
-        usuarios.setBounds(0, 0, 500, 500);
-        usuarios.setVisible(true);
-        // select the last tab
-        painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
-        usuarios.getIndexTabela(painel_principal, painel_principal.getSelectedIndex());
-        usuarios.refreshList();
+        int index = verificaMenuAberto("Usuários");
+        if (index >= 0)
+        {
+            painel_principal.setSelectedIndex(index);
+        }
+        else
+        {
+            Painel_Usuarios usuarios = new Painel_Usuarios(this, painel_principal);
+            painel_principal.add("Usuários", usuarios);
+            usuarios.setBounds(0, 0, 500, 500);
+            usuarios.setVisible(true);
+            painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+            usuarios.refreshList();
+        }
         
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_menuItemCadastroUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -327,7 +366,6 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu5;
@@ -335,13 +373,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
+    private javax.swing.JMenu menuCadastros;
+    private javax.swing.JMenuItem menuItemCadastroProdutos;
+    private javax.swing.JMenuItem menuItemCadastroUsuarios;
     private javax.swing.JTabbedPane painel_principal;
     // End of variables declaration//GEN-END:variables
 }

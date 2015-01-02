@@ -2,22 +2,20 @@
 
 package barsystems.usuarios;
 
+import barsystems.Principal;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 public class Painel_Usuarios extends javax.swing.JPanel {
     
-    protected JTabbedPane tabela;
-    protected int IndexTabela = 0;
+    protected JTabbedPane painelPrincipal;
+    protected Principal principal;
     
-    public Painel_Usuarios() {
+    public Painel_Usuarios(Principal principal, JTabbedPane painelPrincipal) {
         initComponents();
-        
-    }
-    
-     public void getIndexTabela(JTabbedPane tabela, int IndexTabela) {
-        this.tabela = tabela;
-        this.IndexTabela = IndexTabela;
+        this.principal = principal;
+        this.painelPrincipal = painelPrincipal;
     }
     
     public void refreshList() {
@@ -125,6 +123,11 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
         jButton4.setText("Sair");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
         add(jButton4);
         jButton4.setBounds(390, 430, 100, 30);
 
@@ -132,6 +135,13 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         add(jButton6);
         jButton6.setBounds(180, 90, 49, 25);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+        int index = principal.verificaMenuAberto("Usuários");
+        painelPrincipal.remove(index);
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
