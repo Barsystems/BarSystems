@@ -7,8 +7,10 @@ package barsystems.estoque;
 
 import barsystems.conexaoBanco.Class_Conexao_Banco;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +22,10 @@ import javax.swing.table.DefaultTableModel;
 public class Class_estoque {
     protected Class_Conexao_Banco banco = new Class_Conexao_Banco();
     protected Connection conexaoMySQL = banco.getConexaoMySQL();
+    
+    private String codigo_compra;
+    private Date data;
+    private String fornecedor;
  
     public Class_estoque(){
         
@@ -109,7 +115,204 @@ public class Class_estoque {
     }
     
     public void carregaDetalhes(String nome){
-        
+        try{
+           
+           String sql = "SELECT MAX(id_produtos_compra),id_compras_fk,data_compra, nome_fantasia from compras,produtos,produtos_compra, fornecedores where produtos.descricao = '"+nome+"' and id_produto = id_produtos and id_compra = id_compras_fk and id_fornecedor = codigo_fornecedor";  
+           PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
+           
+           ResultSet rs = stmt.executeQuery();  
+              
+            while(rs.next()){
+              codigo_compra = rs.getString(2);
+              data = rs.getDate(3);
+              fornecedor = rs.getString(4);
+              
+            }
+            rs.close();  
+            stmt.close();
+            conexaoMySQL.close();
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
+    
+    public void transferencia(String centro, String produto, int quantidade_passada, String tipo, int qtd_por_caixa, String centro_de_transferencia){
+        int count=0;
+        int codigo_centro =0;
+        int codigo_produto =0;
+        if(tipo.equals("Caixa")){
+            try { 
+                String sql = "Select produtos_centro_estoque.id_produto, centros_estoque.id_centro_estoque "
+                        + "from produtos_centro_estoque, produtos, centros_estoque "
+                        + "where centros_estoque.nome = '"+centro+"' "
+                        + "and centros_estoque.id_centro_estoque = produtos_centro_estoque.id_centro_estoque "
+                        + "and descricao = '"+produto+"' "
+                        + "and produtos.id_produto = produtos_centro_estoque.id_produto";
+                PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
+
+                ResultSet rs = stmt.executeQuery();  
+                
+                while(rs.next()){
+                    codigo_produto = rs.getInt(1);
+                    codigo_centro = rs.getInt(2);
+                    count++;
+                }
+                rs.close();
+                stmt.close();
+                if(count > 0){
+                    sql = "Update produtos_centro_estoque set quantidade_em_unidade = quantidade_em_unidade+("+quantidade_passada*qtd_por_caixa+") WHERE id_produto = "+codigo_produto+" and id_centro_estoque = "+codigo_centro;
+                    PreparedStatement stmt2 = conexaoMySQL.prepareStatement(sql);
+                    stmt2.executeUpdate();
+                    stmt2.close();
+                }else{
+                    sql = "Select id_centro_estoque, id_produto from centros_estoque, produtos WHERE nome = '"+centro+"' and descricao = '"+produto+"'";
+                    PreparedStatement stmt3 = conexaoMySQL.prepareStatement(sql);
+                    
+                    ResultSet rs2 = stmt3.executeQuery();  
+                
+                    while(rs2.next()){
+                        codigo_centro = rs2.getInt(1);
+                        codigo_produto = rs2.getInt(2);
+                    }
+                    rs2.close();
+                    stmt3.close();
+                    sql = "Insert INTO produtos_centro_estoque "
+                            + "(id_produto, id_centro_estoque, quantidade_em_unidade) "
+                            + "VALUES (?,?,?)";
+                    PreparedStatement stmt4 = banco.getConexaoMySQL().prepareStatement(sql);    
+                    stmt4.setInt(1, codigo_produto);
+                    stmt4.setInt(2, codigo_centro);        
+                    stmt4.setInt(3, quantidade_passada*qtd_por_caixa);
+                    
+                    stmt4.execute();
+                    stmt4.close();
+                }
+                    
+                sql = "Select id_centro_estoque, id_produto from centros_estoque, produtos WHERE nome = '"+centro_de_transferencia+"' and descricao = '"+produto+"'";
+                PreparedStatement stmt5 = conexaoMySQL.prepareStatement(sql);
+
+                ResultSet rs3 = stmt5.executeQuery();  
+
+                while(rs3.next()){
+                    codigo_centro = rs3.getInt(1);
+                    codigo_produto = rs3.getInt(2);
+                }    
+                
+                rs3.close();
+                stmt5.close();
+                
+                sql = "Update produtos_centro_estoque set quantidade_em_unidade = quantidade_em_unidade-("+quantidade_passada*qtd_por_caixa+") WHERE id_produto = "+codigo_produto+" and id_centro_estoque = "+codigo_centro;
+                PreparedStatement stmt6 = conexaoMySQL.prepareStatement(sql);
+                stmt6.executeUpdate();
+                stmt6.close();
+                
+                
+                
+                banco.FecharConexao();    
+            }
+             catch (SQLException u) {    
+                throw new RuntimeException(u);   
+                
+        }
+        }else if(tipo.equals("Unidade")){
+            try { 
+                String sql = "Select produtos_centro_estoque.id_produto, centros_estoque.id_centro_estoque "
+                        + "from produtos_centro_estoque, produtos, centros_estoque "
+                        + "where centros_estoque.nome = '"+centro+"' "
+                        + "and centros_estoque.id_centro_estoque = produtos_centro_estoque.id_centro_estoque "
+                        + "and descricao = '"+produto+"' "
+                        + "and produtos.id_produto = produtos_centro_estoque.id_produto";
+                PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
+
+                ResultSet rs = stmt.executeQuery();  
+                
+                while(rs.next()){
+                    codigo_produto = rs.getInt(1);
+                    codigo_centro = rs.getInt(2);
+                    count++;
+                }
+                rs.close();
+                stmt.close();
+                if(count > 0){
+                    sql = "Update produtos_centro_estoque set quantidade_em_unidade = quantidade_em_unidade+("+quantidade_passada+") WHERE id_produto = "+codigo_produto+" and id_centro_estoque = "+codigo_centro;
+                    PreparedStatement stmt2 = conexaoMySQL.prepareStatement(sql);
+                    stmt2.executeUpdate();
+                    stmt2.close();
+                }else{
+                    sql = "Select id_centro_estoque, id_produto from centros_estoque, produtos WHERE nome = '"+centro+"' and descricao = '"+produto+"'";
+                    PreparedStatement stmt3 = conexaoMySQL.prepareStatement(sql);
+                    
+                    ResultSet rs2 = stmt3.executeQuery();  
+                
+                    while(rs2.next()){
+                        codigo_centro = rs2.getInt(1);
+                        codigo_produto = rs2.getInt(2);
+                    }
+                    rs2.close();
+                    stmt3.close();
+                    sql = "Insert INTO produtos_centro_estoque "
+                            + "(id_produto, id_centro_estoque, quantidade_em_unidade) "
+                            + "VALUES (?,?,?)";
+                    PreparedStatement stmt4 = banco.getConexaoMySQL().prepareStatement(sql);    
+                    stmt4.setInt(1, codigo_produto);
+                    stmt4.setInt(2, codigo_centro);        
+                    stmt4.setInt(3, quantidade_passada);
+                    
+                    stmt4.execute();
+                    stmt4.close();
+                }
+                    
+                sql = "Select id_centro_estoque, id_produto from centros_estoque, produtos WHERE nome = '"+centro_de_transferencia+"' and descricao = '"+produto+"'";
+                PreparedStatement stmt5 = conexaoMySQL.prepareStatement(sql);
+
+                ResultSet rs3 = stmt5.executeQuery();  
+
+                while(rs3.next()){
+                    codigo_centro = rs3.getInt(1);
+                    codigo_produto = rs3.getInt(2);
+                }    
+                
+                rs3.close();
+                stmt5.close();
+                
+                sql = "Update produtos_centro_estoque set quantidade_em_unidade = quantidade_em_unidade-("+quantidade_passada+") WHERE id_produto = "+codigo_produto+" and id_centro_estoque = "+codigo_centro;
+                PreparedStatement stmt6 = conexaoMySQL.prepareStatement(sql);
+                stmt6.executeUpdate();
+                stmt6.close();
+                
+                
+                
+                banco.FecharConexao();    
+            }
+             catch (SQLException u) {    
+                throw new RuntimeException(u);   
+                
+        }
+            
+        }
+    }
+
+    /**
+     * @return the codigo_compra
+     */
+    public String getCodigo_compra() {
+        return codigo_compra;
+    }
+
+    /**
+     * @return the data
+     */
+    public Date getData() {
+        return data;
+    }
+
+    /**
+     * @return the fornecedor
+     */
+    public String getFornecedor() {
+        return fornecedor;
+    }
+    
     
 }

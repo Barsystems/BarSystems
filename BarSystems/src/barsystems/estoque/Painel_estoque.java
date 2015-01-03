@@ -5,10 +5,11 @@
  */
 package barsystems.estoque;
 
-import barsystems.fornecedores.Class_Fornecedores;
+
+
+import javax.swing.ButtonModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -16,7 +17,7 @@ import javax.swing.table.TableModel;
  * @author Lucas
  */
 public class Painel_estoque extends javax.swing.JPanel {
-
+    
     /**
      * Creates new form Painel_estoque
      */
@@ -26,15 +27,45 @@ public class Painel_estoque extends javax.swing.JPanel {
         lista_centros.setModel(lista);
     }
      
+     public void refreshTransf(String centro){
+         Class_estoque carrega = new Class_estoque();
+        DefaultListModel lista = carrega.carregaLista();
+        lista.removeElement(centro);
+        lista_centro2.setModel(lista);
+     }
+     
     public void refreshTable(String codigo){
         Class_estoque enviar = new Class_estoque();
         tabela_estoque.setModel(enviar.carregaTabela(codigo));
     }
     
+    public void refreshTransferencia(){
+        int linha;
+        linha = tabela_estoque.getSelectedRow();
+        TableModel modelo = tabela_estoque.getModel();
+        
+        produto.setText((String) modelo.getValueAt(linha,0));
+        centro_estoque.setText((String)lista_centros.getSelectedValue());
+        radio_button.add(caixas);
+        radio_button.add(unidades);
+        String unidade, qtd_por_caixa;
+        float result;
+        unidade = (String) modelo.getValueAt(linha,2);
+        qtd_por_caixa = (String) modelo.getValueAt(linha,1);
+        result = Integer.parseInt(unidade) / Integer.parseInt(qtd_por_caixa);
+        String qtd_de_caixa;
+        qntd_por_caixa = Integer.parseInt(qtd_por_caixa);
+        qtd_de_caixa = String.valueOf(result);
+        quant_caixa.setText(qtd_de_caixa);
+        quant_unidade.setText((String) modelo.getValueAt(linha,2));
+        refreshTransf((String)lista_centros.getSelectedValue());
+    }
+    
     public Painel_estoque() {
         initComponents();
     }
-
+    
+    protected int qntd_por_caixa;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,19 +77,20 @@ public class Painel_estoque extends javax.swing.JPanel {
 
         subir_produto = new javax.swing.JDialog();
         jLabel7 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
+        centro_estoque = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
+        quant_caixa = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
+        quant_unidade = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         quantidade = new javax.swing.JTextField();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        caixas = new javax.swing.JRadioButton();
+        unidades = new javax.swing.JRadioButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         lista_centro2 = new javax.swing.JList();
-        jLabel19 = new javax.swing.JLabel();
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        produto = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        radio_button = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -84,31 +116,31 @@ public class Painel_estoque extends javax.swing.JPanel {
         subir_produto.getContentPane().add(jLabel7);
         jLabel7.setBounds(10, 50, 158, 30);
 
-        jLabel13.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 0, 204));
-        jLabel13.setText("centroestoque");
-        subir_produto.getContentPane().add(jLabel13);
-        jLabel13.setBounds(180, 50, 115, 30);
+        centro_estoque.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        centro_estoque.setForeground(new java.awt.Color(0, 0, 204));
+        centro_estoque.setText("centroestoque");
+        subir_produto.getContentPane().add(centro_estoque);
+        centro_estoque.setBounds(180, 50, 115, 30);
 
         jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel14.setText("Quantidade em caixas:");
         subir_produto.getContentPane().add(jLabel14);
         jLabel14.setBounds(20, 80, 150, 30);
 
-        jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel15.setText("caixas");
-        subir_produto.getContentPane().add(jLabel15);
-        jLabel15.setBounds(180, 80, 40, 30);
+        quant_caixa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        quant_caixa.setText("caixas");
+        subir_produto.getContentPane().add(quant_caixa);
+        quant_caixa.setBounds(180, 80, 40, 30);
 
         jLabel16.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel16.setText("Quantidade em unidades: ");
         subir_produto.getContentPane().add(jLabel16);
         jLabel16.setBounds(20, 120, 170, 20);
 
-        jLabel17.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel17.setText("unidades");
-        subir_produto.getContentPane().add(jLabel17);
-        jLabel17.setBounds(190, 110, 60, 30);
+        quant_unidade.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        quant_unidade.setText("unidades");
+        subir_produto.getContentPane().add(quant_unidade);
+        quant_unidade.setBounds(190, 110, 60, 30);
 
         jLabel18.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel18.setText("Transferir: ");
@@ -117,20 +149,20 @@ public class Painel_estoque extends javax.swing.JPanel {
         subir_produto.getContentPane().add(quantidade);
         quantidade.setBounds(90, 140, 60, 30);
 
-        jRadioButton3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jRadioButton3.setText("caixas");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+        caixas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        caixas.setText("caixas");
+        caixas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
+                caixasActionPerformed(evt);
             }
         });
-        subir_produto.getContentPane().add(jRadioButton3);
-        jRadioButton3.setBounds(160, 150, 65, 25);
+        subir_produto.getContentPane().add(caixas);
+        caixas.setBounds(160, 140, 65, 25);
 
-        jRadioButton4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jRadioButton4.setText("unidades");
-        subir_produto.getContentPane().add(jRadioButton4);
-        jRadioButton4.setBounds(160, 180, 83, 25);
+        unidades.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        unidades.setText("unidades");
+        subir_produto.getContentPane().add(unidades);
+        unidades.setBounds(160, 170, 83, 25);
 
         lista_centro2.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -142,10 +174,18 @@ public class Painel_estoque extends javax.swing.JPanel {
         subir_produto.getContentPane().add(jScrollPane3);
         jScrollPane3.setBounds(260, 140, 160, 130);
 
-        jLabel19.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
-        jLabel19.setText("Produto");
-        subir_produto.getContentPane().add(jLabel19);
-        jLabel19.setBounds(10, 10, 150, 40);
+        produto.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        subir_produto.getContentPane().add(produto);
+        produto.setBounds(10, 20, 130, 30);
+
+        jButton2.setText("Transferir");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        subir_produto.getContentPane().add(jButton2);
+        jButton2.setBounds(260, 280, 160, 60);
 
         setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         setLayout(null);
@@ -183,10 +223,7 @@ public class Painel_estoque extends javax.swing.JPanel {
 
         tabela_estoque.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Produto", "Quantidade por caixa", "Quantidade em unidade", "Valor compra unidade", "Valor venda unidade"
@@ -233,7 +270,7 @@ public class Painel_estoque extends javax.swing.JPanel {
         add(lbl_produto);
         lbl_produto.setBounds(330, 300, 340, 20);
 
-        jLabel10.setText("Comprado em: ");
+        jLabel10.setText("Ultima compra:");
         add(jLabel10);
         jLabel10.setBounds(190, 330, 110, 14);
 
@@ -273,45 +310,98 @@ public class Painel_estoque extends javax.swing.JPanel {
         refreshTable(codigo);
     }//GEN-LAST:event_lista_centrosMouseClicked
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+    private void caixasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_caixasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
+    }//GEN-LAST:event_caixasActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        subir_produto.setBounds(0, 0, 450, 330);
-        subir_produto.setLocationRelativeTo(null);
-        subir_produto.setVisible(true);
+        int linha;
+        linha = tabela_estoque.getSelectedRow();
+        TableModel modelo = tabela_estoque.getModel();
+        
+        if( tabela_estoque.getSelectedRowCount() == 0 ){
+            JOptionPane.showMessageDialog(null,"Selecione um produto na tabela ao lado");
+        }else{
+            refreshTransferencia();
+            subir_produto.setBounds(0, 0, 450, 330);
+            subir_produto.setLocationRelativeTo(null);
+            subir_produto.setVisible(true);
+            
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void tabela_estoqueMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabela_estoqueMouseClicked
         int linha;
         linha = tabela_estoque.getSelectedRow();
         TableModel modelo = tabela_estoque.getModel();
+        Class_estoque detalhes = new Class_estoque();
+        detalhes.carregaDetalhes((String) modelo.getValueAt(linha,0));
         lbl_produto.setText((String) modelo.getValueAt(linha,0));
-        lbl_data.setText((String) modelo.getValueAt(linha,2));
+        lbl_data.setText(detalhes.getData().toString());
+        lbl_cod_compra.setText(detalhes.getCodigo_compra());
+        lbl_fornecedor.setText(detalhes.getFornecedor());
     }//GEN-LAST:event_tabela_estoqueMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        boolean c1 = true, c2 = true, c3 = true;
+        Class_estoque transfere  = new Class_estoque();
+       if(quantidade.getText().equals("")){
+           JOptionPane.showMessageDialog(null, "Digite uma quantidade");
+           c1 = false;
+       }
+       if(caixas.isSelected() == false && unidades.isSelected() == false){
+           JOptionPane.showMessageDialog(null, "Selecione quantidade ou unidade");
+           c2 = false;
+       }           
+       if(lista_centro2.isSelectionEmpty()){
+           JOptionPane.showMessageDialog(null, "Selecione um centro de estoque para enviar");
+           c3 = false;
+       } 
+       if(c1 && c2 && c3){
+                if(caixas.isSelected()){
+                    if( !(qntd_por_caixa*Integer.parseInt(quantidade.getText()) > Integer.parseInt(quant_unidade.getText())) ){
+                 transfere.transferencia((String)lista_centro2.getSelectedValue(), 
+                 produto.getText(), 
+                 Integer.parseInt(quantidade.getText()), 
+                 "Caixa", 
+                 qntd_por_caixa,
+                 centro_estoque.getText());
+                 refreshTransferencia();
+                    }else
+                        JOptionPane.showMessageDialog(null, "Quantidade maior que o estoque");
+                } else if(unidades.isSelected()){
+                    if( !(Integer.parseInt(quantidade.getText()) > Integer.parseInt(quant_unidade.getText())) ){
+                     transfere.transferencia((String)lista_centro2.getSelectedValue(), 
+                     produto.getText(), 
+                     Integer.parseInt(quantidade.getText()), 
+                     "Unidade", 
+                     qntd_por_caixa,
+                     centro_estoque.getText());
+                     refreshTransferencia();
+                }else
+                        JOptionPane.showMessageDialog(null, "Quantidade maior que o estoque");
+            }
+       }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JRadioButton caixas;
+    private javax.swing.JLabel centro_estoque;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -321,8 +411,13 @@ public class Painel_estoque extends javax.swing.JPanel {
     private javax.swing.JLabel lbl_produto;
     private javax.swing.JList lista_centro2;
     private javax.swing.JList lista_centros;
+    private javax.swing.JLabel produto;
+    private javax.swing.JLabel quant_caixa;
+    private javax.swing.JLabel quant_unidade;
     private javax.swing.JTextField quantidade;
+    private javax.swing.ButtonGroup radio_button;
     private javax.swing.JDialog subir_produto;
     private javax.swing.JTable tabela_estoque;
+    private javax.swing.JRadioButton unidades;
     // End of variables declaration//GEN-END:variables
 }
