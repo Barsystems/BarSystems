@@ -323,7 +323,7 @@ public class Painel_estoque extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null,"Selecione um produto na tabela ao lado");
         }else{
             refreshTransferencia();
-            subir_produto.setBounds(0, 0, 450, 330);
+            subir_produto.setBounds(0, 0, 450, 430);
             subir_produto.setLocationRelativeTo(null);
             subir_produto.setVisible(true);
             
@@ -367,7 +367,6 @@ public class Painel_estoque extends javax.swing.JPanel {
                  "Caixa", 
                  qntd_por_caixa,
                  centro_estoque.getText());
-                 refreshTransferencia();
                     }else
                         JOptionPane.showMessageDialog(null, "Quantidade maior que o estoque");
                 } else if(unidades.isSelected()){
@@ -378,11 +377,13 @@ public class Painel_estoque extends javax.swing.JPanel {
                      "Unidade", 
                      qntd_por_caixa,
                      centro_estoque.getText());
-                     refreshTransferencia();
                 }else
                         JOptionPane.showMessageDialog(null, "Quantidade maior que o estoque");
             }
        }
+       
+       String codigo = transfere.getCodigo((String) lista_centros.getSelectedValue());
+       refreshTable(codigo);
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
