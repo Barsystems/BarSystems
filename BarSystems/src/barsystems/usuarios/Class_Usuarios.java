@@ -10,7 +10,6 @@ import javax.swing.DefaultListModel;
 public class Class_Usuarios {
     
     protected Class_Conexao_Banco banco = new Class_Conexao_Banco();
-    protected Connection con = banco.getConexaoMySQL();
     protected String id_usuario, nome, tipo, senha;
     
     public Class_Usuarios() {
@@ -40,22 +39,23 @@ public class Class_Usuarios {
         return senha;
     }
     
-    public DefaultListModel carregaUsuarios() {
+    public DefaultListModel carregaLista() {
         
         DefaultListModel lista = new DefaultListModel();
         
         try 
         {
             String sql = "SELECT nome from usuarios WHERE excluido = 0 order by nome";
-            PreparedStatement st = con.prepareStatement(sql);
+            PreparedStatement st = banco.getConexaoMySQL().prepareStatement(sql);
             ResultSet rs = st.executeQuery();
-            while (rs.next()) {
+            while (rs.next()) 
+            {
                 lista.addElement(rs.getString(1));
             }
             
             rs.close();
             st.close();
-            con.close();
+            banco.FecharConexao();
         } 
         catch (Exception e) 
         {
@@ -64,6 +64,32 @@ public class Class_Usuarios {
         }
         
         return lista;
+    }
+    
+    public void carregaUsuario(String nome) {
+        
+        try 
+        {
+            String SQL = "select id_usuario, nome, senha, tipo from usuarios where nome = '"+nome+"'";
+            PreparedStatement st = banco.getConexaoMySQL().prepareStatement(SQL);
+            ResultSet rs = st.executeQuery();
+            while(rs.next()) 
+            {
+                this.id_usuario = rs.getString(1);
+                this.nome = rs.getString(2);
+                this.senha = rs.getString(3);
+                this.tipo = rs.getString(4);
+            }
+            
+            rs.close();
+            st.close();
+            banco.FecharConexao();
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+        
     }
     
 }

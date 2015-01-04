@@ -1,22 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package barsystems.Venda;
 
-/**
- *
- * @author Marcos
- */
+import barsystems.Principal;
+import javax.swing.JTabbedPane;
+
 public class Painel_Venda extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Painel_Venda
-     */
-    public Painel_Venda() {
+    protected Principal principal;
+    protected JTabbedPane painelPrincipal;
+    
+    public Painel_Venda(Principal principal, JTabbedPane painelPrincipal) {
         initComponents();
+        
+        this.principal = principal;
+        this.painelPrincipal = painelPrincipal;
     }
 
     /**
@@ -29,10 +26,14 @@ public class Painel_Venda extends javax.swing.JPanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        lista_mesas_passantes = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jList2 = new javax.swing.JList();
         jPanel2 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList();
+        btnNovoMesaPassante = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -51,35 +52,46 @@ public class Painel_Venda extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/covered16 (1).png"))); // NOI18N
         jLabel1.setText("Vendas de produtos para mesas e passantes");
         add(jLabel1);
         jLabel1.setBounds(0, 30, 1010, 29);
 
-        jTabbedPane1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lista_mesas_passantes.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        lista_mesas_passantes.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                lista_mesas_passantesStateChanged(evt);
+            }
+        });
 
         jPanel1.setLayout(null);
-        jTabbedPane1.addTab("Mesas", jPanel1);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 145, Short.MAX_VALUE)
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 329, Short.MAX_VALUE)
-        );
+        jList2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jScrollPane4.setViewportView(jList2);
 
-        jTabbedPane1.addTab("Passantes", jPanel2);
+        jPanel1.add(jScrollPane4);
+        jScrollPane4.setBounds(0, 0, 150, 330);
 
-        add(jTabbedPane1);
-        jTabbedPane1.setBounds(20, 110, 150, 360);
+        lista_mesas_passantes.addTab("Mesas", jPanel1);
 
-        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton1.setText("Abrir mesa (F2)");
-        add(jButton1);
-        jButton1.setBounds(20, 480, 150, 30);
+        jPanel2.setLayout(null);
+
+        jList1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jScrollPane3.setViewportView(jList1);
+
+        jPanel2.add(jScrollPane3);
+        jScrollPane3.setBounds(0, 0, 150, 330);
+
+        lista_mesas_passantes.addTab("Passantes", jPanel2);
+
+        add(lista_mesas_passantes);
+        lista_mesas_passantes.setBounds(20, 110, 150, 360);
+
+        btnNovoMesaPassante.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnNovoMesaPassante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plate7.png"))); // NOI18N
+        btnNovoMesaPassante.setText("Abrir mesa");
+        add(btnNovoMesaPassante);
+        btnNovoMesaPassante.setBounds(20, 480, 150, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Mesas abertas");
@@ -187,25 +199,38 @@ public class Painel_Venda extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Centro de estoque");
         add(jLabel5);
-        jLabel5.setBounds(200, 90, 130, 17);
+        jLabel5.setBounds(190, 90, 130, 17);
 
         jComboBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         add(jComboBox1);
-        jComboBox1.setBounds(200, 110, 180, 30);
+        jComboBox1.setBounds(190, 110, 180, 30);
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Pesquisar produtos");
         add(jLabel6);
-        jLabel6.setBounds(400, 90, 130, 17);
+        jLabel6.setBounds(390, 90, 130, 17);
 
         jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         add(jTextField1);
-        jTextField1.setBounds(400, 110, 180, 30);
+        jTextField1.setBounds(390, 110, 190, 30);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void lista_mesas_passantesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_lista_mesas_passantesStateChanged
+        
+        if (lista_mesas_passantes.getSelectedIndex() == 0)
+        {
+            btnNovoMesaPassante.setText("Abrir mesa");
+        }
+        else
+        {
+            btnNovoMesaPassante.setText("Novo passante");
+        }
+        
+    }//GEN-LAST:event_lista_mesas_passantesStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnNovoMesaPassante;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
@@ -215,13 +240,17 @@ public class Painel_Venda extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JList jList1;
+    private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTabbedPane lista_mesas_passantes;
     // End of variables declaration//GEN-END:variables
 }

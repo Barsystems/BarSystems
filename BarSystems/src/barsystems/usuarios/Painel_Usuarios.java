@@ -11,6 +11,7 @@ public class Painel_Usuarios extends javax.swing.JPanel {
     
     protected JTabbedPane painelPrincipal;
     protected Principal principal;
+    public String idUsuario;
     
     public Painel_Usuarios(Principal principal, JTabbedPane painelPrincipal) {
         initComponents();
@@ -21,8 +22,18 @@ public class Painel_Usuarios extends javax.swing.JPanel {
     public void refreshList() {
         
         Class_Usuarios usuarios = new Class_Usuarios();
-        DefaultListModel lista = usuarios.carregaUsuarios();
+        DefaultListModel lista = usuarios.carregaLista();
         listUsuarios.setModel(lista);
+    }
+    
+    public void refreshCampos() {
+        
+        Class_Usuarios usuarios = new Class_Usuarios();
+        usuarios.carregaUsuario((String) listUsuarios.getSelectedValue());
+        txtNomeUsuario.setText(usuarios.getNome());
+        txtSenhaUsuario.setText(usuarios.getSenha());
+        txtTipoUsuario.setText(usuarios.getTipo());
+        idUsuario = usuarios.getIdUsuario();
     }
 
     /**
@@ -39,11 +50,11 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         listUsuarios = new javax.swing.JList();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNomeUsuario = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        txtSenhaUsuario = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtTipoUsuario = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -62,6 +73,13 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         jScrollPane1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         listUsuarios.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        listUsuarios.setSelectionBackground(new java.awt.Color(204, 255, 255));
+        listUsuarios.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        listUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listUsuariosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(listUsuarios);
 
         add(jScrollPane1);
@@ -77,30 +95,30 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         add(jLabel4);
         jLabel4.setBounds(260, 130, 60, 17);
 
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField1.setEnabled(false);
-        add(jTextField1);
-        jTextField1.setBounds(320, 120, 200, 30);
+        txtNomeUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtNomeUsuario.setEnabled(false);
+        add(txtNomeUsuario);
+        txtNomeUsuario.setBounds(320, 120, 200, 30);
 
         jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel5.setText("Senha");
         add(jLabel5);
         jLabel5.setBounds(270, 170, 50, 17);
 
-        jPasswordField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jPasswordField1.setEnabled(false);
-        add(jPasswordField1);
-        jPasswordField1.setBounds(320, 160, 200, 30);
+        txtSenhaUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtSenhaUsuario.setEnabled(false);
+        add(txtSenhaUsuario);
+        txtSenhaUsuario.setBounds(320, 160, 200, 30);
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Tipo");
         add(jLabel6);
         jLabel6.setBounds(280, 210, 40, 17);
 
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jTextField2.setEnabled(false);
-        add(jTextField2);
-        jTextField2.setBounds(320, 200, 200, 30);
+        txtTipoUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtTipoUsuario.setEnabled(false);
+        add(txtTipoUsuario);
+        txtTipoUsuario.setBounds(320, 200, 200, 30);
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
@@ -133,7 +151,7 @@ public class Painel_Usuarios extends javax.swing.JPanel {
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/magnifier12.png"))); // NOI18N
         add(jButton6);
-        jButton6.setBounds(180, 90, 49, 25);
+        jButton6.setBounds(189, 90, 40, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -142,6 +160,12 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         painelPrincipal.remove(index);
         
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void listUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listUsuariosMouseClicked
+        
+        refreshCampos();
+        
+    }//GEN-LAST:event_listUsuariosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -155,10 +179,10 @@ public class Painel_Usuarios extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JList listUsuarios;
+    private javax.swing.JTextField txtNomeUsuario;
+    private javax.swing.JPasswordField txtSenhaUsuario;
+    private javax.swing.JTextField txtTipoUsuario;
     // End of variables declaration//GEN-END:variables
 }

@@ -18,10 +18,13 @@ import javax.swing.JTabbedPane;
 public class Painel_Produtos extends javax.swing.JPanel {
 
     protected JTabbedPane painelPrincipal;
+    protected Principal principal;
     
-    public Painel_Produtos(JTabbedPane painelPrincipal) {
+    public Painel_Produtos(Principal principal, JTabbedPane painelPrincipal) {
         initComponents();
         
+        this.principal = principal;
+        this.painelPrincipal = painelPrincipal;
     }
     
     public void refreshList(){
@@ -724,7 +727,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        Principal principal = new Principal();
         int index = principal.verificaMenuAberto("Produtos");
         painelPrincipal.remove(index);
         

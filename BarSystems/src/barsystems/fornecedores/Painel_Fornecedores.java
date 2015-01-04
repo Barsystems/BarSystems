@@ -5,6 +5,7 @@
  */
 package barsystems.fornecedores;
 
+import barsystems.Principal;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -16,18 +17,17 @@ import javax.swing.JTabbedPane;
 public class Painel_Fornecedores extends javax.swing.JPanel {
 
     private String id_fornecedor;
-    protected JTabbedPane tabela;
-    protected int IndexTabela = 0;
+    protected JTabbedPane painelPrincipal;
+    protected Principal principal;
+    
     /**
      * Creates new form Painel_Fornecedores
      */
-    public Painel_Fornecedores() {
+    public Painel_Fornecedores(Principal principal, JTabbedPane painelPrincipal) {
         initComponents();
-    }
-    
-    public void getIndexTabela(JTabbedPane tabela, int IndexTabela) {
-        this.tabela = tabela;
-        this.IndexTabela = IndexTabela;
+        
+        this.principal = principal;
+        this.painelPrincipal = painelPrincipal;
     }
     
     public void setId_fornecedor(String id){
@@ -883,7 +883,8 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
 
     private void btnFecharTelaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharTelaActionPerformed
         
-        tabela.remove(IndexTabela);
+        int index = principal.verificaMenuAberto("Fornecedores");
+        painelPrincipal.remove(index);
         
     }//GEN-LAST:event_btnFecharTelaActionPerformed
 

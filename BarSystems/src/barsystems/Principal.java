@@ -6,6 +6,7 @@
 package barsystems;
 
 import barsystems.Login.Frm_Login;
+import barsystems.Venda.Painel_Venda;
 import barsystems.estoque.Painel_estoque;
 import barsystems.fornecedores.Painel_Fornecedores;
 import barsystems.produtos.Painel_Produtos;
@@ -70,16 +71,16 @@ public class Principal extends javax.swing.JFrame {
         menuCadastros = new javax.swing.JMenu();
         menuItemCadastroUsuarios = new javax.swing.JMenuItem();
         menuItemCadastroProdutos = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        menuItemCadastroFornecedores = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         jMenuItem8 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
-        jMenuItem7 = new javax.swing.JMenuItem();
-        jMenuItem9 = new javax.swing.JMenuItem();
+        menuSistema = new javax.swing.JMenu();
+        menuItemTrocarUsuario = new javax.swing.JMenuItem();
+        menuItemSair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("BarSystem - Sistema gerenciador de bares e restaurantes - Versão 0.1.1");
@@ -139,16 +140,16 @@ public class Principal extends javax.swing.JFrame {
         });
         menuCadastros.add(menuItemCadastroProdutos);
 
-        jMenuItem6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenuItem6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/grocery10.png"))); // NOI18N
-        jMenuItem6.setText("Fornecedores");
-        jMenuItem6.setToolTipText("Cadastrar fornecedores");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCadastroFornecedores.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCadastroFornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/grocery10.png"))); // NOI18N
+        menuItemCadastroFornecedores.setText("Fornecedores");
+        menuItemCadastroFornecedores.setToolTipText("Cadastrar fornecedores");
+        menuItemCadastroFornecedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                menuItemCadastroFornecedoresActionPerformed(evt);
             }
         });
-        menuCadastros.add(jMenuItem6);
+        menuCadastros.add(menuItemCadastroFornecedores);
 
         jMenuBar1.add(menuCadastros);
 
@@ -182,6 +183,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/covered16.png"))); // NOI18N
         jMenuItem8.setText("Venda");
         jMenuItem8.setToolTipText("Realizar uma venda");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu4.add(jMenuItem8);
 
         jMenuBar1.add(jMenu4);
@@ -190,33 +196,33 @@ public class Principal extends javax.swing.JFrame {
         jMenu6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jMenuBar1.add(jMenu6);
 
-        jMenu5.setText("Sistema");
-        jMenu5.setToolTipText("");
-        jMenu5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuSistema.setText("Sistema");
+        menuSistema.setToolTipText("");
+        menuSistema.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jMenuItem7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenuItem7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/group12.png"))); // NOI18N
-        jMenuItem7.setText("Trocar de usuário");
-        jMenuItem7.setToolTipText("Abre a tela de login para escolher um usuário");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        menuItemTrocarUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemTrocarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/group12.png"))); // NOI18N
+        menuItemTrocarUsuario.setText("Trocar de usuário");
+        menuItemTrocarUsuario.setToolTipText("Abre a tela de login para escolher um usuário");
+        menuItemTrocarUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                menuItemTrocarUsuarioActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem7);
+        menuSistema.add(menuItemTrocarUsuario);
 
-        jMenuItem9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenuItem9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
-        jMenuItem9.setText("Sair");
-        jMenuItem9.setToolTipText("Sair do sistema");
-        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+        menuItemSair.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
+        menuItemSair.setText("Sair");
+        menuItemSair.setToolTipText("Sair do sistema");
+        menuItemSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem9ActionPerformed(evt);
+                menuItemSairActionPerformed(evt);
             }
         });
-        jMenu5.add(jMenuItem9);
+        menuSistema.add(menuItemSair);
 
-        jMenuBar1.add(jMenu5);
+        jMenuBar1.add(menuSistema);
 
         setJMenuBar(jMenuBar1);
 
@@ -248,7 +254,7 @@ public class Principal extends javax.swing.JFrame {
         }
         else
         {
-            Painel_Produtos cadastraProdutos = new Painel_Produtos(painel_principal);
+            Painel_Produtos cadastraProdutos = new Painel_Produtos(this, painel_principal);
             painel_principal.add("Produtos", cadastraProdutos);
             cadastraProdutos.setBounds(0, 0, 500, 500);
             cadastraProdutos.setVisible(true);
@@ -265,27 +271,32 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formWindowClosing
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void menuItemCadastroFornecedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroFornecedoresActionPerformed
         
+        int index = verificaMenuAberto("Fornecedores");
+        if (index >= 0)
+        {
+            painel_principal.setSelectedIndex(index);
+        }
+        else
+        {
+            Painel_Fornecedores cadastraFornecedores = new Painel_Fornecedores(this, painel_principal);
+            painel_principal.add("Fornecedores", cadastraFornecedores);
+            cadastraFornecedores.setBounds(0, 0, 500, 500);
+            cadastraFornecedores.setVisible(true);
+            // select the last tab
+            painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+            cadastraFornecedores.refreshList();
+        }
         
-        
-        Painel_Fornecedores cadastraFornecedores = new Painel_Fornecedores();
-        painel_principal.add("Fornecedores", cadastraFornecedores);
-        cadastraFornecedores.setBounds(0, 0, 500, 500);
-        cadastraFornecedores.setVisible(true);
-        // select the last tab
-        painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
-        cadastraFornecedores.getIndexTabela(painel_principal, painel_principal.getSelectedIndex());
-        cadastraFornecedores.refreshList();
-        
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_menuItemCadastroFornecedoresActionPerformed
 
-    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+    private void menuItemSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemSairActionPerformed
         
         Class_Fechar_Sistema exit = new Class_Fechar_Sistema();
         exit.fecharSistema();
         
-    }//GEN-LAST:event_jMenuItem9ActionPerformed
+    }//GEN-LAST:event_menuItemSairActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         
@@ -297,7 +308,7 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void menuItemTrocarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTrocarUsuarioActionPerformed
         
         if (JOptionPane.showConfirmDialog(null, "Deseja realmente trocar de usuário?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) 
         {
@@ -307,7 +318,7 @@ public class Principal extends javax.swing.JFrame {
             this.dispose();
         }
         
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_menuItemTrocarUsuarioActionPerformed
 
     private void menuItemCadastroUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroUsuariosActionPerformed
         
@@ -327,6 +338,24 @@ public class Principal extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_menuItemCadastroUsuariosActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        
+        int index = verificaMenuAberto("Vendas");
+        if (index >= 0)
+        {
+            painel_principal.setSelectedIndex(index);
+        }
+        else
+        {
+            Painel_Venda venda = new Painel_Venda(this, painel_principal);
+            painel_principal.add("Vendas", venda);
+            venda.setBounds(0, 0, 1000, 700);
+            venda.setVisible(true);
+            painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+        }
+        
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -368,19 +397,19 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JMenuItem jMenuItem8;
-    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu menuCadastros;
+    private javax.swing.JMenuItem menuItemCadastroFornecedores;
     private javax.swing.JMenuItem menuItemCadastroProdutos;
     private javax.swing.JMenuItem menuItemCadastroUsuarios;
+    private javax.swing.JMenuItem menuItemSair;
+    private javax.swing.JMenuItem menuItemTrocarUsuario;
+    private javax.swing.JMenu menuSistema;
     private javax.swing.JTabbedPane painel_principal;
     // End of variables declaration//GEN-END:variables
 }
