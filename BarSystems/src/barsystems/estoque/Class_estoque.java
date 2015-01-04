@@ -5,12 +5,14 @@
  */
 package barsystems.estoque;
 
+import barsystems.Class_Troca_Virgula_Por_Ponto;
 import barsystems.conexaoBanco.Class_Conexao_Banco;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -56,39 +58,53 @@ public class Class_estoque {
         return listModel;
     }// FIM CARREGA LISTA
     
-    public DefaultTableModel carregaTabela(String codigo){
-        DefaultTableModel tabela = new DefaultTableModel(null, new String[] {"Produto", "Quantidade por caixa", 
-            "Quantidade em unidade", "Valor compra unidade", "Valor venda unidade"});
+    public void carregaTabela(String codigo, DefaultTableModel tabela){
+        
+        tabela.setRowCount(0);
+        
+        String valorCompra = null, valorVenda = null;
+        DecimalFormat dffloat = new DecimalFormat("##,###.00");
         
         try{
             
-           String sql = "SELECT descricao, "
+            String sql = "SELECT descricao, "
                    + "quantidade_por_caixa, "
                    + "quantidade_em_unidade, "
                    + "valor_compra_unidade, "
                    + "valor_venda_unidade "
                    + "from produtos, produtos_centro_estoque, produtos_compra "
                    + "where produtos.id_produto = produtos_centro_estoque.id_produto and produtos_centro_estoque.id_centro_estoque ='"+codigo+"' and  produtos.id_produto = produtos_compra.id_produtos  and produtos.excluido = 0";  
-           PreparedStatement stmt = conexaoMySQL.prepareStatement(sql);  
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
            
-           ResultSet rs = stmt.executeQuery();  
-              
-            while(rs.next()){  
-               tabela.addRow(new Object[]{rs.getString(1),
-                                          rs.getString(2),
-                                          rs.getString(3),
-                                          rs.getString(4),
-                                          rs.getString(5)});
+            ResultSet rs = stmt.executeQuery();  
+            
+            while(rs.next())
+            {
+                valorCompra = dffloat.format(rs.getFloat(4));
+                if (valorCompra.equals(",00")) {
+                    valorCompra = "0,00";
+                }
+                valorVenda= dffloat.format(rs.getFloat(5));
+                if (valorVenda.equals(",00")) {
+                    valorVenda = "0,00";
+                }
+                
+                tabela.addRow(new Object[] {
+                    rs.getString(1),
+                    rs.getString(2),
+                    rs.getString(3),
+                    valorCompra,
+                    valorVenda
+                });
             }
+            
             rs.close();  
             stmt.close();
-            conexaoMySQL.close();
+            banco.FecharConexao();
 
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
-        
-        return tabela;
     }
     
     public String getCodigo(String nome){
