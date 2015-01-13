@@ -7,11 +7,14 @@ package barsystems;
 
 import barsystems.Login.Frm_Login;
 import barsystems.Venda.Painel_Venda;
+import barsystems.compras.Painel_compra;
+import barsystems.estoque.Class_estoque;
 import barsystems.estoque.Painel_estoque;
 import barsystems.fornecedores.Painel_Fornecedores;
 import barsystems.produtos.Painel_Produtos;
 import barsystems.usuarios.Painel_Usuarios;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -172,6 +175,11 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/add17.png"))); // NOI18N
         jMenuItem4.setText("Compras");
         jMenuItem4.setToolTipText("Realizar uma compra");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem4);
 
         jMenuBar1.add(jMenu3);
@@ -356,6 +364,14 @@ public class Principal extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        Painel_compra compra = new Painel_compra();
+        painel_principal.add(compra);
+        compra.setBounds(0, 0, 500, 500);
+        compra.setVisible(true);
+        compra.refreshTable();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments

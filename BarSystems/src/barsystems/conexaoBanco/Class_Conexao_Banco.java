@@ -23,7 +23,7 @@ public class Class_Conexao_Banco {
             Class.forName("com.mysql.jdbc.Driver");
 
             //Configurando a nossa conexão com um banco de dados
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/barsystems", "barsystems", "barsystems");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/barsystems", "root", "");
 
             //Testa sua conexão
             if (connection != null) {

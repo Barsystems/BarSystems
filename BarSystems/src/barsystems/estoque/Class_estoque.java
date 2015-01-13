@@ -58,6 +58,11 @@ public class Class_estoque {
         return listModel;
     }// FIM CARREGA LISTA
     
+    /**
+     * Carrega tabela com dados passados
+     * @param codigo
+     * @param tabela 
+     */
     public void carregaTabela(String codigo, DefaultTableModel tabela){
         
         tabela.setRowCount(0);
