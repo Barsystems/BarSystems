@@ -47,6 +47,7 @@ public class Painel_Venda extends javax.swing.JPanel {
         jComboBox1 = new javax.swing.JComboBox();
         jLabel6 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -70,7 +71,7 @@ public class Painel_Venda extends javax.swing.JPanel {
         jScrollPane4.setViewportView(jList2);
 
         jPanel1.add(jScrollPane4);
-        jScrollPane4.setBounds(0, 0, 150, 330);
+        jScrollPane4.setBounds(0, 0, 150, 300);
 
         lista_mesas_passantes.addTab("Mesas", jPanel1);
 
@@ -80,23 +81,23 @@ public class Painel_Venda extends javax.swing.JPanel {
         jScrollPane3.setViewportView(jList1);
 
         jPanel2.add(jScrollPane3);
-        jScrollPane3.setBounds(0, 0, 150, 330);
+        jScrollPane3.setBounds(0, 0, 150, 300);
 
         lista_mesas_passantes.addTab("Passantes", jPanel2);
 
         add(lista_mesas_passantes);
-        lista_mesas_passantes.setBounds(20, 110, 150, 360);
+        lista_mesas_passantes.setBounds(20, 110, 150, 330);
 
         btnNovoMesaPassante.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        btnNovoMesaPassante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plate7.png"))); // NOI18N
+        btnNovoMesaPassante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/covered16.png"))); // NOI18N
         btnNovoMesaPassante.setText("Abrir mesa");
         add(btnNovoMesaPassante);
-        btnNovoMesaPassante.setBounds(20, 480, 150, 30);
+        btnNovoMesaPassante.setBounds(20, 450, 150, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel2.setText("Mesas abertas");
+        jLabel2.setText("Contas em aberto");
         add(jLabel2);
-        jLabel2.setBounds(20, 90, 100, 17);
+        jLabel2.setBounds(20, 90, 120, 17);
 
         jTable1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -148,6 +149,7 @@ public class Painel_Venda extends javax.swing.JPanel {
         add(jLabel4);
         jLabel4.setBounds(640, 160, 130, 17);
 
+        //jTable2.getTableHeader().setFont(new java.awt.Font("Arial", 0, 12));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -213,6 +215,12 @@ public class Painel_Venda extends javax.swing.JPanel {
         jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         add(jTextField1);
         jTextField1.setBounds(390, 110, 190, 30);
+
+        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
+        jButton1.setText("Fechar conta");
+        add(jButton1);
+        jButton1.setBounds(20, 480, 150, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lista_mesas_passantesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_lista_mesas_passantesStateChanged
@@ -231,6 +239,7 @@ public class Painel_Venda extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNovoMesaPassante;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;

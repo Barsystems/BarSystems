@@ -45,6 +45,31 @@ public class Painel_Usuarios extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Cadastrar_Usuario = new javax.swing.JDialog();
+        jLabel7 = new javax.swing.JLabel();
+        txtNomeCadastrar = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txtSenhaCadastrar = new javax.swing.JPasswordField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btnSalvarCadastro = new javax.swing.JButton();
+        btnSairCadastro = new javax.swing.JButton();
+        comboTipoCadastrar = new javax.swing.JComboBox();
+        btnLimparCadastro = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        txtRepetirSenhaCadastro = new javax.swing.JPasswordField();
+        Alterar_Usuario = new javax.swing.JDialog();
+        jLabel11 = new javax.swing.JLabel();
+        txtNomeCadastrar1 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txtSenhaCadastrar1 = new javax.swing.JPasswordField();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        btnSalvarCadastro1 = new javax.swing.JButton();
+        btnSairCadastro1 = new javax.swing.JButton();
+        comboTipoCadastrar1 = new javax.swing.JComboBox();
+        jLabel15 = new javax.swing.JLabel();
+        txtRepetirSenhaCadastro1 = new javax.swing.JPasswordField();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listUsuarios = new javax.swing.JList();
@@ -55,11 +80,176 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         txtSenhaUsuario = new javax.swing.JPasswordField();
         jLabel6 = new javax.swing.JLabel();
         txtTipoUsuario = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnExcluir = new javax.swing.JButton();
+        btnNovo = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
+        btnSair = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+
+        Cadastrar_Usuario.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        Cadastrar_Usuario.setTitle("Novo cadastro");
+        Cadastrar_Usuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Cadastrar_Usuario.setModal(true);
+        Cadastrar_Usuario.setResizable(false);
+        Cadastrar_Usuario.getContentPane().setLayout(null);
+
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel7.setText("Usuário");
+        Cadastrar_Usuario.getContentPane().add(jLabel7);
+        jLabel7.setBounds(90, 90, 50, 17);
+
+        txtNomeCadastrar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtNomeCadastrar.setToolTipText("Até 15 caracteres");
+        Cadastrar_Usuario.getContentPane().add(txtNomeCadastrar);
+        txtNomeCadastrar.setBounds(150, 80, 260, 30);
+
+        jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel8.setText("Senha");
+        Cadastrar_Usuario.getContentPane().add(jLabel8);
+        jLabel8.setBounds(100, 130, 41, 17);
+
+        txtSenhaCadastrar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtSenhaCadastrar.setToolTipText("Até 15 caracteres");
+        Cadastrar_Usuario.getContentPane().add(txtSenhaCadastrar);
+        txtSenhaCadastrar.setBounds(150, 120, 260, 30);
+
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel9.setText("Tipo");
+        Cadastrar_Usuario.getContentPane().add(jLabel9);
+        jLabel9.setBounds(110, 210, 28, 17);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/business60 (1).png"))); // NOI18N
+        jLabel3.setText("Novo cadastro");
+        Cadastrar_Usuario.getContentPane().add(jLabel3);
+        jLabel3.setBounds(0, 30, 460, 29);
+
+        btnSalvarCadastro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnSalvarCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
+        btnSalvarCadastro.setText("Salvar");
+        btnSalvarCadastro.setToolTipText("Salvar cadastro do usuário");
+        btnSalvarCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarCadastroActionPerformed(evt);
+            }
+        });
+        Cadastrar_Usuario.getContentPane().add(btnSalvarCadastro);
+        btnSalvarCadastro.setBounds(70, 280, 100, 30);
+
+        btnSairCadastro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnSairCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
+        btnSairCadastro.setText("Sair");
+        btnSairCadastro.setToolTipText("Cancelar o cadastro do usuário");
+        btnSairCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairCadastroActionPerformed(evt);
+            }
+        });
+        Cadastrar_Usuario.getContentPane().add(btnSairCadastro);
+        btnSairCadastro.setBounds(290, 280, 100, 30);
+
+        comboTipoCadastrar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        comboTipoCadastrar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador", "Normal" }));
+        comboTipoCadastrar.setToolTipText("Escolha o tipo deste usuário");
+        Cadastrar_Usuario.getContentPane().add(comboTipoCadastrar);
+        comboTipoCadastrar.setBounds(150, 200, 260, 30);
+
+        btnLimparCadastro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnLimparCadastro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
+        btnLimparCadastro.setText("Limpar");
+        btnLimparCadastro.setToolTipText("Limpar campos e recomeçar cadastro");
+        btnLimparCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparCadastroActionPerformed(evt);
+            }
+        });
+        Cadastrar_Usuario.getContentPane().add(btnLimparCadastro);
+        btnLimparCadastro.setBounds(180, 280, 100, 30);
+
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setText(" Repita a senha");
+        Cadastrar_Usuario.getContentPane().add(jLabel10);
+        jLabel10.setBounds(40, 170, 110, 17);
+
+        txtRepetirSenhaCadastro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtRepetirSenhaCadastro.setToolTipText("Repita a senha");
+        Cadastrar_Usuario.getContentPane().add(txtRepetirSenhaCadastro);
+        txtRepetirSenhaCadastro.setBounds(150, 160, 260, 30);
+
+        Alterar_Usuario.getContentPane().setLayout(null);
+
+        jLabel11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel11.setText("Usuário");
+        Alterar_Usuario.getContentPane().add(jLabel11);
+        jLabel11.setBounds(90, 90, 50, 17);
+
+        txtNomeCadastrar1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtNomeCadastrar1.setToolTipText("Até 15 caracteres");
+        Alterar_Usuario.getContentPane().add(txtNomeCadastrar1);
+        txtNomeCadastrar1.setBounds(150, 80, 260, 30);
+
+        jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel12.setText("Senha");
+        Alterar_Usuario.getContentPane().add(jLabel12);
+        jLabel12.setBounds(100, 130, 41, 17);
+
+        txtSenhaCadastrar1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtSenhaCadastrar1.setToolTipText("Até 15 caracteres");
+        Alterar_Usuario.getContentPane().add(txtSenhaCadastrar1);
+        txtSenhaCadastrar1.setBounds(150, 120, 260, 30);
+
+        jLabel13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel13.setText("Tipo");
+        Alterar_Usuario.getContentPane().add(jLabel13);
+        jLabel13.setBounds(110, 210, 28, 17);
+
+        jLabel14.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/business60 (1).png"))); // NOI18N
+        jLabel14.setText("Novo cadastro");
+        Alterar_Usuario.getContentPane().add(jLabel14);
+        jLabel14.setBounds(0, 30, 460, 29);
+
+        btnSalvarCadastro1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnSalvarCadastro1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
+        btnSalvarCadastro1.setText("Salvar");
+        btnSalvarCadastro1.setToolTipText("Salvar edição do usuário");
+        btnSalvarCadastro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarCadastro1ActionPerformed(evt);
+            }
+        });
+        Alterar_Usuario.getContentPane().add(btnSalvarCadastro1);
+        btnSalvarCadastro1.setBounds(130, 280, 100, 30);
+
+        btnSairCadastro1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnSairCadastro1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
+        btnSairCadastro1.setText("Sair");
+        btnSairCadastro1.setToolTipText("Cancelar as edições do usuário");
+        btnSairCadastro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairCadastro1ActionPerformed(evt);
+            }
+        });
+        Alterar_Usuario.getContentPane().add(btnSairCadastro1);
+        btnSairCadastro1.setBounds(240, 280, 100, 30);
+
+        comboTipoCadastrar1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        comboTipoCadastrar1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador", "Normal" }));
+        comboTipoCadastrar1.setToolTipText("Escolha o tipo deste usuário");
+        Alterar_Usuario.getContentPane().add(comboTipoCadastrar1);
+        comboTipoCadastrar1.setBounds(150, 200, 260, 30);
+
+        jLabel15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel15.setText(" Repita a senha");
+        Alterar_Usuario.getContentPane().add(jLabel15);
+        jLabel15.setBounds(40, 170, 110, 17);
+
+        txtRepetirSenhaCadastro1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtRepetirSenhaCadastro1.setToolTipText("Repita a senha");
+        Alterar_Usuario.getContentPane().add(txtRepetirSenhaCadastro1);
+        txtRepetirSenhaCadastro1.setBounds(150, 160, 260, 30);
 
         setLayout(null);
 
@@ -68,16 +258,16 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/business60 (1).png"))); // NOI18N
         jLabel1.setText("Manutenção do cadastro de usuários");
         add(jLabel1);
-        jLabel1.setBounds(0, 30, 550, 29);
+        jLabel1.setBounds(0, 30, 560, 29);
 
         jScrollPane1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         listUsuarios.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         listUsuarios.setSelectionBackground(new java.awt.Color(204, 255, 255));
         listUsuarios.setSelectionForeground(new java.awt.Color(0, 0, 0));
-        listUsuarios.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                listUsuariosMouseClicked(evt);
+        listUsuarios.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                listUsuariosValueChanged(evt);
             }
         });
         jScrollPane1.setViewportView(listUsuarios);
@@ -120,68 +310,192 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         add(txtTipoUsuario);
         txtTipoUsuario.setBounds(320, 200, 200, 30);
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
-        jButton3.setText("Excluir");
-        add(jButton3);
-        jButton3.setBounds(280, 430, 100, 30);
+        btnExcluir.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
+        btnExcluir.setText("Excluir");
+        btnExcluir.setToolTipText("Excluir cadastro de um usuário");
+        add(btnExcluir);
+        btnExcluir.setBounds(280, 430, 100, 30);
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plus24.png"))); // NOI18N
-        jButton1.setText("Novo");
-        add(jButton1);
-        jButton1.setBounds(60, 430, 100, 30);
-
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
-        jButton2.setText("Alterar");
-        add(jButton2);
-        jButton2.setBounds(170, 430, 100, 30);
-
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
-        jButton4.setText("Sair");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnNovo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plus24.png"))); // NOI18N
+        btnNovo.setText("Novo");
+        btnNovo.setToolTipText("Cadastrar novo usuário");
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnNovoActionPerformed(evt);
             }
         });
-        add(jButton4);
-        jButton4.setBounds(390, 430, 100, 30);
+        add(btnNovo);
+        btnNovo.setBounds(60, 430, 100, 30);
+
+        btnAlterar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnAlterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
+        btnAlterar.setText("Alterar");
+        btnAlterar.setToolTipText("Alterar informações do cadastro de um usuário");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
+        add(btnAlterar);
+        btnAlterar.setBounds(170, 430, 100, 30);
+
+        btnSair.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
+        btnSair.setText("Sair");
+        btnSair.setToolTipText("Fechar a tela de cadastro de usuários");
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
+        add(btnSair);
+        btnSair.setBounds(390, 430, 100, 30);
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/magnifier12.png"))); // NOI18N
         add(jButton6);
         jButton6.setBounds(189, 90, 40, 30);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         
         int index = principal.verificaMenuAberto("Usuários");
         painelPrincipal.remove(index);
         
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_btnSairActionPerformed
 
-    private void listUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listUsuariosMouseClicked
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        
+        txtNomeCadastrar.setText("");
+        txtSenhaCadastrar.setText("");
+        txtRepetirSenhaCadastro.setText("");
+        comboTipoCadastrar.setSelectedIndex(0);
+        
+        Cadastrar_Usuario.setBounds(0, 0, 460, 370);
+        Cadastrar_Usuario.setLocationRelativeTo(null);
+        Cadastrar_Usuario.setVisible(true);
+        txtNomeCadastrar.grabFocus();
+        
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnLimparCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparCadastroActionPerformed
+        
+        txtNomeCadastrar.setText("");
+        txtSenhaCadastrar.setText("");
+        comboTipoCadastrar.setSelectedIndex(0);
+        
+        txtNomeCadastrar.grabFocus();
+        
+    }//GEN-LAST:event_btnLimparCadastroActionPerformed
+
+    private void btnSairCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairCadastroActionPerformed
+        
+        Cadastrar_Usuario.dispose();
+        
+    }//GEN-LAST:event_btnSairCadastroActionPerformed
+
+    private void btnSalvarCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCadastroActionPerformed
+        
+        if (txtNomeCadastrar.getText().equals("") || txtSenhaCadastrar.getText().equals("") ||
+                txtRepetirSenhaCadastro.getText().equals("")) 
+        {
+            JOptionPane.showMessageDialog(null, "Não pode haver campos vazios!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } 
+        else if (!txtSenhaCadastrar.getText().equals(txtRepetirSenhaCadastro.getText())) 
+        {
+            JOptionPane.showMessageDialog(null, "As senhas não coincidem! Reescreva a senha novamente!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtRepetirSenhaCadastro.selectAll();
+            txtRepetirSenhaCadastro.grabFocus();
+        } 
+        else 
+        {
+            Class_Usuarios usuarios = new Class_Usuarios(
+                    txtNomeCadastrar.getText(), 
+                    txtSenhaCadastrar.getText(), 
+                    comboTipoCadastrar.getSelectedItem().toString()
+            );
+            
+            boolean result = usuarios.cadastra(txtNomeCadastrar.getText(), txtSenhaCadastrar.getText(), 
+                    comboTipoCadastrar.getSelectedItem().toString());
+            if (result == false) 
+            {
+                JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                txtNomeUsuario.setText("");
+                txtSenhaUsuario.setText("");
+                txtTipoUsuario.setText("");
+                
+                Cadastrar_Usuario.dispose();
+                refreshList();
+            } 
+            else 
+            {
+                JOptionPane.showMessageDialog(null, "Falha ao cadastrar usuário!", "Atenção", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        
+    }//GEN-LAST:event_btnSalvarCadastroActionPerformed
+
+    private void listUsuariosValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_listUsuariosValueChanged
         
         refreshCampos();
         
-    }//GEN-LAST:event_listUsuariosMouseClicked
+    }//GEN-LAST:event_listUsuariosValueChanged
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        
+        
+        
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnSalvarCadastro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCadastro1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalvarCadastro1ActionPerformed
+
+    private void btnSairCadastro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairCadastro1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSairCadastro1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JDialog Alterar_Usuario;
+    private javax.swing.JDialog Cadastrar_Usuario;
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnExcluir;
+    private javax.swing.JButton btnLimparCadastro;
+    private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnSairCadastro;
+    private javax.swing.JButton btnSairCadastro1;
+    private javax.swing.JButton btnSalvarCadastro;
+    private javax.swing.JButton btnSalvarCadastro1;
+    private javax.swing.JComboBox comboTipoCadastrar;
+    private javax.swing.JComboBox comboTipoCadastrar1;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList listUsuarios;
+    private javax.swing.JTextField txtNomeCadastrar;
+    private javax.swing.JTextField txtNomeCadastrar1;
     private javax.swing.JTextField txtNomeUsuario;
+    private javax.swing.JPasswordField txtRepetirSenhaCadastro;
+    private javax.swing.JPasswordField txtRepetirSenhaCadastro1;
+    private javax.swing.JPasswordField txtSenhaCadastrar;
+    private javax.swing.JPasswordField txtSenhaCadastrar1;
     private javax.swing.JPasswordField txtSenhaUsuario;
     private javax.swing.JTextField txtTipoUsuario;
     // End of variables declaration//GEN-END:variables

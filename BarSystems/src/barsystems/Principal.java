@@ -5,6 +5,7 @@
  */
 package barsystems;
 
+import barsystems.Caixa.Painel_Caixa;
 import barsystems.Login.Frm_Login;
 import barsystems.Venda.Painel_Venda;
 import barsystems.compras.Painel_compra;
@@ -79,7 +80,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        menuItemCaixa = new javax.swing.JMenuItem();
+        menuItemVenda = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         menuSistema = new javax.swing.JMenu();
         menuItemTrocarUsuario = new javax.swing.JMenuItem();
@@ -187,16 +189,29 @@ public class Principal extends javax.swing.JFrame {
         jMenu4.setText("Bar");
         jMenu4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        jMenuItem8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenuItem8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/covered16.png"))); // NOI18N
-        jMenuItem8.setText("Venda");
-        jMenuItem8.setToolTipText("Realizar uma venda");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        menuItemCaixa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        menuItemCaixa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png"))); // NOI18N
+        menuItemCaixa.setText("Caixa");
+        menuItemCaixa.setToolTipText("Gerenciar caixa");
+        menuItemCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                menuItemCaixaActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem8);
+        jMenu4.add(menuItemCaixa);
+
+        menuItemVenda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
+        menuItemVenda.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/covered16.png"))); // NOI18N
+        menuItemVenda.setText("Venda");
+        menuItemVenda.setToolTipText("Realizar uma venda");
+        menuItemVenda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemVendaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(menuItemVenda);
 
         jMenuBar1.add(jMenu4);
 
@@ -347,7 +362,7 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_menuItemCadastroUsuariosActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void menuItemVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemVendaActionPerformed
         
         int index = verificaMenuAberto("Vendas");
         if (index >= 0)
@@ -363,7 +378,26 @@ public class Principal extends javax.swing.JFrame {
             painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
         }
         
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+    }//GEN-LAST:event_menuItemVendaActionPerformed
+
+    private void menuItemCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCaixaActionPerformed
+        
+        int index = verificaMenuAberto("Caixa");
+        if (index >= 0)
+        {
+            painel_principal.setSelectedIndex(index);
+        }
+        else
+        {
+            Painel_Caixa caixa = new Painel_Caixa(this, painel_principal);
+            painel_principal.add("Caixa", caixa);
+            caixa.refreshMovimentacaoCaixa();
+            caixa.setBounds(0, 0, 1000, 700);
+            caixa.setVisible(true);
+            painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+        }
+        
+    }//GEN-LAST:event_menuItemCaixaActionPerformed
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         Painel_compra compra = new Painel_compra();
@@ -418,13 +452,14 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenu menuCadastros;
     private javax.swing.JMenuItem menuItemCadastroFornecedores;
     private javax.swing.JMenuItem menuItemCadastroProdutos;
     private javax.swing.JMenuItem menuItemCadastroUsuarios;
+    private javax.swing.JMenuItem menuItemCaixa;
     private javax.swing.JMenuItem menuItemSair;
     private javax.swing.JMenuItem menuItemTrocarUsuario;
+    private javax.swing.JMenuItem menuItemVenda;
     private javax.swing.JMenu menuSistema;
     private javax.swing.JTabbedPane painel_principal;
     // End of variables declaration//GEN-END:variables

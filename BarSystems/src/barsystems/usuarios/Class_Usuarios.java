@@ -2,10 +2,11 @@
 package barsystems.usuarios;
 
 import barsystems.conexaoBanco.Class_Conexao_Banco;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 public class Class_Usuarios {
     
@@ -16,8 +17,7 @@ public class Class_Usuarios {
         
     }
     
-    public Class_Usuarios(String id_usuario, String nome, String tipo, String senha) {
-        this.id_usuario = id_usuario;
+    public Class_Usuarios(String nome, String tipo, String senha) {
         this.nome = nome;
         this.tipo = tipo;
         this.senha = senha;
@@ -88,6 +88,34 @@ public class Class_Usuarios {
         catch (Exception e) 
         {
             e.printStackTrace();
+        }
+        
+    }
+    
+    public boolean cadastra(String nome, String senha, String tipo) {
+        
+        String sql = "INSERT INTO usuarios(nome, senha, tipo) VALUES(?,?,?)";    
+    
+        try {    
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);    
+            stmt.setString(1, nome);
+            stmt.setString(2, senha);    
+            stmt.setString(3, tipo);    
+
+            if(!stmt.execute()){
+                stmt.close();
+                banco.FecharConexao();
+                return false;
+            }
+            else{
+                stmt.execute();
+                stmt.close();
+                banco.FecharConexao();
+                JOptionPane.showMessageDialog(null,"Usuário cadastrado com sucesso!");
+                return true;
+            }
+        } catch (SQLException u) {    
+            throw new RuntimeException(u);
         }
         
     }

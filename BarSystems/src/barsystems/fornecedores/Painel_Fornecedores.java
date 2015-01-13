@@ -748,7 +748,7 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
             boolean result = enviar.Cadastra();
             if(!result)
             {
-                JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Fornecedor cadastrado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
                 nome_fornecedor1.setText("");
                 fantasia_fornecedor1.setText("");
                 cnpj_fornecedor1.setText("");
@@ -761,12 +761,12 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
                 inscricao_fornecedor1.setText("");
                 obs_fornecedor1.setText("");
  
-                Novo_fornecedor.setVisible(false);
+                Novo_fornecedor.dispose();
                 refreshList();            
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Falha ao cadastrar produto!", "Atenção", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Falha ao cadastrar Fornecedor!", "Atenção", JOptionPane.ERROR_MESSAGE);
             }
         }
         
