@@ -6,15 +6,30 @@ import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Painel_Caixa extends javax.swing.JPanel {
+    
+    protected String id_usuario, nome_usuario, id_caixa;
 
-    public Painel_Caixa(Principal principal, JTabbedPane tabelaPrincipal) {
+    public Painel_Caixa(Principal principal, JTabbedPane tabelaPrincipal, String id_usuario, String nome_usuario) {
         initComponents();
+        
+        this.id_usuario = id_usuario;
+        this.nome_usuario = nome_usuario;
+        
+        lblTituloCaixa.setText("Gerenciamento de caixa: Usuario "+this.nome_usuario);
     }
     
     public void refreshMovimentacaoCaixa() {
         
         Class_Caixa caixa = new Class_Caixa();
-        caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel());
+        if (caixa.verificaCaixaAberto(id_usuario) == true) 
+        {
+            caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel());
+            btnAbrirFecharCaixa.setText("Fechar caixa");
+        } 
+        else 
+        {
+            btnAbrirFecharCaixa.setText("Abrir caixa");
+        }
         
     }
 
@@ -27,22 +42,22 @@ public class Painel_Caixa extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblTituloCaixa = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaMovimentacoesCaixa = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnAbrirFecharCaixa = new javax.swing.JButton();
+        btnNovoLancamento = new javax.swing.JButton();
+        btnAlterarLancamento = new javax.swing.JButton();
+        btnExcluirLancamento = new javax.swing.JButton();
 
         setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15.png"))); // NOI18N
-        jLabel1.setText("Gerenciamento de caixa por usuário");
-        add(jLabel1);
-        jLabel1.setBounds(0, 30, 930, 29);
+        lblTituloCaixa.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        lblTituloCaixa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15.png"))); // NOI18N
+        lblTituloCaixa.setText("Gerenciamento de caixa por usuário");
+        add(lblTituloCaixa);
+        lblTituloCaixa.setBounds(0, 30, 930, 29);
 
         tabelaMovimentacoesCaixa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabelaMovimentacoesCaixa.setModel(new javax.swing.table.DefaultTableModel(
@@ -84,39 +99,59 @@ public class Painel_Caixa extends javax.swing.JPanel {
         add(jScrollPane1);
         jScrollPane1.setBounds(20, 120, 890, 300);
 
-        jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png"))); // NOI18N
-        jButton1.setText("Abrir caixa");
-        add(jButton1);
-        jButton1.setBounds(20, 80, 170, 30);
+        btnAbrirFecharCaixa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnAbrirFecharCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png"))); // NOI18N
+        btnAbrirFecharCaixa.setText("Abrir caixa");
+        btnAbrirFecharCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAbrirFecharCaixaActionPerformed(evt);
+            }
+        });
+        add(btnAbrirFecharCaixa);
+        btnAbrirFecharCaixa.setBounds(20, 80, 170, 30);
 
-        jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plus24.png"))); // NOI18N
-        jButton2.setText("Novo lançamento");
-        add(jButton2);
-        jButton2.setBounds(180, 450, 190, 30);
+        btnNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnNovoLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plus24.png"))); // NOI18N
+        btnNovoLancamento.setText("Novo lançamento");
+        add(btnNovoLancamento);
+        btnNovoLancamento.setBounds(170, 460, 180, 30);
 
-        jButton3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
-        jButton3.setText("Alterar lancaçamento");
-        add(jButton3);
-        jButton3.setBounds(380, 450, 190, 30);
+        btnAlterarLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnAlterarLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
+        btnAlterarLancamento.setText("Alterar lançamento");
+        add(btnAlterarLancamento);
+        btnAlterarLancamento.setBounds(360, 460, 180, 30);
 
-        jButton4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
-        jButton4.setText("Excluir lançamento");
-        add(jButton4);
-        jButton4.setBounds(580, 450, 190, 30);
+        btnExcluirLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnExcluirLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
+        btnExcluirLancamento.setText("Excluir lançamento");
+        add(btnExcluirLancamento);
+        btnExcluirLancamento.setBounds(550, 460, 180, 30);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAbrirFecharCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirFecharCaixaActionPerformed
+        
+        if (btnAbrirFecharCaixa.getText().equals("Abrir caixa")) 
+        {
+            Class_Caixa caixa = new Class_Caixa();
+            caixa.abrirCaixa();
+            
+        } 
+        else 
+        {
+            
+        }
+        
+    }//GEN-LAST:event_btnAbrirFecharCaixaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnAbrirFecharCaixa;
+    private javax.swing.JButton btnAlterarLancamento;
+    private javax.swing.JButton btnExcluirLancamento;
+    private javax.swing.JButton btnNovoLancamento;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTituloCaixa;
     private javax.swing.JTable tabelaMovimentacoesCaixa;
     // End of variables declaration//GEN-END:variables
 }

@@ -120,4 +120,22 @@ public class Class_Usuarios {
         
     }
     
+    public String retornaIdUsuario(String nome_usuario) {
+        String id_usuario = null;
+        try {
+            String query = "select nome from usuarios where id_usuario = '"+nome_usuario+"'";
+            PreparedStatement ps = banco.getConexaoMySQL().prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                id_usuario = rs.getString("id_usuario");
+            }
+            rs.close();
+            ps.close();
+            banco.FecharConexao();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id_usuario;
+    }
+    
 }

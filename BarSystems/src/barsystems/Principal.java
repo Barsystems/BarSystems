@@ -14,6 +14,7 @@ import barsystems.estoque.Painel_estoque;
 import barsystems.fornecedores.Painel_Fornecedores;
 import barsystems.produtos.Painel_Produtos;
 import barsystems.usuarios.Painel_Usuarios;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,12 +24,23 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Principal extends javax.swing.JFrame {
 
+    protected String id_usuario, nome_usuario;
     
     /**
      * Creates new form Principal
      */
     public Principal() {
         initComponents();
+    }
+    
+    public Principal(String id_usuario, String nome_usuario) {
+        initComponents();
+        
+        this.id_usuario = id_usuario;
+        this.nome_usuario = nome_usuario;
+        
+        menuItemCaixaActionPerformed(null);
+        menuItemVendaActionPerformed(null);
     }
     
     public void gerarTamanhoTela() {
@@ -372,7 +384,7 @@ public class Principal extends javax.swing.JFrame {
         else
         {
             Painel_Venda venda = new Painel_Venda(this, painel_principal);
-            painel_principal.add("Vendas", venda);
+            painel_principal.addTab("Vendas   ", new ImageIcon(getClass().getResource("/barsystems/imagens/covered16.png")),venda, "Gerencie mesas e venda produtos!");
             venda.setBounds(0, 0, 1000, 700);
             venda.setVisible(true);
             painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
@@ -389,8 +401,8 @@ public class Principal extends javax.swing.JFrame {
         }
         else
         {
-            Painel_Caixa caixa = new Painel_Caixa(this, painel_principal);
-            painel_principal.add("Caixa", caixa);
+            Painel_Caixa caixa = new Painel_Caixa(this, painel_principal, this.id_usuario, this.nome_usuario);
+            painel_principal.addTab("Caixa   ", new ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png")), caixa, "Gerencie seu caixa!");
             caixa.refreshMovimentacaoCaixa();
             caixa.setBounds(0, 0, 1000, 700);
             caixa.setVisible(true);
