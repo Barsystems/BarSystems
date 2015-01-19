@@ -3,6 +3,7 @@ package barsystems.Login;
 
 import barsystems.conexaoBanco.Class_Conexao_Banco;
 import java.awt.HeadlessException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,21 +21,22 @@ public class Class_Login {
         try
         {
             Class_Conexao_Banco banco = new Class_Conexao_Banco();
-            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement("Select Nome, Senha from usuarios "
+            Connection con = banco.getConexaoMySQL();
+            PreparedStatement stmt = con.prepareStatement("Select Nome, Senha from usuarios "
                     + "where Nome = '"+Usuario+"' and Senha = '"+Senha+"'");
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) 
             {
                 rs.close();
                 stmt.close();
-                banco.FecharConexao();
+                con.close();
                 return true;
             } 
             else 
             {
                 rs.close();
                 stmt.close();
-                banco.FecharConexao();
+                con.close();
                 return false;
             }
             

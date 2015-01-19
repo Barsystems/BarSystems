@@ -121,7 +121,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
         cadastro_produtos.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         cadastro_produtos.setTitle("Novo cadastro");
         cadastro_produtos.setModal(true);
-        cadastro_produtos.setPreferredSize(new java.awt.Dimension(400, 400));
         cadastro_produtos.setResizable(false);
         cadastro_produtos.getContentPane().setLayout(null);
 
@@ -236,7 +235,6 @@ public class Painel_Produtos extends javax.swing.JPanel {
         editar_produtos.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         editar_produtos.setTitle("Alteração de dados");
         editar_produtos.setModal(true);
-        editar_produtos.setPreferredSize(new java.awt.Dimension(400, 400));
         editar_produtos.setResizable(false);
         editar_produtos.getContentPane().setLayout(null);
 

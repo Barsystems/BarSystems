@@ -1,21 +1,25 @@
 
 package barsystems.Caixa;
 
+import barsystems.Class_Consumir_Letras;
 import barsystems.Principal;
+import java.text.DecimalFormat;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 
 public class Painel_Caixa extends javax.swing.JPanel {
     
-    protected String id_usuario, nome_usuario, id_caixa;
+    protected String nome_usuario;
+    protected int id_usuario;
 
-    public Painel_Caixa(Principal principal, JTabbedPane tabelaPrincipal, String id_usuario, String nome_usuario) {
+    public Painel_Caixa(Principal principal, JTabbedPane tabelaPrincipal, int id_usuario, String nome_usuario) {
         initComponents();
         
         this.id_usuario = id_usuario;
         this.nome_usuario = nome_usuario;
         
-        lblTituloCaixa.setText("Gerenciamento de caixa: Usuario "+this.nome_usuario);
+        lblTituloCaixa.setText("Gerenciamento de caixa: Usuário "+this.nome_usuario);
     }
     
     public void refreshMovimentacaoCaixa() {
@@ -23,7 +27,8 @@ public class Painel_Caixa extends javax.swing.JPanel {
         Class_Caixa caixa = new Class_Caixa();
         if (caixa.verificaCaixaAberto(id_usuario) == true) 
         {
-            caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel());
+            int id_caixa = caixa.getIdCaixa(id_usuario);
+            caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel(), id_caixa);
             btnAbrirFecharCaixa.setText("Fechar caixa");
         } 
         else 
@@ -42,6 +47,21 @@ public class Painel_Caixa extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        Novo_Lancamento = new javax.swing.JDialog();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jComboBox2 = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        jTextField2 = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTextField3 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         lblTituloCaixa = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaMovimentacoesCaixa = new javax.swing.JTable();
@@ -49,6 +69,89 @@ public class Painel_Caixa extends javax.swing.JPanel {
         btnNovoLancamento = new javax.swing.JButton();
         btnAlterarLancamento = new javax.swing.JButton();
         btnExcluirLancamento = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+
+        Novo_Lancamento.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        Novo_Lancamento.setTitle("Lançamento avulso no caixa");
+        Novo_Lancamento.setModal(true);
+        Novo_Lancamento.getContentPane().setLayout(null);
+
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15.png"))); // NOI18N
+        jLabel1.setText("Lançamento avulso no caixa");
+        Novo_Lancamento.getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 30, 671, 30);
+
+        jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel2.setText("Descrição do lançamento");
+        Novo_Lancamento.getContentPane().add(jLabel2);
+        jLabel2.setBounds(40, 140, 170, 17);
+
+        jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_Lancamento.getContentPane().add(jTextField1);
+        jTextField1.setBounds(220, 130, 410, 30);
+
+        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel3.setText(" Forma de pagamento");
+        Novo_Lancamento.getContentPane().add(jLabel3);
+        jLabel3.setBounds(60, 180, 150, 17);
+
+        jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel4.setText(" Tipo de lançamento");
+        Novo_Lancamento.getContentPane().add(jLabel4);
+        jLabel4.setBounds(70, 100, 140, 17);
+
+        jComboBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Receita", "Despesa" }));
+        Novo_Lancamento.getContentPane().add(jComboBox1);
+        jComboBox1.setBounds(220, 90, 410, 30);
+
+        jComboBox2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cartão de débito", "Cartão de crédito - Visa", "Cartão de crédito - MasterCard", "Cartão de crédito - Elo", "Cartão de crédito - Diners", "Cheque pré", "Cheque a vista" }));
+        Novo_Lancamento.getContentPane().add(jComboBox2);
+        jComboBox2.setBounds(220, 170, 410, 30);
+
+        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel5.setText("Número de parcelas");
+        Novo_Lancamento.getContentPane().add(jLabel5);
+        jLabel5.setBounds(70, 220, 130, 17);
+
+        jTextField2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_Lancamento.getContentPane().add(jTextField2);
+        jTextField2.setBounds(220, 210, 60, 30);
+
+        jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel6.setText("Valor do lançamento");
+        Novo_Lancamento.getContentPane().add(jLabel6);
+        jLabel6.setBounds(310, 220, 140, 17);
+
+        jTextField3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Novo_Lancamento.getContentPane().add(jTextField3);
+        jTextField3.setBounds(460, 210, 170, 30);
+
+        jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
+        jButton2.setText("Salvar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        Novo_Lancamento.getContentPane().add(jButton2);
+        jButton2.setBounds(170, 310, 100, 30);
+
+        jButton3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
+        jButton3.setText("Limpar");
+        Novo_Lancamento.getContentPane().add(jButton3);
+        jButton3.setBounds(280, 310, 100, 30);
+
+        jButton4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
+        jButton4.setText("Sair");
+        Novo_Lancamento.getContentPane().add(jButton4);
+        jButton4.setBounds(390, 310, 100, 30);
 
         setLayout(null);
 
@@ -85,6 +188,7 @@ public class Painel_Caixa extends javax.swing.JPanel {
         });
         tabelaMovimentacoesCaixa.setToolTipText("Movimentações do caixa");
         tabelaMovimentacoesCaixa.setRowHeight(25);
+        tabelaMovimentacoesCaixa.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabelaMovimentacoesCaixa);
         if (tabelaMovimentacoesCaixa.getColumnModel().getColumnCount() > 0) {
             tabelaMovimentacoesCaixa.getColumnModel().getColumn(0).setPreferredWidth(250);
@@ -102,6 +206,7 @@ public class Painel_Caixa extends javax.swing.JPanel {
         btnAbrirFecharCaixa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnAbrirFecharCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png"))); // NOI18N
         btnAbrirFecharCaixa.setText("Abrir caixa");
+        btnAbrirFecharCaixa.setToolTipText("Abra e feche o caixa clicando neste botão");
         btnAbrirFecharCaixa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAbrirFecharCaixaActionPerformed(evt);
@@ -113,29 +218,58 @@ public class Painel_Caixa extends javax.swing.JPanel {
         btnNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnNovoLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plus24.png"))); // NOI18N
         btnNovoLancamento.setText("Novo lançamento");
+        btnNovoLancamento.setToolTipText("Faça lançamentos de receita e despesa no caixa");
+        btnNovoLancamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoLancamentoActionPerformed(evt);
+            }
+        });
         add(btnNovoLancamento);
         btnNovoLancamento.setBounds(170, 460, 180, 30);
 
         btnAlterarLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnAlterarLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
         btnAlterarLancamento.setText("Alterar lançamento");
+        btnAlterarLancamento.setToolTipText("Altere as informações de algum lançamento");
         add(btnAlterarLancamento);
         btnAlterarLancamento.setBounds(360, 460, 180, 30);
 
         btnExcluirLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnExcluirLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
         btnExcluirLancamento.setText("Excluir lançamento");
+        btnExcluirLancamento.setToolTipText("Exclua lançamentos indesejados");
         add(btnExcluirLancamento);
         btnExcluirLancamento.setBounds(550, 460, 180, 30);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/printer11.png"))); // NOI18N
+        jButton1.setToolTipText("Imprima a movimentação deste caixa");
+        add(jButton1);
+        jButton1.setBounds(190, 80, 50, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAbrirFecharCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrirFecharCaixaActionPerformed
         
         if (btnAbrirFecharCaixa.getText().equals("Abrir caixa")) 
         {
-            Class_Caixa caixa = new Class_Caixa();
-            caixa.abrirCaixa();
-            
+            if (JOptionPane.showConfirmDialog(null, "Deseja realmente abrir o caixa?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) {
+                String valor = JOptionPane.showInputDialog(null, "Informe o valor de abertura", "Atenção", JOptionPane.PLAIN_MESSAGE);
+                String valorAtualizado = "";
+                String caracteres = "1234567890,.";
+                for (int i = 0; i < valor.length(); i++) 
+                {
+                    if (caracteres.contains(String.valueOf(valor.charAt(i)))) 
+                    {
+                        valorAtualizado = valorAtualizado + String.valueOf(valor.charAt(i));
+                    }
+                }
+                
+                Class_Caixa caixa = new Class_Caixa();
+                caixa.abrirCaixa(id_usuario);
+                int id_caixa = caixa.getIdCaixa(id_usuario);
+                caixa.registraMovimentacaoCaixa(id_caixa, "Abertura do caixa", "Dinheiro", 1, valorAtualizado, "Abertura", id_usuario);
+                caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel(), id_caixa);
+                btnAbrirFecharCaixa.setText("Fechar caixa");
+            }
         } 
         else 
         {
@@ -144,13 +278,45 @@ public class Painel_Caixa extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnAbrirFecharCaixaActionPerformed
 
+    private void btnNovoLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoLancamentoActionPerformed
+        
+        if (btnAbrirFecharCaixa.getText().equals("Abrir caixa")) {
+            JOptionPane.showMessageDialog(null, "Abra uma caixa para fazer um lançamento!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Novo_Lancamento.setBounds(0, 0, 690, 410);
+            Novo_Lancamento.setLocationRelativeTo(null);
+            Novo_Lancamento.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_btnNovoLancamentoActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog Novo_Lancamento;
     private javax.swing.JButton btnAbrirFecharCaixa;
     private javax.swing.JButton btnAlterarLancamento;
     private javax.swing.JButton btnExcluirLancamento;
     private javax.swing.JButton btnNovoLancamento;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JComboBox jComboBox2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lblTituloCaixa;
     private javax.swing.JTable tabelaMovimentacoesCaixa;
     // End of variables declaration//GEN-END:variables

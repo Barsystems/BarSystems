@@ -2,6 +2,7 @@
 package barsystems.usuarios;
 
 import barsystems.conexaoBanco.Class_Conexao_Banco;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class Class_Usuarios {
     
-    protected Class_Conexao_Banco banco = new Class_Conexao_Banco();
+    Class_Conexao_Banco banco = new Class_Conexao_Banco();
     protected String id_usuario, nome, tipo, senha;
     
     public Class_Usuarios() {
@@ -45,8 +46,9 @@ public class Class_Usuarios {
         
         try 
         {
+            Connection con = banco.getConexaoMySQL();
             String sql = "SELECT nome from usuarios WHERE excluido = 0 order by nome";
-            PreparedStatement st = banco.getConexaoMySQL().prepareStatement(sql);
+            PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) 
             {
@@ -55,7 +57,7 @@ public class Class_Usuarios {
             
             rs.close();
             st.close();
-            banco.FecharConexao();
+            con.close();
         } 
         catch (Exception e) 
         {
@@ -70,8 +72,9 @@ public class Class_Usuarios {
         
         try 
         {
+            Connection con = banco.getConexaoMySQL();
             String SQL = "select id_usuario, nome, senha, tipo from usuarios where nome = '"+nome+"'";
-            PreparedStatement st = banco.getConexaoMySQL().prepareStatement(SQL);
+            PreparedStatement st = con.prepareStatement(SQL);
             ResultSet rs = st.executeQuery();
             while(rs.next()) 
             {
@@ -83,7 +86,7 @@ public class Class_Usuarios {
             
             rs.close();
             st.close();
-            banco.FecharConexao();
+            con.close();
         } 
         catch (Exception e) 
         {
@@ -97,20 +100,21 @@ public class Class_Usuarios {
         String sql = "INSERT INTO usuarios(nome, senha, tipo) VALUES(?,?,?)";    
     
         try {    
-            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);    
+            Connection con = banco.getConexaoMySQL();
+            PreparedStatement stmt = con.prepareStatement(sql);    
             stmt.setString(1, nome);
             stmt.setString(2, senha);    
             stmt.setString(3, tipo);    
 
             if(!stmt.execute()){
                 stmt.close();
-                banco.FecharConexao();
+                con.close();
                 return false;
             }
             else{
                 stmt.execute();
                 stmt.close();
-                banco.FecharConexao();
+                con.close();
                 JOptionPane.showMessageDialog(null,"Usuário cadastrado com sucesso!");
                 return true;
             }
@@ -120,18 +124,19 @@ public class Class_Usuarios {
         
     }
     
-    public String retornaIdUsuario(String nome_usuario) {
-        String id_usuario = null;
+    public int getIdUsuario(String nome_usuario) {
+        int id_usuario = 0;
         try {
-            String query = "select nome from usuarios where id_usuario = '"+nome_usuario+"'";
-            PreparedStatement ps = banco.getConexaoMySQL().prepareStatement(query);
+            Connection con = banco.getConexaoMySQL();
+            String query = "select id_usuario from usuarios where nome = '"+nome_usuario+"'";
+            PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                id_usuario = rs.getString("id_usuario");
+                id_usuario = rs.getInt("id_usuario");
             }
             rs.close();
             ps.close();
-            banco.FecharConexao();
+            con.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

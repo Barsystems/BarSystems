@@ -62,15 +62,15 @@ public class Class_Conexao_Banco {
 
 
     //Método que fecha sua conexão//
-    public boolean FecharConexao() {
+    public boolean FecharConexao(/*Connection con*/) {
 
         try {
 
-            getConexaoMySQL().close();
+            //con.close();
 
             return true;
 
-        } catch (SQLException e) {
+        } catch (/*SQL*/Exception e) {
 
             return false;
 

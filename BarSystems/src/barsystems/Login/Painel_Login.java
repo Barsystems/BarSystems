@@ -5,8 +5,6 @@ import barsystems.Class_Fechar_Sistema;
 import barsystems.Principal;
 import barsystems.usuarios.Class_Usuarios;
 import java.awt.Event;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -132,7 +130,8 @@ public class Painel_Login extends javax.swing.JPanel {
             if (login.verificaLoginSenha(txtUsuario.getText(), txtSenha.getText()) == true) 
             {
                 Class_Usuarios usuarios = new Class_Usuarios();
-                String id_usuario = usuarios.retornaIdUsuario(txtUsuario.getText());
+                int id_usuario = usuarios.getIdUsuario(txtUsuario.getText());
+                
                 Principal principal = new Principal(id_usuario, txtUsuario.getText());
                 principal.setVisible(true);
                 

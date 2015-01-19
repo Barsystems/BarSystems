@@ -68,8 +68,9 @@ public class Class_produtos {
                 "VALUES(?,?,?,?,?,?)";    
     
         Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
-        try {    
-            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);    
+        try {
+            Connection con = banco.getConexaoMySQL();
+            PreparedStatement stmt = con.prepareStatement(sql);    
             stmt.setInt(1, Integer.parseInt(codigo));
             stmt.setString(2, descricao);        
             stmt.setString(3, tipo); 
@@ -79,13 +80,13 @@ public class Class_produtos {
 
             if(!stmt.execute()){
                 stmt.close();
-                banco.FecharConexao();
+                con.close();
                 return false;
             }
             else{
                 stmt.execute();
                 stmt.close();
-                banco.FecharConexao();
+                con.close();
                 JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
                 return true;
             }
@@ -118,12 +119,13 @@ public class Class_produtos {
                 ",valor_venda_unidade="+troca.trocaVirgulaPorPonto(valor_venda)+" WHERE id_produto = "+codigo;
     
             try {    
-                PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);    
+                Connection con = banco.getConexaoMySQL();
+                PreparedStatement stmt = con.prepareStatement(sql);    
                 
     
                 stmt.executeUpdate();
                     stmt.close();
-                    banco.FecharConexao();
+                    con.close();
                     return true;
                 
                     
@@ -144,16 +146,17 @@ public class Class_produtos {
         String sql = "UPDATE produtos set excluido = 1 where id_produto = '"+codigo+"'";    
     
             try {    
-                PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);    
+                Connection con = banco.getConexaoMySQL();
+                PreparedStatement stmt = con.prepareStatement(sql);    
                 if(!stmt.execute()){
                     stmt.close();
-                    banco.FecharConexao();
+                    con.close();
                     return false;
                 }
                 else{
                     stmt.execute();
                     stmt.close();
-                    banco.FecharConexao();
+                    con.close();
                     JOptionPane.showMessageDialog(null,"Produto excluído com sucesso!");
                     return true;
                 }
@@ -166,16 +169,17 @@ public class Class_produtos {
         String sql = "DELETE FROM produtos where id_produto = '"+codigo+"'";    
     
             try {    
-                PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);    
+                Connection con = banco.getConexaoMySQL();
+                PreparedStatement stmt = con.prepareStatement(sql);    
                 if(!stmt.execute()){
                     stmt.close();
-                    banco.FecharConexao();
+                    con.close();
                     return false;
                 }
                 else{
                     stmt.execute();
                     stmt.close();
-                    banco.FecharConexao();
+                    con.close();
                     JOptionPane.showMessageDialog(null,"Produto excluído com sucesso!");
                     return true;
                 }
@@ -196,7 +200,8 @@ public class Class_produtos {
         try{
             
            String sql = "SELECT descricao FROM produtos where excluido = 0 order by descricao";  
-           PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           Connection con = banco.getConexaoMySQL();
+           PreparedStatement stmt = con.prepareStatement(sql);    
            
            ResultSet rs = stmt.executeQuery();  
               
@@ -205,7 +210,7 @@ public class Class_produtos {
             }              
             rs.close();  
             stmt.close();
-            banco.FecharConexao();
+            con.close();
         
             
         }catch(Exception e){
@@ -225,7 +230,8 @@ public class Class_produtos {
         try{
             
            String sql = "SELECT id_produto, descricao, tipo, valor_compra_unidade, valor_venda_unidade FROM produtos where excluido = 0 and descricao = '"+nome+"'";  
-            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+            Connection con = banco.getConexaoMySQL();
+                PreparedStatement stmt = con.prepareStatement(sql);    
    
             ResultSet rs = stmt.executeQuery();              
             while(rs.next()){
@@ -246,7 +252,7 @@ public class Class_produtos {
             }              
             rs.close();  
             stmt.close();
-            banco.FecharConexao();
+            con.close();
         
             
         }catch(Exception e){
@@ -261,7 +267,8 @@ public class Class_produtos {
         try{
             
            String sql = "SELECT descricao FROM produtos where excluido = 0 and descricao like'%"+pesquisa+"%'";  
-           PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           Connection con = banco.getConexaoMySQL();
+                PreparedStatement stmt = con.prepareStatement(sql);   
            
            ResultSet rs = stmt.executeQuery();  
               
@@ -270,7 +277,7 @@ public class Class_produtos {
             }              
             rs.close();  
             stmt.close();
-            banco.FecharConexao();
+            con.close();
         
             
         }catch(Exception e){
@@ -286,7 +293,8 @@ public class Class_produtos {
         try{
 
            String sql = "SELECT id_produto FROM produtos where excluido = 0 and id_produto = '"+Codigo+"'";  
-           PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           Connection con = banco.getConexaoMySQL();
+                PreparedStatement stmt = con.prepareStatement(sql);     
 
            ResultSet rs = stmt.executeQuery();  
 
@@ -295,7 +303,7 @@ public class Class_produtos {
             }
             rs.close();  
             stmt.close();
-            banco.FecharConexao();
+            con.close();
 
 
         }catch(Exception e){
@@ -312,7 +320,8 @@ public class Class_produtos {
         try{
 
            String sql = "SELECT id_produto FROM produtos where excluido = 1 and id_produto = '"+Codigo+"'";  
-           PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           Connection con = banco.getConexaoMySQL();
+                PreparedStatement stmt = con.prepareStatement(sql);     
 
            ResultSet rs = stmt.executeQuery();  
 
@@ -321,7 +330,7 @@ public class Class_produtos {
             }
             rs.close();  
             stmt.close();
-            banco.FecharConexao();
+            con.close();
 
 
         }catch(Exception e){
@@ -337,7 +346,8 @@ public class Class_produtos {
         try{
 
             String sql = "SELECT descricao FROM produtos where excluido = 0 and descricao = '"+nome+"'";  
-            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+            Connection con = banco.getConexaoMySQL();
+                PreparedStatement stmt = con.prepareStatement(sql);   
 
             ResultSet rs = stmt.executeQuery();  
 
@@ -346,7 +356,7 @@ public class Class_produtos {
             }
             rs.close();  
             stmt.close();
-            banco.FecharConexao();
+            con.close();
 
 
         }catch(Exception e){
@@ -363,7 +373,8 @@ public class Class_produtos {
         try
         {
             String sql = "SELECT MAX(id_produto) as maiorCodigo FROM produtos";  
-            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+            Connection con = banco.getConexaoMySQL();
+                PreparedStatement stmt = con.prepareStatement(sql);   
 
             ResultSet rs = stmt.executeQuery();  
 
@@ -372,7 +383,7 @@ public class Class_produtos {
             }
             rs.close();  
             stmt.close();
-            banco.FecharConexao();
+            con.close();
         }
         catch (Exception e)
         {
