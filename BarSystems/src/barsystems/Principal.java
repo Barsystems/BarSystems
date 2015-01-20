@@ -429,6 +429,8 @@ public class Principal extends javax.swing.JFrame {
 
     private void menuItemComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemComprasActionPerformed
         Painel_compra compra = new Painel_compra();
+        compra.refreshCombo_Fornecedor();
+        compra.refreshFormaPagamento();
         painel_principal.add(compra);
         compra.setBounds(0, 0, 500, 500);
         compra.setVisible(true);
