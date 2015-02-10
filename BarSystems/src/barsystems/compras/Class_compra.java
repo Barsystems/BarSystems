@@ -106,7 +106,7 @@ public class Class_compra {
         tabela.setRowCount(0);       
         try{
             
-            String sql = "SELECT produtos.descricao, quantidade_em_caixa "
+            String sql = "SELECT produtos.descricao, quantidade_em_unidade "
                     + "from produtos_compra, produtos "
                     + "where id_compras_fk = '"+codigo+"' and id_produtos = id_produto";
             PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
@@ -303,17 +303,16 @@ public class Class_compra {
        try {
            for(int i=0;i<tabela.getRowCount();i++){
                id_produto = retornaId_Produtos_da_Compra((String) tabela.getValueAt(i, 2));
-                sql = "INSERT INTO produtos_compra ( id_produtos, valor_compra, quantidade_em_caixa, data_compra, quantidade_por_caixa,id_centro_estoque,id_compras_fk)"+
-                     "VALUES(?,?,?,?,?,?,?)";  
+                sql = "INSERT INTO produtos_compra ( id_produtos, valor_compra, quantidade_em_unidade, data_compra, id_centro_estoque, id_compras_fk)"+
+                     "VALUES(?,?,?,?,?,?)";  
                  Connection con = banco.getConexaoMySQL();
                  PreparedStatement stmt3 = con.prepareStatement(sql);    
                  stmt3.setString(1, id_produto);
                  stmt3.setFloat(2, Float.parseFloat((String) tabela.getValueAt(i, 6)));        
-                 stmt3.setInt(3, Integer.parseInt((String) tabela.getValueAt(i, 0))); 
+                 stmt3.setInt(3, Integer.parseInt((String) tabela.getValueAt(i, 0))*Integer.parseInt((String) tabela.getValueAt(i, 1))); 
                  stmt3.setString(4, data);
-                 stmt3.setInt(5, Integer.parseInt((String) tabela.getValueAt(i, 1)));
-                 stmt3.setInt(6, Integer.parseInt(id_centro_estoque));
-                 stmt3.setInt(7, Integer.parseInt(id_compra));
+                 stmt3.setInt(5, Integer.parseInt(id_centro_estoque));
+                 stmt3.setInt(6, Integer.parseInt(id_compra));
 
                  if(!stmt3.execute()){
                      stmt3.close();
@@ -333,6 +332,7 @@ public class Class_compra {
        try {
            String val="";
            for(int i=0;i<tabela.getRowCount();i++){
+                id_produto = retornaId_Produtos_da_Compra((String) tabela.getValueAt(i, 2));
                 sql = "SELECT id_produto from produtos_centro_estoque where  id_produto='"+id_produto+"' and id_centro_estoque='"+id_centro_estoque+"'";
                 PreparedStatement stmt10 = banco.getConexaoMySQL().prepareStatement(sql);  
 
@@ -343,6 +343,7 @@ public class Class_compra {
                    val = rs10.getString(1);
                 }
                 if(val.equals("")){
+                    JOptionPane.showMessageDialog(null, "ENTROU AQUI!!");
                 sql = "INSERT INTO produtos_centro_estoque (id_produto, id_centro_estoque, quantidade_em_unidade)"+
                  "VALUES(?,?,?)";  
                  Connection con = banco.getConexaoMySQL();
@@ -350,7 +351,7 @@ public class Class_compra {
                  stmt11.setString(1, id_produto);
                  stmt11.setString(2, id_centro_estoque);        
                  valor_unidade = Integer.parseInt((String) tabela.getValueAt(i, 0))*Integer.parseInt((String) tabela.getValueAt(i, 1));
-                 stmt11.setInt(3, Integer.parseInt((String) tabela.getValueAt(i, 0))*Integer.parseInt((String) tabela.getValueAt(i, 1))); 
+                 stmt11.setInt(3, valor_unidade); 
                  if(!stmt11.execute()){
                      stmt11.close();
                      con.close();
@@ -362,7 +363,7 @@ public class Class_compra {
                      JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
                  }
                 }else{
-                    
+                valor_unidade = Integer.parseInt((String) tabela.getValueAt(i, 0))*Integer.parseInt((String) tabela.getValueAt(i, 1));    
                 sql = "Update produtos_centro_estoque set quantidade_em_unidade='"+valor_unidade+"'+quantidade_em_unidade where id_produto='"+id_produto+"' and id_centro_estoque = '"+id_centro_estoque+"'";
                 Connection con = banco.getConexaoMySQL();
                 PreparedStatement stmt20 = con.prepareStatement(sql);    
@@ -405,6 +406,30 @@ public class Class_compra {
             JOptionPane.showMessageDialog(null, e);
         }
         return valor;
+    }
+    
+    public String retorna_cod_fornecedor(String nome_fantasia){
+        String codigo = "0";
+        try{
+            
+            String sql = "SELECT id_fornecedor from fornecedores where nome_fantasia = '"+nome_fantasia+"' and excluido = 0";
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           
+            ResultSet rs = stmt.executeQuery();  
+            
+            while(rs.next())
+            {
+                codigo = rs.getString(1);
+            }
+            
+            rs.close();  
+            stmt.close();
+            banco.FecharConexao();
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return codigo;
     }
 
     /**

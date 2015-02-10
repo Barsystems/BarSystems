@@ -30,16 +30,7 @@ public class Painel_estoque extends javax.swing.JPanel {
         centro_estoque.setText((String)lista_centros.getSelectedValue());
         radio_button.add(caixas);
         radio_button.add(unidades);
-        String unidade, qtd_por_caixa;
-        float result;
-        unidade = (String) modelo.getValueAt(linha,2);
-        qtd_por_caixa = (String) modelo.getValueAt(linha,1);
-        result = Integer.parseInt(unidade) / Integer.parseInt(qtd_por_caixa);
-        String qtd_de_caixa;
-        qntd_por_caixa = Integer.parseInt(qtd_por_caixa);
-        qtd_de_caixa = String.valueOf(result);
-        quant_caixa.setText(qtd_de_caixa);
-        quant_unidade.setText((String) modelo.getValueAt(linha,2));
+        quant_unidade.setText((String) modelo.getValueAt(linha,1));
         refreshTransf((String)lista_centros.getSelectedValue());
     }
     
@@ -60,8 +51,6 @@ public class Painel_estoque extends javax.swing.JPanel {
         subir_produto = new javax.swing.JDialog();
         jLabel7 = new javax.swing.JLabel();
         centro_estoque = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        quant_caixa = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         quant_unidade = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -102,25 +91,15 @@ public class Painel_estoque extends javax.swing.JPanel {
         subir_produto.getContentPane().add(centro_estoque);
         centro_estoque.setBounds(180, 50, 115, 30);
 
-        jLabel14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel14.setText("Quantidade em caixas:");
-        subir_produto.getContentPane().add(jLabel14);
-        jLabel14.setBounds(20, 80, 150, 30);
-
-        quant_caixa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        quant_caixa.setText("caixas");
-        subir_produto.getContentPane().add(quant_caixa);
-        quant_caixa.setBounds(180, 80, 40, 30);
-
         jLabel16.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel16.setText("Quantidade em unidades: ");
         subir_produto.getContentPane().add(jLabel16);
-        jLabel16.setBounds(20, 120, 170, 20);
+        jLabel16.setBounds(10, 90, 170, 20);
 
         quant_unidade.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         quant_unidade.setText("unidades");
         subir_produto.getContentPane().add(quant_unidade);
-        quant_unidade.setBounds(190, 110, 60, 30);
+        quant_unidade.setBounds(180, 80, 60, 40);
 
         jLabel18.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel18.setText("Transferir: ");
@@ -131,6 +110,11 @@ public class Painel_estoque extends javax.swing.JPanel {
 
         caixas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         caixas.setText("caixas");
+        caixas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                caixasMouseClicked(evt);
+            }
+        });
         caixas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 caixasActionPerformed(evt);
@@ -199,14 +183,14 @@ public class Painel_estoque extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Produto", "Quant/Caixa", "Unidades", "Valor Compra", "Valor Venda"
+                "Produto", "Unidades", "Valor Compra", "Valor Venda"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -230,9 +214,8 @@ public class Painel_estoque extends javax.swing.JPanel {
         if (tabela_estoque.getColumnModel().getColumnCount() > 0) {
             tabela_estoque.getColumnModel().getColumn(0).setPreferredWidth(300);
             tabela_estoque.getColumnModel().getColumn(1).setPreferredWidth(100);
-            tabela_estoque.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tabela_estoque.getColumnModel().getColumn(2).setPreferredWidth(150);
             tabela_estoque.getColumnModel().getColumn(3).setPreferredWidth(150);
-            tabela_estoque.getColumnModel().getColumn(4).setPreferredWidth(150);
         }
 
         add(jScrollPane2);
@@ -383,6 +366,12 @@ public class Painel_estoque extends javax.swing.JPanel {
         
     }//GEN-LAST:event_lista_centrosMouseClicked
 
+    private void caixasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_caixasMouseClicked
+        String valor = JOptionPane.showInputDialog("Digite a quantidade por caixa");
+        qntd_por_caixa = Integer.parseInt(valor);
+        
+    }//GEN-LAST:event_caixasMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton caixas;
@@ -392,7 +381,6 @@ public class Painel_estoque extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel3;
@@ -408,7 +396,6 @@ public class Painel_estoque extends javax.swing.JPanel {
     private javax.swing.JList lista_centro2;
     private javax.swing.JList lista_centros;
     private javax.swing.JLabel produto;
-    private javax.swing.JLabel quant_caixa;
     private javax.swing.JLabel quant_unidade;
     private javax.swing.JTextField quantidade;
     private javax.swing.ButtonGroup radio_button;

@@ -180,6 +180,16 @@ public class Painel_compra extends javax.swing.JPanel {
         descricao_nova.setBounds(20, 10, 280, 30);
 
         combo_fornecedor.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        combo_fornecedor.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                combo_fornecedorItemStateChanged(evt);
+            }
+        });
+        combo_fornecedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                combo_fornecedorMouseClicked(evt);
+            }
+        });
         nova_compra.getContentPane().add(combo_fornecedor);
         combo_fornecedor.setBounds(20, 60, 270, 20);
 
@@ -807,14 +817,25 @@ public class Painel_compra extends javax.swing.JPanel {
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
         Class_compra realiza = new Class_compra();
+        String codigo_fornecedor = realiza.retorna_cod_fornecedor((String)combo_fornecedor.getSelectedItem());
         realiza.realiza_Compra(descricao_nova.getText(), 
-                "1", n_nota.getText(), 
+                codigo_fornecedor, 
+                n_nota.getText(), 
                 data_comprado.getText(),
                 lbl_total.getText(),
                 "1", 
                 tabela_adcionados.getModel(),
-                "2");
+                "3"); // 3 pq estou mandndo tudo pro porao
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void combo_fornecedorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_fornecedorItemStateChanged
+
+        
+    }//GEN-LAST:event_combo_fornecedorItemStateChanged
+
+    private void combo_fornecedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_combo_fornecedorMouseClicked
+       
+    }//GEN-LAST:event_combo_fornecedorMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

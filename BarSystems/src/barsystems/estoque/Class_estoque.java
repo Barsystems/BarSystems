@@ -72,9 +72,8 @@ public class Class_estoque {
         
         try{
             
-            String sql = "SELECT descricao, "
-                   + "quantidade_por_caixa, "
-                   + "quantidade_em_unidade, "
+            String sql = "SELECT distinct descricao, "
+                   + "produtos_centro_estoque.quantidade_em_unidade, "
                    + "valor_compra_unidade, "
                    + "valor_venda_unidade "
                    + "from produtos, produtos_centro_estoque, produtos_compra "
@@ -85,11 +84,11 @@ public class Class_estoque {
             
             while(rs.next())
             {
-                valorCompra = dffloat.format(rs.getFloat(4));
+                valorCompra = dffloat.format(rs.getFloat(3));
                 if (valorCompra.equals(",00")) {
                     valorCompra = "0,00";
                 }
-                valorVenda= dffloat.format(rs.getFloat(5));
+                valorVenda= dffloat.format(rs.getFloat(4));
                 if (valorVenda.equals(",00")) {
                     valorVenda = "0,00";
                 }
@@ -97,7 +96,6 @@ public class Class_estoque {
                 tabela.addRow(new Object[] {
                     rs.getString(1),
                     rs.getString(2),
-                    rs.getString(3),
                     valorCompra,
                     valorVenda
                 });
