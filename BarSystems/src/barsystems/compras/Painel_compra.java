@@ -86,6 +86,20 @@ public class Painel_compra extends javax.swing.JPanel {
         List_forma_pagamento.setModel(listModel);
     }
     
+    public float refreshLblTotal(){
+         float total =0;
+        String aa;
+        float bb;
+        for(int i =0; i<tabela_adcionados.getRowCount();i++){
+            total = ( Integer.parseInt((String)tabela_adcionados.getValueAt(i, 0)) *  
+                    (float) tabela_adcionados.getValueAt(i,5) ) + total;
+            
+            
+            //total = (Float.parseFloat(aa) * Float.parseFloat(bb)) + total;  
+        }
+        
+        return total;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -107,7 +121,7 @@ public class Painel_compra extends javax.swing.JPanel {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList();
+        lista_parcelas = new javax.swing.JList();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -129,6 +143,8 @@ public class Painel_compra extends javax.swing.JPanel {
         jLabel6 = new javax.swing.JLabel();
         lbl_total = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
+        jButton10 = new javax.swing.JButton();
         lblProdutosCadastrados = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         codigo_compra = new javax.swing.JTextField();
@@ -230,6 +246,11 @@ public class Painel_compra extends javax.swing.JPanel {
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        List_forma_pagamento.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                List_forma_pagamentoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(List_forma_pagamento);
 
         nova_compra.getContentPane().add(jScrollPane1);
@@ -243,12 +264,12 @@ public class Painel_compra extends javax.swing.JPanel {
         nova_compra.getContentPane().add(jLabel8);
         jLabel8.setBounds(350, 410, 50, 14);
 
-        jList2.setModel(new javax.swing.AbstractListModel() {
+        lista_parcelas.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane4.setViewportView(jList2);
+        jScrollPane4.setViewportView(lista_parcelas);
 
         nova_compra.getContentPane().add(jScrollPane4);
         jScrollPane4.setBounds(350, 430, 530, 90);
@@ -455,6 +476,24 @@ public class Painel_compra extends javax.swing.JPanel {
         nova_compra.getContentPane().add(jButton8);
         jButton8.setBounds(890, 320, 160, 60);
 
+        jButton9.setText("remover produto");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+        nova_compra.getContentPane().add(jButton9);
+        jButton9.setBounds(700, 260, 160, 20);
+
+        jButton10.setText("jButton10");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        nova_compra.getContentPane().add(jButton10);
+        jButton10.setBounds(910, 400, 79, 23);
+
         setLayout(null);
 
         lblProdutosCadastrados.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
@@ -658,12 +697,16 @@ public class Painel_compra extends javax.swing.JPanel {
     }//GEN-LAST:event_codigo_compraActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+         DefaultListModel listModel = new DefaultListModel();
         refreshListTipo();
         refreshCombo_Fornecedor();
+        lista_parcelas.setModel(listModel);
+        
         refreshListProdutos("Cerveja");
         nova_compra.setBounds(0, 0, 1180, 600);
         nova_compra.setLocationRelativeTo(null);
         nova_compra.setVisible(true);
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -796,16 +839,7 @@ public class Painel_compra extends javax.swing.JPanel {
                                     valor_unitario,
                                     valor_caixa,
                                     sub_valor.getText()});
-        float total =0;
-        String aa;
-        float bb;
-        for(int i =0; i<tabela_adcionados.getRowCount();i++){
-            total = ( Integer.parseInt((String)tabela_adcionados.getValueAt(i, 0)) *  
-                    (float) tabela_adcionados.getValueAt(i,5) ) + total;
-            
-            
-            //total = (Float.parseFloat(aa) * Float.parseFloat(bb)) + total;  
-        }
+        float total = refreshLblTotal();
         
         lbl_total.setText(Float.toString(total));
     }//GEN-LAST:event_jButton7ActionPerformed
@@ -816,6 +850,8 @@ public class Painel_compra extends javax.swing.JPanel {
     }//GEN-LAST:event_lista_produtoMouseClicked
 
     private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        DefaultListModel modelo = (DefaultListModel) lista_parcelas.getModel();
+        
         Class_compra realiza = new Class_compra();
         String codigo_fornecedor = realiza.retorna_cod_fornecedor((String)combo_fornecedor.getSelectedItem());
         realiza.realiza_Compra(descricao_nova.getText(), 
@@ -825,7 +861,11 @@ public class Painel_compra extends javax.swing.JPanel {
                 lbl_total.getText(),
                 "1", 
                 tabela_adcionados.getModel(),
-                "3"); // 3 pq estou mandndo tudo pro porao
+                "3",
+                (String)List_forma_pagamento.getSelectedValue(),
+                modelo.getSize()
+                ); // 3 pq estou mandando tudo pro porao
+        
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void combo_fornecedorItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_combo_fornecedorItemStateChanged
@@ -836,6 +876,170 @@ public class Painel_compra extends javax.swing.JPanel {
     private void combo_fornecedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_combo_fornecedorMouseClicked
        
     }//GEN-LAST:event_combo_fornecedorMouseClicked
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        DefaultTableModel modelo = (DefaultTableModel) tabela_adcionados.getModel();
+        modelo.removeRow(tabela_adcionados.getSelectedRow());
+        
+        float total = refreshLblTotal();
+        
+        lbl_total.setText(Float.toString(total));
+        ((DefaultListModel)lista_parcelas.getModel()).removeAllElements();
+                
+    }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void List_forma_pagamentoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_List_forma_pagamentoMouseClicked
+        DefaultListModel listModel = new DefaultListModel();
+        
+        if(List_forma_pagamento.getSelectedValue().equals("A vista")){
+            listModel.addElement(lbl_total.getText());
+            lista_parcelas.setModel(listModel);
+        } else if(List_forma_pagamento.getSelectedValue().equals("Cartao")){
+            if (JOptionPane.showConfirmDialog(null, "A vista no cartão?", "Atenção", JOptionPane.YES_NO_OPTION) == 0){
+                listModel.removeAllElements();
+                listModel.addElement(lbl_total.getText());
+                lista_parcelas.setModel(listModel);
+            } else{
+                listModel.removeAllElements();
+                if (JOptionPane.showConfirmDialog(null, "Tem entrada?", "Atenção", JOptionPane.YES_NO_OPTION) == 0){
+                float entrada = Float.parseFloat(JOptionPane.showInputDialog("Digite o valor da entrada!"));
+                listModel.addElement(String.valueOf(entrada));
+                if (JOptionPane.showConfirmDialog(null, "Dividir o restante em parcelas iguais?", "Atenção", JOptionPane.YES_NO_OPTION) == 0){
+                    int vezes = Integer.parseInt(JOptionPane.showInputDialog("Quantas vezes sera parcelado?"));
+                    float restante = Float.parseFloat(lbl_total.getText()) - entrada;
+                    float total = restante/vezes;
+                    for (int i=0;i<vezes;i++)
+                        listModel.addElement(String.valueOf(total));
+                    lista_parcelas.setModel(listModel);
+                } else{
+                    float restante = Float.parseFloat(lbl_total.getText()) - entrada;
+                    float parcela = 0;
+                    while (restante != 0 ){
+                        parcela = Float.parseFloat(JOptionPane.showInputDialog("Digite o valor da prox parcela!\n"
+                                + "Ainda falta adcionar: "+restante));
+                        listModel.addElement(String.valueOf(parcela));
+                        restante = restante - parcela;
+                    }
+                    lista_parcelas.setModel(listModel);    
+                }
+            } else{
+                listModel.removeAllElements();
+                if (JOptionPane.showConfirmDialog(null, "Dividir em parcelas iguais?", "Atenção", JOptionPane.YES_NO_OPTION) == 0){
+                    int vezes = Integer.parseInt(JOptionPane.showInputDialog("Quantas vezes sera parcelado?"));
+                    float restante = Float.parseFloat(lbl_total.getText());
+                    float total = restante/vezes;
+                    for (int i=0;i<vezes;i++)
+                        listModel.addElement(String.valueOf(total));
+                    lista_parcelas.setModel(listModel);
+                } else{
+                    float restante = Float.parseFloat(lbl_total.getText());
+                    float parcela = 0;
+                    while (restante != 0 ){
+                        parcela = Float.parseFloat(JOptionPane.showInputDialog("Digite o valor da prox parcela!\n"
+                                + "Ainda falta adcionar: "+restante));
+                        listModel.addElement(String.valueOf(parcela));
+                        restante = restante - parcela;
+                    }
+                    lista_parcelas.setModel(listModel);    
+                }
+            }
+            }
+        } else if(List_forma_pagamento.getSelectedValue().equals("Parcelado")){
+            listModel.removeAllElements();
+            if (JOptionPane.showConfirmDialog(null, "Tem entrada?", "Atenção", JOptionPane.YES_NO_OPTION) == 0){
+                float entrada = Float.parseFloat(JOptionPane.showInputDialog("Digite o valor da entrada!"));
+                listModel.addElement(String.valueOf(entrada));
+                if (JOptionPane.showConfirmDialog(null, "Dividir o restante em parcelas iguais?", "Atenção", JOptionPane.YES_NO_OPTION) == 0){
+                    int vezes = Integer.parseInt(JOptionPane.showInputDialog("Quantas vezes sera parcelado?"));
+                    float restante = Float.parseFloat(lbl_total.getText()) - entrada;
+                    float total = restante/vezes;
+                    for (int i=0;i<vezes;i++)
+                        listModel.addElement(String.valueOf(total));
+                    lista_parcelas.setModel(listModel);
+                } else{
+                    float restante = Float.parseFloat(lbl_total.getText()) - entrada;
+                    float parcela = 0;
+                    while (restante != 0 ){
+                        parcela = Float.parseFloat(JOptionPane.showInputDialog("Digite o valor da prox parcela!\n"
+                                + "Ainda falta adcionar: "+restante));
+                        listModel.addElement(String.valueOf(parcela));
+                        restante = restante - parcela;
+                    }
+                    lista_parcelas.setModel(listModel);    
+                }
+            } else{
+                listModel.removeAllElements();
+                if (JOptionPane.showConfirmDialog(null, "Dividir em parcelas iguais?", "Atenção", JOptionPane.YES_NO_OPTION) == 0){
+                    int vezes = Integer.parseInt(JOptionPane.showInputDialog("Quantas vezes sera parcelado?"));
+                    float restante = Float.parseFloat(lbl_total.getText());
+                    float total = restante/vezes;
+                    for (int i=0;i<vezes;i++)
+                        listModel.addElement(String.valueOf(total));
+                    lista_parcelas.setModel(listModel);
+                } else{
+                    float restante = Float.parseFloat(lbl_total.getText());
+                    float parcela = 0;
+                    while (restante != 0 ){
+                        parcela = Float.parseFloat(JOptionPane.showInputDialog("Digite o valor da prox parcela!\n"
+                                + "Ainda falta adcionar: "+restante));
+                        listModel.addElement(String.valueOf(parcela));
+                        restante = restante - parcela;
+                    }
+                    lista_parcelas.setModel(listModel);    
+                }
+            }
+            
+        } else if(List_forma_pagamento.getSelectedValue().equals("Boleto")){
+            listModel.removeAllElements();
+            if (JOptionPane.showConfirmDialog(null, "Tem entrada?", "Atenção", JOptionPane.YES_NO_OPTION) == 0){
+                float entrada = Float.parseFloat(JOptionPane.showInputDialog("Digite o valor da entrada!"));
+                listModel.addElement(String.valueOf(entrada));
+                if (JOptionPane.showConfirmDialog(null, "Dividir o restante em parcelas iguais?", "Atenção", JOptionPane.YES_NO_OPTION) == 0){
+                    int vezes = Integer.parseInt(JOptionPane.showInputDialog("Quantas vezes sera parcelado?"));
+                    float restante = Float.parseFloat(lbl_total.getText()) - entrada;
+                    float total = restante/vezes;
+                    for (int i=0;i<vezes;i++)
+                        listModel.addElement(String.valueOf(total));
+                    lista_parcelas.setModel(listModel);
+                } else{
+                    float restante = Float.parseFloat(lbl_total.getText()) - entrada;
+                    float parcela = 0;
+                    while (restante != 0 ){
+                        parcela = Float.parseFloat(JOptionPane.showInputDialog("Digite o valor da prox parcela!\n"
+                                + "Ainda falta adcionar: "+restante));
+                        listModel.addElement(String.valueOf(parcela));
+                        restante = restante - parcela;
+                    }
+                    lista_parcelas.setModel(listModel);    
+                }
+            } else{
+                listModel.removeAllElements();
+                if (JOptionPane.showConfirmDialog(null, "Dividir em parcelas iguais?", "Atenção", JOptionPane.YES_NO_OPTION) == 0){
+                    int vezes = Integer.parseInt(JOptionPane.showInputDialog("Quantas vezes sera parcelado?"));
+                    float restante = Float.parseFloat(lbl_total.getText());
+                    float total = restante/vezes;
+                    for (int i=0;i<vezes;i++)
+                        listModel.addElement(String.valueOf(total));
+                    lista_parcelas.setModel(listModel);
+                } else{
+                    float restante = Float.parseFloat(lbl_total.getText());
+                    float parcela = 0;
+                    while (restante != 0 ){
+                        parcela = Float.parseFloat(JOptionPane.showInputDialog("Digite o valor da prox parcela!\n"
+                                + "Ainda falta adcionar: "+restante));
+                        listModel.addElement(String.valueOf(parcela));
+                        restante = restante - parcela;
+                    }
+                    lista_parcelas.setModel(listModel);    
+                }
+            }
+        }
+    }//GEN-LAST:event_List_forma_pagamentoMouseClicked
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        
+        
+    }//GEN-LAST:event_jButton10ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -848,6 +1052,7 @@ public class Painel_compra extends javax.swing.JPanel {
     private javax.swing.JTextField descricao_nova;
     private javax.swing.JTextField fornecedor_compra;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -855,6 +1060,7 @@ public class Painel_compra extends javax.swing.JPanel {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -871,7 +1077,6 @@ public class Painel_compra extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -882,6 +1087,7 @@ public class Painel_compra extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JLabel lblProdutosCadastrados;
     private javax.swing.JLabel lbl_total;
+    private javax.swing.JList lista_parcelas;
     private javax.swing.JList lista_produto;
     private javax.swing.JList lista_tipo;
     private javax.swing.JTextField n_nota;

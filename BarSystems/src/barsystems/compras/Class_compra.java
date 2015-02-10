@@ -249,7 +249,9 @@ public class Class_compra {
                                 String valor,
                                 String parcelas,
                                 TableModel tabela,
-                                String id_centro_estoque){
+                                String id_centro_estoque,
+                                String forma_pagamento,
+                                int n_parcelas){
         int valor_unidade = 0;
         String id_compra = "";
         String id_produto = "";
@@ -376,11 +378,35 @@ public class Class_compra {
                 }
                 rs10.close();  
                 stmt10.close();
-                banco.FecharConexao();
+                
            }
        } catch (SQLException u) {    
             throw new RuntimeException(u);    
         } 
+       
+       try {
+                sql = "INSERT INTO pagamentos_compra (id_compra, forma_pagamento, parcelas, valor)"+
+                 "VALUES(?,?,?,?)";  
+                 Connection con = banco.getConexaoMySQL();
+                 PreparedStatement stmt21 = con.prepareStatement(sql);    
+                 stmt21.setString(1, id_compra);
+                 stmt21.setString(2, forma_pagamento);        
+                 stmt21.setString(3, String.valueOf(n_parcelas)); 
+                 stmt21.setString(4, valor);
+                 if(!stmt21.execute()){
+                     stmt21.close();
+                     con.close();
+                 }
+                 else{
+                     stmt21.execute();
+                     stmt21.close();
+                     con.close();
+                 }
+       } catch (SQLException u) {    
+            throw new RuntimeException(u);    
+        }
+       
+       
         
     }
     
