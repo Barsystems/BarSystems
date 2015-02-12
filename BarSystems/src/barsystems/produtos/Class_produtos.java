@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -21,7 +22,6 @@ import javax.swing.JOptionPane;
  */
 public class Class_produtos {
     protected Class_Conexao_Banco banco = new Class_Conexao_Banco();
-    protected DecimalFormat dffloat = new DecimalFormat("##,###.00");
     
     protected String descricao, tipo, valor_compra_unidade,valor_unidade_venda, codigo;
     
@@ -111,6 +111,8 @@ public class Class_produtos {
             String valor_compra, 
             String valor_venda) {
         
+        valor_compra = valor_compra.replace("R$ ", "");
+        valor_venda = valor_venda.replace("R$ ", "");
         Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
         
         String sql = "Update produtos set descricao='"+descricao+
@@ -229,21 +231,18 @@ public class Class_produtos {
     public void carregaProduto(String nome){
         try{
             
-           String sql = "SELECT id_produto, descricao, tipo, valor_compra_unidade, valor_venda_unidade FROM produtos where excluido = 0 and descricao = '"+nome+"'";  
+            NumberFormat z = NumberFormat.getCurrencyInstance();
+            
+            String sql = "SELECT id_produto, descricao, tipo, valor_compra_unidade, valor_venda_unidade FROM produtos where excluido = 0 and descricao = '"+nome+"'";  
             Connection con = banco.getConexaoMySQL();
                 PreparedStatement stmt = con.prepareStatement(sql);    
    
             ResultSet rs = stmt.executeQuery();              
             while(rs.next()){
                 
-                String valorCompra = dffloat.format(rs.getFloat(4));
-                if (valorCompra.equals(",00")) {
-                    valorCompra = "0,00";
-                }
-                String valorVenda = dffloat.format(rs.getFloat(5));
-                if (valorVenda.equals(",00")) {
-                    valorVenda = "0,00";
-                }
+                String valorCompra = z.format(rs.getFloat(4));
+                String valorVenda = z.format(rs.getFloat(5));
+                
                 this.codigo = rs.getString(1);
                 this.descricao = rs.getString(2);
                 this.tipo = rs.getString(3);

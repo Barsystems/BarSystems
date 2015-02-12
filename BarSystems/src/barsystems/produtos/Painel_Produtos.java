@@ -725,7 +725,7 @@ public class Painel_Produtos extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         
-        int index = principal.verificaMenuAberto("Produtos");
+        int index = principal.verificaMenuAberto("Produtos   ");
         painelPrincipal.remove(index);
         
     }//GEN-LAST:event_jButton1ActionPerformed

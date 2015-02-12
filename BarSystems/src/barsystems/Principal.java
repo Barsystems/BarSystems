@@ -5,8 +5,10 @@
  */
 package barsystems;
 
-import barsystems.Caixa.Painel_Caixa;
+import barsystems.Centros_Custo.Painel_Caixa;
+import barsystems.Centros_Custo.Painel_Centros_Custo;
 import barsystems.Configuracoes.Painel_Configuracoes;
+import barsystems.Financeiro.Painel_Financeiro;
 import barsystems.Login.Frm_Login;
 import barsystems.Venda.Painel_Venda;
 import barsystems.compras.Painel_compra;
@@ -41,7 +43,7 @@ public class Principal extends javax.swing.JFrame {
         this.id_usuario = id_usuario;
         this.nome_usuario = nome_usuario;
         
-        menuItemCaixaActionPerformed(null);
+        menuItemCentrosCustoActionPerformed(null);
         menuItemVendaActionPerformed(null);
     }
     
@@ -90,13 +92,44 @@ public class Principal extends javax.swing.JFrame {
         menuItemCadastroUsuarios = new javax.swing.JMenuItem();
         menuItemCadastroProdutos = new javax.swing.JMenuItem();
         menuItemCadastroFornecedores = new javax.swing.JMenuItem();
+        menuItemCadastroMesas = new javax.swing.JMenuItem();
         menuEstoque = new javax.swing.JMenu();
         menuItemCentrosEstoque = new javax.swing.JMenuItem();
         menuItemCompras = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
-        menuItemCaixa = new javax.swing.JMenuItem();
         menuItemVenda = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem18 = new javax.swing.JMenuItem();
+        jMenuItem19 = new javax.swing.JMenuItem();
+        jMenuItem20 = new javax.swing.JMenuItem();
+        jMenuItem21 = new javax.swing.JMenuItem();
+        jMenuItem22 = new javax.swing.JMenuItem();
+        jMenuItem23 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenu8 = new javax.swing.JMenu();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
+        jMenu9 = new javax.swing.JMenu();
+        jMenuItem12 = new javax.swing.JMenuItem();
+        jMenuItem13 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem16 = new javax.swing.JMenuItem();
+        jMenuItem17 = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        menuItemCentrosCusto = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         menuSistema = new javax.swing.JMenu();
         menuItemTrocarUsuario = new javax.swing.JMenuItem();
         menuItemSair = new javax.swing.JMenuItem();
@@ -170,6 +203,12 @@ public class Principal extends javax.swing.JFrame {
         });
         menuCadastros.add(menuItemCadastroFornecedores);
 
+        menuItemCadastroMesas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCadastroMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/restaurant2.png"))); // NOI18N
+        menuItemCadastroMesas.setText("Mesas");
+        menuItemCadastroMesas.setToolTipText("Cadastrar mesas");
+        menuCadastros.add(menuItemCadastroMesas);
+
         jMenuBar1.add(menuCadastros);
 
         menuEstoque.setText("Estoque");
@@ -203,18 +242,6 @@ public class Principal extends javax.swing.JFrame {
         jMenu4.setText("Bar");
         jMenu4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        menuItemCaixa.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
-        menuItemCaixa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png"))); // NOI18N
-        menuItemCaixa.setText("Caixa");
-        menuItemCaixa.setToolTipText("Gerenciar caixa");
-        menuItemCaixa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemCaixaActionPerformed(evt);
-            }
-        });
-        jMenu4.add(menuItemCaixa);
-
         menuItemVenda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         menuItemVenda.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         menuItemVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/covered16.png"))); // NOI18N
@@ -231,7 +258,153 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu6.setText("Relatórios");
         jMenu6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenu7.setText("Auditoria");
+        jMenu7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItem18.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem18.setText("Clientes");
+        jMenu7.add(jMenuItem18);
+
+        jMenuItem19.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem19.setText("Produtos");
+        jMenu7.add(jMenuItem19);
+
+        jMenuItem20.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem20.setText("Fornecedores");
+        jMenu7.add(jMenuItem20);
+
+        jMenuItem21.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem21.setText("Estoque");
+        jMenu7.add(jMenuItem21);
+
+        jMenuItem22.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem22.setText("Vendas");
+        jMenu7.add(jMenuItem22);
+
+        jMenuItem23.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem23.setText("Financeiros");
+        jMenu7.add(jMenuItem23);
+
+        jMenu6.add(jMenu7);
+
+        jMenu2.setText("Clientes");
+        jMenu2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItem2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem2.setText("Relação de clientes");
+        jMenu2.add(jMenuItem2);
+
+        jMenuItem3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem3.setText("Dados de um cliente específico");
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem4.setText("Clientes inadimplentes");
+        jMenu2.add(jMenuItem4);
+
+        jMenu6.add(jMenu2);
+
+        jMenu8.setText("Fornecedores");
+        jMenu8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItem5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem5.setText("Relação de fornecedores");
+        jMenu8.add(jMenuItem5);
+
+        jMenuItem11.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem11.setText("Dados de um fornecedor específico");
+        jMenu8.add(jMenuItem11);
+
+        jMenu6.add(jMenu8);
+
+        jMenu3.setText("Estoque");
+        jMenu3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItem6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem6.setText("Quantidade em estoque");
+        jMenu3.add(jMenuItem6);
+
+        jMenuItem7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem7.setText("Produtos em falta");
+        jMenu3.add(jMenuItem7);
+
+        jMenuItem9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem9.setText("Relação de compras");
+        jMenu3.add(jMenuItem9);
+
+        jMenuItem10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem10.setText("Compras agendadas");
+        jMenu3.add(jMenuItem10);
+
+        jMenu6.add(jMenu3);
+
+        jMenu5.setText("Vendas");
+        jMenu5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItem8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem8.setText("Vendas no bar");
+        jMenu5.add(jMenuItem8);
+
+        jMenu6.add(jMenu5);
+
+        jMenu9.setText("Financeiro");
+        jMenu9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItem12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem12.setText("Movimentação dos caixas");
+        jMenu9.add(jMenuItem12);
+
+        jMenuItem13.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem13.setText("Movimentação das contas bancárias");
+        jMenu9.add(jMenuItem13);
+
+        jMenuItem14.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem14.setText("Balancete");
+        jMenu9.add(jMenuItem14);
+
+        jMenuItem15.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem15.setText("Demonstrativo de resultados e estatísticas");
+        jMenu9.add(jMenuItem15);
+
+        jMenuItem16.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem16.setText("Receitas");
+        jMenu9.add(jMenuItem16);
+
+        jMenuItem17.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem17.setText("Despesas");
+        jMenu9.add(jMenuItem17);
+
+        jMenu6.add(jMenu9);
+
         jMenuBar1.add(jMenu6);
+
+        jMenu1.setText("Financeiro");
+        jMenu1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        menuItemCentrosCusto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
+        menuItemCentrosCusto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCentrosCusto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png"))); // NOI18N
+        menuItemCentrosCusto.setText("Centros de custo");
+        menuItemCentrosCusto.setToolTipText("Gerenciar caixa");
+        menuItemCentrosCusto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCentrosCustoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuItemCentrosCusto);
+
+        jMenuItem1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coin12.png"))); // NOI18N
+        jMenuItem1.setText("Sistema financeiro");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
 
         menuSistema.setText("Sistema");
         menuSistema.setToolTipText("");
@@ -392,7 +565,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void menuItemVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemVendaActionPerformed
         
-        int index = verificaMenuAberto("Vendas");
+        int index = verificaMenuAberto("Vendas   ");
         if (index >= 0)
         {
             painel_principal.setSelectedIndex(index);
@@ -408,24 +581,24 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_menuItemVendaActionPerformed
 
-    private void menuItemCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCaixaActionPerformed
+    private void menuItemCentrosCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCentrosCustoActionPerformed
         
-        int index = verificaMenuAberto("Caixa");
+        int index = verificaMenuAberto("Centros de custo   ");
         if (index >= 0)
         {
             painel_principal.setSelectedIndex(index);
         }
         else
         {
-            Painel_Caixa caixa = new Painel_Caixa(this, painel_principal, this.id_usuario, this.nome_usuario);
-            painel_principal.addTab("Caixa   ", new ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png")), caixa, "Gerencie seu caixa!");
-            caixa.refreshMovimentacaoCaixa();
-            caixa.setBounds(0, 0, 1000, 700);
-            caixa.setVisible(true);
+            Painel_Centros_Custo centros_custo = new Painel_Centros_Custo(this, painel_principal, this.id_usuario, this.nome_usuario);
+            painel_principal.addTab("Centros de custo   ", new ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png")), centros_custo, "Gerencie os seus recebimentos!");
+            centros_custo.setBounds(0, 0, 1000, 700);
+            centros_custo.adicionaCentrosCusto();
+            centros_custo.setVisible(true);
             painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
         }
         
-    }//GEN-LAST:event_menuItemCaixaActionPerformed
+    }//GEN-LAST:event_menuItemCentrosCustoActionPerformed
 
     private void menuItemComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemComprasActionPerformed
         Painel_compra compra = new Painel_compra();
@@ -436,6 +609,24 @@ public class Principal extends javax.swing.JFrame {
         compra.setVisible(true);
         compra.refreshTable();
     }//GEN-LAST:event_menuItemComprasActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        
+        int index = verificaMenuAberto("Sistema financeiro   ");
+        if (index >= 0)
+        {
+            painel_principal.setSelectedIndex(index);
+        }
+        else
+        {
+            Painel_Financeiro financeiro = new Painel_Financeiro(this, painel_principal, this.id_usuario, this.nome_usuario);
+            painel_principal.addTab("Sistema financeiro   ", new ImageIcon(getClass().getResource("/barsystems/imagens/coin12.png")), financeiro, "Gerencie e configure o sistema financeiro!");
+            financeiro.setBounds(0, 0, 1000, 700);
+            financeiro.setVisible(true);
+            painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+        }
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -474,16 +665,47 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
+    private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
+    private javax.swing.JMenuItem jMenuItem15;
+    private javax.swing.JMenuItem jMenuItem16;
+    private javax.swing.JMenuItem jMenuItem17;
+    private javax.swing.JMenuItem jMenuItem18;
+    private javax.swing.JMenuItem jMenuItem19;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem20;
+    private javax.swing.JMenuItem jMenuItem21;
+    private javax.swing.JMenuItem jMenuItem22;
+    private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JMenu menuCadastros;
     private javax.swing.JMenu menuConfiguracoes;
     private javax.swing.JMenu menuEstoque;
     private javax.swing.JMenuItem menuItemCadastroFornecedores;
+    private javax.swing.JMenuItem menuItemCadastroMesas;
     private javax.swing.JMenuItem menuItemCadastroProdutos;
     private javax.swing.JMenuItem menuItemCadastroUsuarios;
-    private javax.swing.JMenuItem menuItemCaixa;
+    private javax.swing.JMenuItem menuItemCentrosCusto;
     private javax.swing.JMenuItem menuItemCentrosEstoque;
     private javax.swing.JMenuItem menuItemCompras;
     private javax.swing.JMenuItem menuItemConfiguracoesSistema;

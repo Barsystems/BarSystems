@@ -67,7 +67,7 @@ public class Class_Conexao_Banco {
         try {
 
             //con.close();
-
+            
             return true;
 
         } catch (/*SQL*/Exception e) {

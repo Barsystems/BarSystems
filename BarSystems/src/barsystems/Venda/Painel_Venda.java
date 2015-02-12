@@ -35,19 +35,12 @@ public class Painel_Venda extends javax.swing.JPanel {
         jList1 = new javax.swing.JList();
         btnNovoMesaPassante = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable2 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
-        jLabel6 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setLayout(null);
 
@@ -56,7 +49,7 @@ public class Painel_Venda extends javax.swing.JPanel {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/covered16 (1).png"))); // NOI18N
         jLabel1.setText("Vendas de produtos para mesas e passantes");
         add(jLabel1);
-        jLabel1.setBounds(0, 30, 1010, 29);
+        jLabel1.setBounds(0, 30, 800, 29);
 
         lista_mesas_passantes.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         lista_mesas_passantes.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -92,62 +85,17 @@ public class Painel_Venda extends javax.swing.JPanel {
         btnNovoMesaPassante.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/covered16.png"))); // NOI18N
         btnNovoMesaPassante.setText("Abrir mesa");
         add(btnNovoMesaPassante);
-        btnNovoMesaPassante.setBounds(20, 450, 150, 30);
+        btnNovoMesaPassante.setBounds(40, 480, 170, 30);
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Contas em aberto");
         add(jLabel2);
         jLabel2.setBounds(20, 90, 120, 17);
 
-        jTable1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Produto", "Valor", "Quant", "Estoque", "Cod"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.Integer.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        jTable1.setRowHeight(25);
-        jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(1).setPreferredWidth(40);
-            jTable1.getColumnModel().getColumn(2).setPreferredWidth(30);
-            jTable1.getColumnModel().getColumn(3).setPreferredWidth(100);
-            jTable1.getColumnModel().getColumn(4).setPreferredWidth(30);
-        }
-
-        add(jScrollPane1);
-        jScrollPane1.setBounds(190, 180, 390, 330);
-
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel3.setText("Produtos disponíveis");
-        add(jLabel3);
-        jLabel3.setBounds(190, 160, 150, 17);
-
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText("Produtos lançados");
         add(jLabel4);
-        jLabel4.setBounds(640, 160, 130, 17);
+        jLabel4.setBounds(190, 90, 130, 17);
 
         //jTable2.getTableHeader().setFont(new java.awt.Font("Arial", 0, 12));
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
@@ -186,41 +134,25 @@ public class Painel_Venda extends javax.swing.JPanel {
         }
 
         add(jScrollPane2);
-        jScrollPane2.setBounds(640, 180, 350, 330);
-
-        jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton2.setText(">");
-        add(jButton2);
-        jButton2.setBounds(590, 210, 40, 35);
-
-        jButton3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton3.setText("<");
-        add(jButton3);
-        jButton3.setBounds(590, 250, 40, 35);
-
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel5.setText("Centro de estoque");
-        add(jLabel5);
-        jLabel5.setBounds(190, 90, 130, 17);
-
-        jComboBox1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        add(jComboBox1);
-        jComboBox1.setBounds(190, 110, 180, 30);
-
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel6.setText("Pesquisar produtos");
-        add(jLabel6);
-        jLabel6.setBounds(390, 90, 130, 17);
-
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        add(jTextField1);
-        jTextField1.setBounds(390, 110, 190, 30);
+        jScrollPane2.setBounds(190, 110, 590, 330);
 
         jButton1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
         jButton1.setText("Fechar conta");
         add(jButton1);
-        jButton1.setBounds(20, 480, 150, 30);
+        jButton1.setBounds(580, 480, 170, 30);
+
+        jButton4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plus24.png"))); // NOI18N
+        jButton4.setText("Fazer pedido");
+        add(jButton4);
+        jButton4.setBounds(220, 480, 170, 30);
+
+        jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
+        jButton2.setText("Devolver produto");
+        add(jButton2);
+        jButton2.setBounds(400, 480, 170, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lista_mesas_passantesStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_lista_mesas_passantesStateChanged
@@ -241,25 +173,18 @@ public class Painel_Venda extends javax.swing.JPanel {
     private javax.swing.JButton btnNovoMesaPassante;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox jComboBox1;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JList jList1;
     private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTabbedPane lista_mesas_passantes;
     // End of variables declaration//GEN-END:variables
 }

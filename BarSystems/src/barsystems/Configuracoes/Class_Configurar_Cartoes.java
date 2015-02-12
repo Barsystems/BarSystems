@@ -75,7 +75,7 @@ public class Class_Configurar_Cartoes {
                 this.id_cartao = rs.getString(1);
                 this.cartao = rs.getString(2);
                 this.taxa = rs.getString(3) + " %";
-                this.dias_receber = rs.getString(4);
+                this.dias_receber = rs.getString(4) + " dias";
             }
             
             rs.close();

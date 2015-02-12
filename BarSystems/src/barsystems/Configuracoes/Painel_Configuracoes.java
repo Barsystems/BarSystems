@@ -206,6 +206,7 @@ public class Painel_Configuracoes extends javax.swing.JPanel {
         jLabel11.setBounds(130, 140, 40, 17);
 
         txtTaxaCartao1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtTaxaCartao1.setToolTipText("Configure a taxa do cartão");
         Editar_Cartoes.getContentPane().add(txtTaxaCartao1);
         txtTaxaCartao1.setBounds(180, 130, 250, 30);
 
@@ -215,6 +216,7 @@ public class Painel_Configuracoes extends javax.swing.JPanel {
         jLabel12.setBounds(80, 180, 90, 17);
 
         txtDiasReceberCartao1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtDiasReceberCartao1.setToolTipText("Dias para o recebimento do cartão");
         Editar_Cartoes.getContentPane().add(txtDiasReceberCartao1);
         txtDiasReceberCartao1.setBounds(180, 170, 250, 30);
 
