@@ -38,6 +38,25 @@ public class Class_Centros_Custo {
         return this.saldo;
     }
     
+    public DefaultListModel refreshCaixas() {
+        DefaultListModel lista = new DefaultListModel();
+        try {
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("SELECT nome FROM centros_custo WHERE tipo = 'Caixa' "
+                    + "AND excluido = 0");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                lista.addElement(rs.getString(1));
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+    
     public int retornaIdCentroCusto(String nome) {
         int centro_custo = 0;
         try {
@@ -169,22 +188,28 @@ public class Class_Centros_Custo {
             ImageIcon icon = null;
             Component component = null;
             Connection conn = banco.getConexaoMySQL();
-            PreparedStatement ps = conn.prepareStatement("SELECT nome, tipo FROM centros_custo "
-                    + "WHERE excluido = 0");
+            PreparedStatement ps = conn.prepareStatement("SELECT centros_custo.id_centro_custo, centros_custo.nome, "
+                    + "centros_custo.tipo, responsaveis_caixa.id_usuario "
+                    + "FROM centros_custo "
+                    + "INNER JOIN responsaveis_caixa ON centros_custo.id_centro_custo = responsaveis_caixa.id_centro_custo "
+                    + "WHERE centros_custo.Excluido = 0 AND responsaveis_caixa.id_usuario = '"+id_usuario+"'");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                if (rs.getString(2).equals("Caixa")) {
+                if (rs.getString("centros_custo.tipo").equals("Caixa")) {
                     icon = new ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png"));
-                    Painel_Caixa caixa = new Painel_Caixa(rs.getString(1), id_usuario, nome_usuario);
+                    Painel_Caixa caixa = new Painel_Caixa(rs.getInt("centros_custo.id_centro_custo"), rs.getString("centros_custo.nome"), id_usuario, nome_usuario);
                     component = caixa;
                 } else {
                     icon = new ImageIcon(getClass().getResource("/barsystems/imagens/credit31.png"));
                     Painel_Conta_Bancaria conta_bancaria = new Painel_Conta_Bancaria();
                     component = conta_bancaria;
                 }
-                painel_centros_custo.addTab(rs.getString(1)+"   ", icon, component, "Gerencie seus centros de custo!");
+                painel_centros_custo.addTab(rs.getString("centros_custo.nome")+"   ", icon, component, "Gerencie seus centros de custo!");
                 component = null;
             }
+            rs.close();
+            ps.close();
+            conn.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -6,9 +6,10 @@ import barsystems.conexaoBanco.Class_Conexao_Banco;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -18,6 +19,56 @@ public class Class_Caixa {
     
     public Class_Caixa() {
         
+    }
+    
+    public void retiraResponsavelCaixa(int id_centro_custo, int id_usuario) {
+        try {
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("DELETE FROM responsaveis_caixa "
+                    + "WHERE id_centro_custo = '"+id_centro_custo+"' AND id_usuario = '"+id_usuario+"'");
+            ps.executeUpdate();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void adicionaResponsavelCaixa(int id_centro_custo, int id_usuario) {
+        try {
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO responsaveis_caixa (id_centro_custo, id_usuario) "
+                    + "VALUES (?, ?)");
+            ps.setInt(1, id_centro_custo);
+            ps.setInt(2, id_usuario);
+            ps.executeUpdate();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public DefaultListModel carregaResponsaveisCaixa(String nome_caixa) {
+        DefaultListModel lista = new DefaultListModel();
+        try {
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("SELECT responsaveis_caixa.*, usuarios.nome, centros_custo.nome "
+                    + "FROM responsaveis_caixa "
+                    + "INNER JOIN usuarios ON usuarios.id_usuario = responsaveis_caixa.id_usuario "
+                    + "INNER JOIN centros_custo ON centros_custo.id_centro_custo = responsaveis_caixa.id_centro_custo "
+                    + "WHERE centros_custo.nome = '"+nome_caixa+"'");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                lista.addElement(rs.getString("usuarios.nome"));
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
     }
     
     public boolean verificaCaixaAberto(int id_caixa) {
@@ -45,28 +96,30 @@ public class Class_Caixa {
     public void carregaMovimentacoesCaixa(DefaultTableModel tabela, int id_caixa) {
         tabela.setRowCount(0);
         String valor;
-        DecimalFormat dffloat = new DecimalFormat("##,###.00");
+        NumberFormat nf = NumberFormat.getCurrencyInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         
         try {
-            String query = "select * from movimentacoes_caixa where id_caixa = '"+id_caixa+"'";
+            String query = "select movimentacoes_caixa.*, usuarios.nome, formas_pagamento.descricao "
+                    + "from movimentacoes_caixa "
+                    + "inner join usuarios on movimentacoes_caixa.id_usuario = usuarios.id_usuario "
+                    + "inner join formas_pagamento on movimentacoes_caixa.id_forma_pagamento_fk = formas_pagamento.id_forma_pagamento "
+                    + "where id_caixa = '"+id_caixa+"'";
             Connection con = banco.getConexaoMySQL();
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                valor = dffloat.format(rs.getFloat("valor"));
-                if (valor.equals(",00")) {
-                    valor = "0,00";
-                }
+                valor = nf.format(rs.getFloat("movimentacoes_caixa.valor"));
                 
                 tabela.addRow(new Object[] {
-                    rs.getString("descricao"),
-                    rs.getString("forma_pagamento"),
-                    rs.getInt("numero_parcelas"),
+                    rs.getString("movimentacoes_caixa.descricao"),
+                    rs.getString("formas_pagamento.descricao"),
+                    rs.getInt("movimentacoes_caixa.numero_parcelas"),
                     valor,
-                    rs.getString("tipo"),
-                    sdf.format(rs.getTimestamp("data_cadastro")),
-                    rs.getInt("id_movimentacao_caixa")
+                    rs.getString("movimentacoes_caixa.tipo"),
+                    sdf.format(rs.getTimestamp("movimentacoes_caixa.data_pagamento")),
+                    rs.getString("usuarios.nome"),
+                    rs.getInt("movimentacoes_caixa.id_movimentacao_caixa")
                 });
             }
             rs.close();
@@ -78,15 +131,18 @@ public class Class_Caixa {
         
     }
     
-    public void abrirCaixa(int id_centro_custo, int id_usuario) {
+    public void abrirCaixa(int id_centro_custo) {
         
         try 
         {
-            String query = "insert into caixas (id_centro_custo, id_usuario) values (?, ?)";
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            String dataAbertura = sdf.format(new Date());
+            
+            String query = "insert into caixas (data_abertura, id_centro_custo) values (?, ?)";
             Connection con = banco.getConexaoMySQL();
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, id_centro_custo);
-            ps.setInt(2, id_usuario);
+            ps.setString(1, dataAbertura);
+            ps.setInt(2, id_centro_custo);
             ps.executeUpdate();
             
             ps.close();
@@ -101,25 +157,26 @@ public class Class_Caixa {
         
     }
     
-    public void registraMovimentacaoCaixa(int id_caixa, String descricao, String forma_pagamento, 
-            int numero_parcelas, String valor, String tipo, int id_usuario) {
+    public void registraMovimentacaoCaixa(int id_caixa, String descricao, int id_forma_pagamento, 
+            int numero_parcelas, String valor, String tipo, int id_usuario, String data_pagamento) {
         
         Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
         float Valor = troca.trocaVirgulaPorPonto(valor);
         
         try 
         {
-            String query = "insert into movimentacoes_caixa (id_caixa, descricao, forma_pagamento, numero_parcelas,"
-                    + "valor, tipo, id_usuario) values (?, ?, ?, ?, ?, ?, ?)";
+            String query = "insert into movimentacoes_caixa (id_caixa, descricao, id_forma_pagamento_fk, numero_parcelas,"
+                    + "valor, tipo, data_pagamento, id_usuario) values (?, ?, ?, ?, ?, ?, ?, ?)";
             Connection con = banco.getConexaoMySQL();
             PreparedStatement ps = con.prepareStatement(query);
             ps.setInt(1, id_caixa);
             ps.setString(2, descricao);
-            ps.setString(3, forma_pagamento);
+            ps.setInt(3, id_forma_pagamento);
             ps.setInt(4, numero_parcelas);
             ps.setFloat(5, Valor);
             ps.setString(6, tipo);
-            ps.setInt(7, id_usuario);
+            ps.setString(7, data_pagamento);
+            ps.setInt(8, id_usuario);
             ps.executeUpdate();
             
             ps.close();
@@ -170,12 +227,30 @@ public class Class_Caixa {
             ps.close();
             con.close();
             
-            JOptionPane.showMessageDialog(null, "Caixa aberto com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Caixa fechado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
         } 
         catch (Exception e) 
         {
             e.printStackTrace();
         }
         
+    }
+    
+    public int getIdUltimaMovimentacaoCaixa() {
+        int id = 0;
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("select max(id_movimentacao_caixa) as id from movimentacoes_caixa");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            id = rs.getInt(1);
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
     }
 }

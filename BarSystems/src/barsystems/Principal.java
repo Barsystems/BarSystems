@@ -5,21 +5,18 @@
  */
 package barsystems;
 
-import barsystems.Centros_Custo.Painel_Caixa;
 import barsystems.Centros_Custo.Painel_Centros_Custo;
 import barsystems.Configuracoes.Painel_Configuracoes;
 import barsystems.Financeiro.Painel_Financeiro;
 import barsystems.Login.Frm_Login;
 import barsystems.Venda.Painel_Venda;
 import barsystems.compras.Painel_compra;
-import barsystems.estoque.Class_estoque;
 import barsystems.estoque.Painel_estoque;
 import barsystems.fornecedores.Painel_Fornecedores;
 import barsystems.produtos.Painel_Produtos;
 import barsystems.usuarios.Painel_Usuarios;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *

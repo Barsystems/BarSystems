@@ -1,15 +1,14 @@
 
 package barsystems.Financeiro;
 
+import barsystems.Centros_Custo.Class_Caixa;
 import barsystems.Centros_Custo.Class_Centros_Custo;
 import barsystems.Principal;
+import barsystems.usuarios.Class_Usuarios;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+import javax.swing.ListModel;
 
-/**
- *
- * @author Marcos
- */
 public class Painel_Financeiro extends javax.swing.JPanel {
 
     protected Principal principal;
@@ -70,13 +69,27 @@ public class Painel_Financeiro extends javax.swing.JPanel {
         btnSairCadastroCentroCusto2 = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         lblTipoCentroCusto = new javax.swing.JLabel();
+        Configurar_Responsaveis_Caixa = new javax.swing.JDialog();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        lista_caixas = new javax.swing.JList();
+        jLabel19 = new javax.swing.JLabel();
+        comboUsuario = new javax.swing.JComboBox();
+        jLabel20 = new javax.swing.JLabel();
+        lblCaixaSelecionado = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        lista_responsaveis = new javax.swing.JList();
+        btnSairConfiguracaoResponsaveis = new javax.swing.JButton();
+        btnRetirarResponsavelCaixa = new javax.swing.JButton();
+        btnAdicionarResponsavelCaixa = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         btnCentrosCusto = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        btnConfigurarCentros = new javax.swing.JButton();
 
         Centros_Custo.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         Centros_Custo.setTitle("Manutenção do cadastro de centros de custo");
@@ -333,6 +346,107 @@ public class Painel_Financeiro extends javax.swing.JPanel {
         Alterar_Centro_Custo.getContentPane().add(lblTipoCentroCusto);
         lblTipoCentroCusto.setBounds(220, 130, 110, 20);
 
+        Configurar_Responsaveis_Caixa.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        Configurar_Responsaveis_Caixa.setTitle("Configurar responsáveis pelo caixa");
+        Configurar_Responsaveis_Caixa.setModal(true);
+        Configurar_Responsaveis_Caixa.setResizable(false);
+        Configurar_Responsaveis_Caixa.getContentPane().setLayout(null);
+
+        jLabel17.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png"))); // NOI18N
+        jLabel17.setText("Configuração dos responsáveis pelos caixas");
+        Configurar_Responsaveis_Caixa.getContentPane().add(jLabel17);
+        jLabel17.setBounds(0, 30, 650, 30);
+
+        jLabel18.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel18.setText("Caixas disponíveis");
+        Configurar_Responsaveis_Caixa.getContentPane().add(jLabel18);
+        jLabel18.setBounds(20, 90, 120, 17);
+
+        lista_caixas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lista_caixas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        lista_caixas.setToolTipText("");
+        lista_caixas.setSelectionBackground(new java.awt.Color(204, 255, 255));
+        lista_caixas.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        lista_caixas.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                lista_caixasValueChanged(evt);
+            }
+        });
+        jScrollPane2.setViewportView(lista_caixas);
+
+        Configurar_Responsaveis_Caixa.getContentPane().add(jScrollPane2);
+        jScrollPane2.setBounds(20, 110, 200, 250);
+
+        jLabel19.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel19.setText("Selecione um usuário para adicionar aos responsáveis");
+        Configurar_Responsaveis_Caixa.getContentPane().add(jLabel19);
+        jLabel19.setBounds(280, 90, 350, 17);
+
+        comboUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        comboUsuario.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "<Selecione>" }));
+        comboUsuario.setToolTipText("Selecione um usuário para adicionar como responsável");
+        Configurar_Responsaveis_Caixa.getContentPane().add(comboUsuario);
+        comboUsuario.setBounds(280, 110, 350, 30);
+
+        jLabel20.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel20.setText("Responsáveis pelo caixa");
+        Configurar_Responsaveis_Caixa.getContentPane().add(jLabel20);
+        jLabel20.setBounds(280, 190, 170, 17);
+
+        lblCaixaSelecionado.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblCaixaSelecionado.setForeground(new java.awt.Color(255, 0, 0));
+        lblCaixaSelecionado.setText("Caixa selecionado");
+        Configurar_Responsaveis_Caixa.getContentPane().add(lblCaixaSelecionado);
+        lblCaixaSelecionado.setBounds(450, 190, 180, 17);
+
+        lista_responsaveis.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        lista_responsaveis.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        lista_responsaveis.setToolTipText("Responsável pelo caixa selecionado");
+        lista_responsaveis.setSelectionBackground(new java.awt.Color(204, 255, 255));
+        lista_responsaveis.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        jScrollPane3.setViewportView(lista_responsaveis);
+
+        Configurar_Responsaveis_Caixa.getContentPane().add(jScrollPane3);
+        jScrollPane3.setBounds(280, 210, 350, 150);
+
+        btnSairConfiguracaoResponsaveis.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnSairConfiguracaoResponsaveis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
+        btnSairConfiguracaoResponsaveis.setText("Sair");
+        btnSairConfiguracaoResponsaveis.setToolTipText("Fechar a tela de configuração dos responsáveis pelos caixas");
+        btnSairConfiguracaoResponsaveis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairConfiguracaoResponsaveisActionPerformed(evt);
+            }
+        });
+        Configurar_Responsaveis_Caixa.getContentPane().add(btnSairConfiguracaoResponsaveis);
+        btnSairConfiguracaoResponsaveis.setBounds(280, 410, 100, 30);
+
+        btnRetirarResponsavelCaixa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnRetirarResponsavelCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
+        btnRetirarResponsavelCaixa.setText("Retirar");
+        btnRetirarResponsavelCaixa.setToolTipText("Retirar responsáveis do caixa");
+        btnRetirarResponsavelCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRetirarResponsavelCaixaActionPerformed(evt);
+            }
+        });
+        Configurar_Responsaveis_Caixa.getContentPane().add(btnRetirarResponsavelCaixa);
+        btnRetirarResponsavelCaixa.setBounds(510, 140, 120, 30);
+
+        btnAdicionarResponsavelCaixa.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnAdicionarResponsavelCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
+        btnAdicionarResponsavelCaixa.setText("Adicionar");
+        btnAdicionarResponsavelCaixa.setToolTipText("Adicionar responsáveis ao caixa selecionado");
+        btnAdicionarResponsavelCaixa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarResponsavelCaixaActionPerformed(evt);
+            }
+        });
+        Configurar_Responsaveis_Caixa.getContentPane().add(btnAdicionarResponsavelCaixa);
+        btnAdicionarResponsavelCaixa.setBounds(380, 140, 120, 30);
+
         setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
@@ -374,11 +488,16 @@ public class Painel_Financeiro extends javax.swing.JPanel {
         add(jLabel16);
         jLabel16.setBounds(20, 250, 170, 17);
 
-        jButton2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/three115.png"))); // NOI18N
-        jButton2.setText("Configurações");
-        add(jButton2);
-        jButton2.setBounds(20, 280, 170, 30);
+        btnConfigurarCentros.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnConfigurarCentros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/three115.png"))); // NOI18N
+        btnConfigurarCentros.setText("Configurações");
+        btnConfigurarCentros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfigurarCentrosActionPerformed(evt);
+            }
+        });
+        add(btnConfigurarCentros);
+        btnConfigurarCentros.setBounds(20, 280, 170, 30);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCentrosCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCentrosCustoActionPerformed
@@ -533,23 +652,114 @@ public class Painel_Financeiro extends javax.swing.JPanel {
         
     }//GEN-LAST:event_radioContaBancariaActionPerformed
 
+    private void btnConfigurarCentrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfigurarCentrosActionPerformed
+        
+        Class_Centros_Custo centros = new Class_Centros_Custo();
+        lista_caixas.setModel(centros.refreshCaixas());
+        comboUsuario.removeAllItems();
+        comboUsuario.addItem("<Selecione>");
+        Class_Usuarios usuarios = new Class_Usuarios();
+        usuarios.carregaUsuariosComboBox(comboUsuario);
+        comboUsuario.setSelectedIndex(0);
+        lblCaixaSelecionado.setVisible(false);
+        //lista_responsaveis.removeAll();
+        Configurar_Responsaveis_Caixa.setBounds(0, 0, 660, 490);
+        Configurar_Responsaveis_Caixa.setLocationRelativeTo(null);
+        Configurar_Responsaveis_Caixa.setVisible(true);
+        
+    }//GEN-LAST:event_btnConfigurarCentrosActionPerformed
+
+    private void btnSairConfiguracaoResponsaveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairConfiguracaoResponsaveisActionPerformed
+        
+        Configurar_Responsaveis_Caixa.dispose();
+        
+    }//GEN-LAST:event_btnSairConfiguracaoResponsaveisActionPerformed
+
+    private void lista_caixasValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_lista_caixasValueChanged
+        
+        Object caixa1 = lista_caixas.getSelectedValue();
+        if (caixa1 == null) {
+            lista_caixas.setSelectedIndex(0);
+        }
+        lblCaixaSelecionado.setVisible(true);
+        String nome_caixa = lista_caixas.getSelectedValue().toString();
+        lblCaixaSelecionado.setText(nome_caixa);
+        Class_Caixa caixa = new Class_Caixa();
+        lista_responsaveis.setModel(caixa.carregaResponsaveisCaixa(nome_caixa));
+        
+    }//GEN-LAST:event_lista_caixasValueChanged
+
+    private void btnAdicionarResponsavelCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarResponsavelCaixaActionPerformed
+        
+        if (lista_caixas.getSelectedValue() == null) {
+            JOptionPane.showMessageDialog(null, "Selecione o caixa desejado para adicionar os responsáveis!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (comboUsuario.getSelectedIndex() == 0) {
+                JOptionPane.showMessageDialog(null, "Selecione o usuário para adicionar aos responsáveis!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            } else {
+                ListModel lista = lista_responsaveis.getModel();
+                String responsavel = comboUsuario.getSelectedItem().toString();
+                boolean flag = false;
+                for (int i = 0; i < lista.getSize(); i++) {
+                    if (responsavel.equals(lista.getElementAt(i).toString())) {
+                        flag = true;
+                    }
+                }
+                if (flag == true) {
+                    JOptionPane.showMessageDialog(null, "Este usuário já é responsável por este caixa!\nNão é preciso definí-lo novamente!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    Class_Usuarios usuarios = new Class_Usuarios();
+                    int id_usuario = usuarios.getIdUsuario(responsavel);
+                    Class_Centros_Custo centros = new Class_Centros_Custo();
+                    int id_centro_custo = centros.retornaIdCentroCusto(lista_caixas.getSelectedValue().toString());
+                    Class_Caixa caixa = new Class_Caixa();
+                    caixa.adicionaResponsavelCaixa(id_centro_custo, id_usuario);
+                    lista_responsaveis.setModel(caixa.carregaResponsaveisCaixa(lista_caixas.getSelectedValue().toString()));
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_btnAdicionarResponsavelCaixaActionPerformed
+
+    private void btnRetirarResponsavelCaixaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRetirarResponsavelCaixaActionPerformed
+        
+        Object responsavel = lista_responsaveis.getSelectedValue();
+        if (responsavel == null) {
+            JOptionPane.showMessageDialog(null, "Selecione o responsável na lista abaixo para retirar!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Class_Usuarios usuarios = new Class_Usuarios();
+            int id_usuario = usuarios.getIdUsuario(responsavel.toString());
+            Class_Centros_Custo centros = new Class_Centros_Custo();
+            int id_centro_custo = centros.retornaIdCentroCusto(lista_caixas.getSelectedValue().toString());
+            Class_Caixa caixa = new Class_Caixa();
+            caixa.retiraResponsavelCaixa(id_centro_custo, id_usuario);
+            lista_responsaveis.setModel(caixa.carregaResponsaveisCaixa(lista_caixas.getSelectedValue().toString()));
+        }
+        
+    }//GEN-LAST:event_btnRetirarResponsavelCaixaActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog Alterar_Centro_Custo;
     private javax.swing.JDialog Centros_Custo;
+    private javax.swing.JDialog Configurar_Responsaveis_Caixa;
     private javax.swing.JDialog Novo_Centro_Custo;
+    private javax.swing.JButton btnAdicionarResponsavelCaixa;
     private javax.swing.JButton btnAlterarCentrosCusto;
     private javax.swing.JButton btnCentrosCusto;
+    private javax.swing.JButton btnConfigurarCentros;
     private javax.swing.JButton btnExcluirCentrosCusto;
     private javax.swing.JButton btnLimparDadosCentroCusto;
     private javax.swing.JButton btnNovoCentroCusto;
+    private javax.swing.JButton btnRetirarResponsavelCaixa;
     private javax.swing.JButton btnSairCadastroCentroCusto;
     private javax.swing.JButton btnSairCadastroCentroCusto2;
     private javax.swing.JButton btnSairCentrosCusto;
+    private javax.swing.JButton btnSairConfiguracaoResponsaveis;
     private javax.swing.JButton btnSalvarCentroCusto;
     private javax.swing.JButton btnSalvarCentroCusto2;
+    private javax.swing.JComboBox comboUsuario;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -558,7 +768,11 @@ public class Painel_Financeiro extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -567,8 +781,13 @@ public class Painel_Financeiro extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel lblCaixaSelecionado;
     private javax.swing.JLabel lblTipoCentroCusto;
+    private javax.swing.JList lista_caixas;
     private javax.swing.JList lista_centros_custo;
+    private javax.swing.JList lista_responsaveis;
     private javax.swing.JRadioButton radioCaixa;
     private javax.swing.JRadioButton radioContaBancaria;
     private javax.swing.JTextField txtNomeCentro;

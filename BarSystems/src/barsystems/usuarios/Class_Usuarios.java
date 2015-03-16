@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 
 public class Class_Usuarios {
     
-    Class_Conexao_Banco banco = new Class_Conexao_Banco();
     protected String id_usuario, nome, tipo, senha;
     
     public Class_Usuarios() {
@@ -40,12 +39,28 @@ public class Class_Usuarios {
         return senha;
     }
     
+    public void carregaUsuariosComboBox(javax.swing.JComboBox combo_usuario) {
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("SELECT nome FROM usuarios WHERE Excluido = 0");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                combo_usuario.addItem(rs.getString(1));
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     public DefaultListModel carregaLista() {
-        
         DefaultListModel lista = new DefaultListModel();
-        
         try 
         {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection con = banco.getConexaoMySQL();
             String sql = "SELECT nome from usuarios WHERE excluido = 0 order by nome";
             PreparedStatement st = con.prepareStatement(sql);
@@ -54,12 +69,11 @@ public class Class_Usuarios {
             {
                 lista.addElement(rs.getString(1));
             }
-            
             rs.close();
             st.close();
             con.close();
         } 
-        catch (Exception e) 
+        catch (Exception e)
         {
             e.printStackTrace();
             e.getMessage();
@@ -72,6 +86,7 @@ public class Class_Usuarios {
         
         try 
         {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection con = banco.getConexaoMySQL();
             String SQL = "select id_usuario, nome, senha, tipo from usuarios where nome = '"+nome+"'";
             PreparedStatement st = con.prepareStatement(SQL);
@@ -95,11 +110,31 @@ public class Class_Usuarios {
         
     }
     
+    public boolean verificaCadastroExistente(String nome) {
+        boolean flag = false;
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection con = banco.getConexaoMySQL();
+            PreparedStatement stmt = con.prepareStatement("SELECT nome FROM usuarios WHERE nome = '"+nome+"'");
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                flag = true;
+            }
+            rs.close();
+            stmt.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+    
     public boolean cadastra(String nome, String senha, String tipo) {
         
         String sql = "INSERT INTO usuarios(nome, senha, tipo) VALUES(?,?,?)";    
     
         try {    
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection con = banco.getConexaoMySQL();
             PreparedStatement stmt = con.prepareStatement(sql);    
             stmt.setString(1, nome);
@@ -127,8 +162,9 @@ public class Class_Usuarios {
     public int getIdUsuario(String nome_usuario) {
         int id_usuario = 0;
         try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection con = banco.getConexaoMySQL();
-            String query = "select id_usuario from usuarios where nome = '"+nome_usuario+"'";
+            String query = "select id_usuario from usuarios where nome = '"+nome_usuario+"' and excluido = 0";
             PreparedStatement ps = con.prepareStatement(query);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {

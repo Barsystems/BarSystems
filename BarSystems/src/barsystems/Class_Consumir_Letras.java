@@ -14,4 +14,17 @@ public class Class_Consumir_Letras {
         }
     }
     
+    public String retiraLetras(String valor) {
+        String valorAtualizado = "";
+        String caracteres = "1234567890,.";
+        for (int i = 0; i < valor.length(); i++)
+        {
+            if (caracteres.contains(String.valueOf(valor.charAt(i))))
+            {
+                valorAtualizado = valorAtualizado + String.valueOf(valor.charAt(i));
+            }
+        }
+        return valorAtualizado;
+    }
+    
 }

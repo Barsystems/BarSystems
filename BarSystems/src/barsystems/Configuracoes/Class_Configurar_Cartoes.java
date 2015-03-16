@@ -41,7 +41,10 @@ public class Class_Configurar_Cartoes {
         try 
         {
             Connection con = banco.getConexaoMySQL();
-            String sql = "SELECT cartao from cartoes WHERE excluido = 0 order by cartao";
+            String sql = "SELECT formas_pagamento.descricao "
+                    + "FROM formas_pagamento "
+                    + "INNER JOIN cartoes ON formas_pagamento.id_forma_pagamento = cartoes.id_forma_pagamento "
+                    + "WHERE formas_pagamento.excluido = 0 order by formas_pagamento.descricao";
             PreparedStatement st = con.prepareStatement(sql);
             ResultSet rs = st.executeQuery();
             while (rs.next()) 
@@ -67,13 +70,16 @@ public class Class_Configurar_Cartoes {
         try 
         {
             Connection con = banco.getConexaoMySQL();
-            String SQL = "select id_cartao, cartao, taxa, dias_receber from cartoes where cartao = '"+cartao+"'";
+            String SQL = "select formas_pagamento.descricao, cartoes.id_cartao, cartoes.taxa, cartoes.dias_receber "
+                    + "from formas_pagamento "
+                    + "inner join cartoes on formas_pagamento.id_forma_pagamento = cartoes.id_forma_pagamento "
+                    + "where formas_pagamento.descricao = '"+cartao+"'";
             PreparedStatement st = con.prepareStatement(SQL);
             ResultSet rs = st.executeQuery();
             while(rs.next()) 
             {
-                this.id_cartao = rs.getString(1);
-                this.cartao = rs.getString(2);
+                this.id_cartao = rs.getString(2);
+                this.cartao = rs.getString(1);
                 this.taxa = rs.getString(3) + " %";
                 this.dias_receber = rs.getString(4) + " dias";
             }
@@ -89,42 +95,15 @@ public class Class_Configurar_Cartoes {
         
     }
     
-    public void carregaCartoes(String cartao){
-        try{
-            
-           String sql = "SELECT id_cartao, cartao, taxa, dias_receber FROM cartoes where excluido = 0 and cartao = '"+cartao+"'";  
-            Connection con = banco.getConexaoMySQL();
-                PreparedStatement stmt = con.prepareStatement(sql);    
-   
-            ResultSet rs = stmt.executeQuery();              
-            while(rs.next()){
-                this.id_cartao = rs.getString(1);
-                this.cartao = rs.getString(2);
-                this.taxa = rs.getString(3);
-                this.dias_receber = rs.getString(4);
-            }              
-            rs.close();  
-            stmt.close();
-            con.close();
-        
-            
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-            e.printStackTrace();
-        }
-    }
-    
     public boolean edita(
             String codigo, 
-            String cartao,  
             String taxa, 
             String dias_receber) {
         
         Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
         
-        String sql = "Update cartoes set cartao='"+cartao+
-                "',taxa='"+troca.trocaVirgulaPorPonto(taxa)+""
-                +"',dias_receber='"+dias_receber+"' WHERE id_cartao = "+codigo;
+        String sql = "Update cartoes set taxa='"+troca.trocaVirgulaPorPonto(taxa.replace("%", ""))+""
+                +"',dias_receber='"+dias_receber.replace("dias", "")+"' WHERE id_cartao = "+codigo;
     
             try {    
                 Connection con = banco.getConexaoMySQL();

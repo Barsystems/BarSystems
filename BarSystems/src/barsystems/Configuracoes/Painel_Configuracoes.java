@@ -1,6 +1,7 @@
 
 package barsystems.Configuracoes;
 
+import barsystems.Class_Consumir_Letras;
 import barsystems.Principal;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -42,7 +43,7 @@ public class Painel_Configuracoes extends javax.swing.JPanel {
     
     public void carregaEditar() {
         Class_Configurar_Cartoes cartoes = new Class_Configurar_Cartoes();
-        cartoes.carregaCartoes((String) listCartoes.getSelectedValue());
+        cartoes.carregaCartao((String) listCartoes.getSelectedValue());
         txtCartao1.setText(cartoes.getCartao());
         txtTaxaCartao1.setText(cartoes.getTaxa());
         txtDiasReceberCartao1.setText(cartoes.getDiasReceber());
@@ -207,6 +208,11 @@ public class Painel_Configuracoes extends javax.swing.JPanel {
 
         txtTaxaCartao1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtTaxaCartao1.setToolTipText("Configure a taxa do cartão");
+        txtTaxaCartao1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTaxaCartao1KeyTyped(evt);
+            }
+        });
         Editar_Cartoes.getContentPane().add(txtTaxaCartao1);
         txtTaxaCartao1.setBounds(180, 130, 250, 30);
 
@@ -217,6 +223,11 @@ public class Painel_Configuracoes extends javax.swing.JPanel {
 
         txtDiasReceberCartao1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtDiasReceberCartao1.setToolTipText("Dias para o recebimento do cartão");
+        txtDiasReceberCartao1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDiasReceberCartao1KeyTyped(evt);
+            }
+        });
         Editar_Cartoes.getContentPane().add(txtDiasReceberCartao1);
         txtDiasReceberCartao1.setBounds(180, 170, 250, 30);
 
@@ -349,7 +360,6 @@ public class Painel_Configuracoes extends javax.swing.JPanel {
         else{
             Class_Configurar_Cartoes cartoes = new Class_Configurar_Cartoes();
             boolean result = cartoes.edita(id_cartao,
-                txtCartao1.getText(),
                 txtTaxaCartao1.getText(),
                 txtDiasReceberCartao1.getText());
             if(result)
@@ -366,6 +376,20 @@ public class Painel_Configuracoes extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_btnSalvarEdicaoCartaoActionPerformed
+
+    private void txtTaxaCartao1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTaxaCartao1KeyTyped
+        
+        Class_Consumir_Letras cons = new Class_Consumir_Letras();
+        cons.consome("1234567890,.%", evt);
+        
+    }//GEN-LAST:event_txtTaxaCartao1KeyTyped
+
+    private void txtDiasReceberCartao1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDiasReceberCartao1KeyTyped
+        
+        Class_Consumir_Letras cons = new Class_Consumir_Letras();
+        cons.consome("1234567890", evt);
+        
+    }//GEN-LAST:event_txtDiasReceberCartao1KeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

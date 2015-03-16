@@ -314,6 +314,11 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
         btnExcluir.setText("Excluir");
         btnExcluir.setToolTipText("Excluir cadastro de um usuário");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
         add(btnExcluir);
         btnExcluir.setBounds(280, 430, 100, 30);
 
@@ -383,6 +388,7 @@ public class Painel_Usuarios extends javax.swing.JPanel {
         
         txtNomeCadastrar.setText("");
         txtSenhaCadastrar.setText("");
+        txtRepetirSenhaCadastro.setText("");
         comboTipoCadastrar.setSelectedIndex(0);
         
         txtNomeCadastrar.grabFocus();
@@ -407,7 +413,7 @@ public class Painel_Usuarios extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "As senhas não coincidem! Reescreva a senha novamente!", "Atenção", JOptionPane.WARNING_MESSAGE);
             txtRepetirSenhaCadastro.selectAll();
             txtRepetirSenhaCadastro.grabFocus();
-        } 
+        }
         else 
         {
             Class_Usuarios usuarios = new Class_Usuarios(
@@ -416,21 +422,30 @@ public class Painel_Usuarios extends javax.swing.JPanel {
                     comboTipoCadastrar.getSelectedItem().toString()
             );
             
-            boolean result = usuarios.cadastra(txtNomeCadastrar.getText(), txtSenhaCadastrar.getText(), 
-                    comboTipoCadastrar.getSelectedItem().toString());
-            if (result == false) 
+            if (usuarios.verificaCadastroExistente(txtNomeCadastrar.getText()) == true)
             {
-                JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-                txtNomeUsuario.setText("");
-                txtSenhaUsuario.setText("");
-                txtTipoUsuario.setText("");
-                
-                Cadastrar_Usuario.dispose();
-                refreshList();
-            } 
-            else 
+                JOptionPane.showMessageDialog(null, "Este usuário já existe!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                txtNomeCadastrar.grabFocus();
+                txtNomeCadastrar.selectAll();
+            }
+            else
             {
-                JOptionPane.showMessageDialog(null, "Falha ao cadastrar usuário!", "Atenção", JOptionPane.ERROR_MESSAGE);
+                boolean result = usuarios.cadastra(txtNomeCadastrar.getText(), txtSenhaCadastrar.getText(), 
+                        comboTipoCadastrar.getSelectedItem().toString());
+                if (result == false) 
+                {
+                    JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+                    txtNomeUsuario.setText("");
+                    txtSenhaUsuario.setText("");
+                    txtTipoUsuario.setText("");
+
+                    Cadastrar_Usuario.dispose();
+                    refreshList();
+                } 
+                else 
+                {
+                    JOptionPane.showMessageDialog(null, "Falha ao cadastrar usuário!", "Atenção", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
         
@@ -444,7 +459,16 @@ public class Painel_Usuarios extends javax.swing.JPanel {
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         
-        
+        Object usuario = listUsuarios.getSelectedValue();
+        if (usuario == null) {
+            JOptionPane.showMessageDialog(null, "Selecione o usuário para alterar!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (usuario.toString().equals("Administrador")) {
+                JOptionPane.showMessageDialog(null, "Este é um usuário padrão e não poderá ser alterado!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            } else {
+                
+            }
+        }
         
     }//GEN-LAST:event_btnAlterarActionPerformed
 
@@ -455,6 +479,21 @@ public class Painel_Usuarios extends javax.swing.JPanel {
     private void btnSairCadastro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairCadastro1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSairCadastro1ActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        
+        Object usuario = listUsuarios.getSelectedValue();
+        if (usuario == null) {
+            JOptionPane.showMessageDialog(null, "Selecione o usuário para excluir!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (usuario.toString().equals("Administrador")) {
+                JOptionPane.showMessageDialog(null, "Este é um usuário padrão e não poderá ser excluído!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            } else {
+                
+            }
+        }
+        
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
