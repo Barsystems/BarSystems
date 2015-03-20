@@ -29,6 +29,7 @@ public class Class_Receitas {
         int id_setor = setores.retornaIdSetorFinanceiro(setor);
         Class_Formas_Pagto formas = new Class_Formas_Pagto();
         int id_forma_pagamento = formas.retornaIdFormaPagamento(forma_pagamento);
+        
         try {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
             Date data = sdf.parse(data_vencimento);
@@ -68,6 +69,7 @@ public class Class_Receitas {
                 
                 calendar.add(Calendar.DAY_OF_MONTH, dias);
                 data_vencimento = sdf.format(calendar.getTime());
+                data_pagamento = null;
 
                 if (!forma_pagamento.contains("Cartão")) {
                     liquidada = 0;
@@ -81,4 +83,43 @@ public class Class_Receitas {
         }
     }
     
+    public void alteraReceitaPelaMovimentacaoCaixa(int id_movimentacao_caixa, String descricao, String forma_pagamento, 
+            String valor) {
+        
+        Class_Formas_Pagto formas = new Class_Formas_Pagto();
+        int id_forma_pagamento = formas.retornaIdFormaPagamento(forma_pagamento);
+        
+        Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
+        float Valor = troca.trocaVirgulaPorPonto(valor);
+        
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("UPDATE receitas SET "
+                    + "descricao = '"+descricao+"', "
+                    + "id_forma_pagamento = '"+id_forma_pagamento+"', "
+                    + "valor = '"+Valor+"' "
+                    + "WHERE id_movimentacao_caixa_fk = '"+id_movimentacao_caixa+"'");
+            ps.executeUpdate();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void excluiReceitaPelaMovimentacaoCaixa(int id_movimentacao_caixa) {
+        try {            
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("UPDATE receitas SET "
+                    + "excluido = 1 "
+                    + "WHERE id_movimentacao_caixa_fk = '"+id_movimentacao_caixa+"'");
+            ps.executeUpdate();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

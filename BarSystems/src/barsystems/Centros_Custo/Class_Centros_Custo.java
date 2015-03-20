@@ -2,6 +2,7 @@
 package barsystems.Centros_Custo;
 
 import barsystems.conexaoBanco.Class_Conexao_Banco;
+import barsystems.usuarios.Class_Usuarios;
 import java.awt.Component;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -184,28 +185,47 @@ public class Class_Centros_Custo {
     }
     
     public void getCentrosCusto(JTabbedPane painel_centros_custo, int id_usuario, String nome_usuario) {
-        try {
-            ImageIcon icon = null;
-            Component component = null;
+        try {            
             Connection conn = banco.getConexaoMySQL();
-            PreparedStatement ps = conn.prepareStatement("SELECT centros_custo.id_centro_custo, centros_custo.nome, "
-                    + "centros_custo.tipo, responsaveis_caixa.id_usuario "
-                    + "FROM centros_custo "
-                    + "INNER JOIN responsaveis_caixa ON centros_custo.id_centro_custo = responsaveis_caixa.id_centro_custo "
-                    + "WHERE centros_custo.Excluido = 0 AND responsaveis_caixa.id_usuario = '"+id_usuario+"'");
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                if (rs.getString("centros_custo.tipo").equals("Caixa")) {
-                    icon = new ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png"));
-                    Painel_Caixa caixa = new Painel_Caixa(rs.getInt("centros_custo.id_centro_custo"), rs.getString("centros_custo.nome"), id_usuario, nome_usuario);
-                    component = caixa;
-                } else {
-                    icon = new ImageIcon(getClass().getResource("/barsystems/imagens/credit31.png"));
-                    Painel_Conta_Bancaria conta_bancaria = new Painel_Conta_Bancaria();
-                    component = conta_bancaria;
+            PreparedStatement ps = null;
+            ResultSet rs = null;
+            
+            Class_Usuarios usuarios = new Class_Usuarios();
+            String tipo_usuario = usuarios.getTipoUsuario(nome_usuario);
+            if (tipo_usuario.equals("Administrador")) { 
+                ImageIcon icon = null;
+                Component component = null;
+                String tip = null;
+                
+                ps = conn.prepareStatement("SELECT centros_custo.id_centro_custo, centros_custo.nome, "
+                        + "centros_custo.tipo FROM centros_custo WHERE centros_custo.Excluido = 0");
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    if (rs.getString("centros_custo.tipo").equals("Caixa")) {
+                        icon = new ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png"));
+                        Painel_Caixa caixa = new Painel_Caixa(rs.getInt("centros_custo.id_centro_custo"), rs.getString("centros_custo.nome"), id_usuario, nome_usuario);
+                        component = caixa;
+                        tip = "Gerencie seu caixa!";
+                    } else {
+                        icon = new ImageIcon(getClass().getResource("/barsystems/imagens/credit31.png"));
+                        Painel_Conta_Bancaria conta_bancaria = new Painel_Conta_Bancaria(rs.getInt("centros_custo.id_centro_custo"), rs.getString("centros_custo.nome"), id_usuario, nome_usuario);
+                        component = conta_bancaria;
+                        tip = "Gerencie sua conta bancária!";
+                    }
+                    painel_centros_custo.addTab(rs.getString("centros_custo.nome")+"   ", icon, component, tip);
                 }
-                painel_centros_custo.addTab(rs.getString("centros_custo.nome")+"   ", icon, component, "Gerencie seus centros de custo!");
-                component = null;
+            } else {
+                ps = conn.prepareStatement("SELECT centros_custo.id_centro_custo, centros_custo.nome, "
+                        + "centros_custo.tipo, responsaveis_caixa.id_usuario "
+                        + "FROM centros_custo "
+                        + "INNER JOIN responsaveis_caixa ON centros_custo.id_centro_custo = responsaveis_caixa.id_centro_custo "
+                        + "WHERE centros_custo.Excluido = 0 AND responsaveis_caixa.id_usuario = '"+id_usuario+"' "
+                        + "AND centros_custo.tipo = 'Caixa'");
+                rs = ps.executeQuery();
+                while (rs.next()) {
+                    Painel_Caixa caixa = new Painel_Caixa(rs.getInt("centros_custo.id_centro_custo"), rs.getString("centros_custo.nome"), id_usuario, nome_usuario);
+                    painel_centros_custo.addTab(rs.getString("centros_custo.nome")+"   ", new ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png")), caixa, "Gerencie seu caixa!");
+                }
             }
             rs.close();
             ps.close();

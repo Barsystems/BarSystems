@@ -345,6 +345,25 @@ public class Class_Fornecedores {
         return listModel;
     }// FIM PESQUISA
     
+    public int retornaIdFornecedor(String nome_fantasia) {
+        int id = 0;
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("select id_fornecedor from fornecedores "
+                    + "where nome_fantasia = '"+nome_fantasia+"'");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                id = rs.getInt(1);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
     
 }
 

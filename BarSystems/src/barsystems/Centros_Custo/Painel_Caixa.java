@@ -2,9 +2,11 @@
 package barsystems.Centros_Custo;
 
 import barsystems.Class_Consumir_Letras;
-import barsystems.Class_Manipular_Data;
+import barsystems.Class_Troca_Virgula_Por_Ponto;
+import barsystems.Financeiro.Class_Despesas;
 import barsystems.Financeiro.Class_Receitas;
-import barsystems.formasPagamento.Class_Formas_Pagto;
+import barsystems.usuarios.Class_Usuarios;
+import barsystems.usuarios.Painel_Senha_Administrador;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -43,6 +45,57 @@ public class Painel_Caixa extends javax.swing.JPanel {
         }
         
     }
+    
+    public void limpaCamposNovoLancamento() {
+        comboTipoNovoLancamento.setSelectedIndex(0);
+        txtDescricaoNovoLancamento.setText("");
+        comboFormaNovoLancamento.setSelectedIndex(0);
+        txtValorNovoLancamento.setText("");
+        txtDescricaoNovoLancamento.grabFocus();
+    }
+    
+    public void carregaCamposAlterarLancamento(int linha) {
+        DefaultTableModel modelo = (DefaultTableModel) tabelaMovimentacoesCaixa.getModel();
+        lblTipoAlterarLancamento.setText(modelo.getValueAt(linha, 3).toString());
+        txtDescricaoAlterarLancamento.setText(modelo.getValueAt(linha, 0).toString());
+        comboFormaAlterarLancamento.setSelectedItem(modelo.getValueAt(linha, 1).toString());
+        txtValorAlterarLancamento.setText(modelo.getValueAt(linha, 2).toString().replace("R$ ", ""));
+        
+        //Aqui precisamos verificar se a movimentação pertence a uma abertura de caixa.
+        //Se sim, não podemos deixar o usuário modificar a descrição e a forma de pagamento.
+        if (lblTipoAlterarLancamento.getText().equals("Abertura")) {
+            txtDescricaoAlterarLancamento.setEnabled(false);
+            comboFormaAlterarLancamento.setEnabled(false);
+        } else {
+            txtDescricaoAlterarLancamento.setEnabled(true);
+            comboFormaAlterarLancamento.setEnabled(true);
+        }
+
+        Alterar_Lancamento.setBounds(0, 0, 690, 410);
+        Alterar_Lancamento.setLocationRelativeTo(null);
+        Alterar_Lancamento.setVisible(true);
+    }
+    
+    public void excluiMovimentacao(int linha) {
+        if (JOptionPane.showConfirmDialog(null, "Deseja realmente excluir?", "Atenção", JOptionPane.YES_NO_OPTION)==0) {
+            DefaultTableModel modelo = (DefaultTableModel) tabelaMovimentacoesCaixa.getModel();
+            int id_movimentacao = Integer.valueOf(modelo.getValueAt(linha, 6).toString());
+            Class_Caixa caixa = new Class_Caixa();
+            caixa.excluiMovimentacaoCaixa(id_movimentacao);
+
+            if (modelo.getValueAt(linha, 3).toString().equals("Receita")) {                
+                Class_Receitas receitas = new Class_Receitas();
+                receitas.excluiReceitaPelaMovimentacaoCaixa(id_movimentacao);
+            } else if (modelo.getValueAt(linha, 3).equals("Despesa")) {
+                Class_Despesas despesas = new Class_Despesas();
+                despesas.excluiDespesaPelaMovimentacaoCaixa(id_movimentacao);
+            }
+
+            int id_caixa = caixa.getIdCaixa(id_centro_custo);
+            caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel(), id_caixa);
+            JOptionPane.showMessageDialog(null, "Lançamento excluído com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,18 +113,24 @@ public class Painel_Caixa extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         comboTipoNovoLancamento = new javax.swing.JComboBox();
-        comboFormaNovoLancamento = new javax.swing.JComboBox();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         txtValorNovoLancamento = new javax.swing.JTextField();
         btnSalvarNovoLancamento = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
         btnSairNovoLancamento = new javax.swing.JButton();
-        comboParcelasNovoLancamento = new javax.swing.JComboBox();
+        comboFormaNovoLancamento = new javax.swing.JComboBox();
+        Alterar_Lancamento = new javax.swing.JDialog();
         jLabel7 = new javax.swing.JLabel();
-        txtDataLanNovoLancamento = new javax.swing.JFormattedTextField();
         jLabel8 = new javax.swing.JLabel();
-        txtHoraNovoLancamento = new javax.swing.JFormattedTextField();
+        txtDescricaoAlterarLancamento = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        txtValorAlterarLancamento = new javax.swing.JTextField();
+        btnSalvarAlterarLancamento = new javax.swing.JButton();
+        btnSairAlterarLancamento = new javax.swing.JButton();
+        lblTipoAlterarLancamento = new javax.swing.JLabel();
+        comboFormaAlterarLancamento = new javax.swing.JComboBox();
         lblTituloCaixa = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaMovimentacoesCaixa = new javax.swing.JTable();
@@ -97,40 +156,31 @@ public class Painel_Caixa extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Descrição do lançamento");
         Novo_Lancamento.getContentPane().add(jLabel2);
-        jLabel2.setBounds(40, 140, 170, 17);
+        jLabel2.setBounds(40, 150, 170, 17);
 
         txtDescricaoNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         Novo_Lancamento.getContentPane().add(txtDescricaoNovoLancamento);
-        txtDescricaoNovoLancamento.setBounds(220, 130, 410, 30);
+        txtDescricaoNovoLancamento.setBounds(220, 140, 410, 30);
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText(" Forma de pagamento");
         Novo_Lancamento.getContentPane().add(jLabel3);
-        jLabel3.setBounds(60, 180, 150, 17);
+        jLabel3.setBounds(60, 190, 150, 17);
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel4.setText(" Tipo de lançamento");
         Novo_Lancamento.getContentPane().add(jLabel4);
-        jLabel4.setBounds(70, 100, 140, 17);
+        jLabel4.setBounds(70, 110, 140, 17);
 
         comboTipoNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         comboTipoNovoLancamento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Receita", "Despesa" }));
         Novo_Lancamento.getContentPane().add(comboTipoNovoLancamento);
-        comboTipoNovoLancamento.setBounds(220, 90, 170, 30);
-
-        comboFormaNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        Novo_Lancamento.getContentPane().add(comboFormaNovoLancamento);
-        comboFormaNovoLancamento.setBounds(220, 170, 410, 30);
-
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel5.setText("Número de parcelas");
-        Novo_Lancamento.getContentPane().add(jLabel5);
-        jLabel5.setBounds(70, 220, 130, 17);
+        comboTipoNovoLancamento.setBounds(220, 100, 410, 30);
 
         jLabel6.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel6.setText("Valor do lançamento");
         Novo_Lancamento.getContentPane().add(jLabel6);
-        jLabel6.setBounds(310, 220, 140, 17);
+        jLabel6.setBounds(70, 230, 140, 17);
 
         txtValorNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtValorNovoLancamento.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -139,7 +189,7 @@ public class Painel_Caixa extends javax.swing.JPanel {
             }
         });
         Novo_Lancamento.getContentPane().add(txtValorNovoLancamento);
-        txtValorNovoLancamento.setBounds(460, 210, 170, 30);
+        txtValorNovoLancamento.setBounds(220, 220, 130, 30);
 
         btnSalvarNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnSalvarNovoLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
@@ -150,7 +200,7 @@ public class Painel_Caixa extends javax.swing.JPanel {
             }
         });
         Novo_Lancamento.getContentPane().add(btnSalvarNovoLancamento);
-        btnSalvarNovoLancamento.setBounds(170, 320, 100, 30);
+        btnSalvarNovoLancamento.setBounds(170, 310, 100, 30);
 
         btnLimpar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnLimpar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
@@ -161,7 +211,7 @@ public class Painel_Caixa extends javax.swing.JPanel {
             }
         });
         Novo_Lancamento.getContentPane().add(btnLimpar);
-        btnLimpar.setBounds(280, 320, 100, 30);
+        btnLimpar.setBounds(280, 310, 100, 30);
 
         btnSairNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnSairNovoLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
@@ -172,40 +222,91 @@ public class Painel_Caixa extends javax.swing.JPanel {
             }
         });
         Novo_Lancamento.getContentPane().add(btnSairNovoLancamento);
-        btnSairNovoLancamento.setBounds(390, 320, 100, 30);
+        btnSairNovoLancamento.setBounds(390, 310, 100, 30);
 
-        comboParcelasNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        comboParcelasNovoLancamento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-        Novo_Lancamento.getContentPane().add(comboParcelasNovoLancamento);
-        comboParcelasNovoLancamento.setBounds(220, 210, 60, 30);
+        comboFormaNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        comboFormaNovoLancamento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cheque" }));
+        Novo_Lancamento.getContentPane().add(comboFormaNovoLancamento);
+        comboFormaNovoLancamento.setBounds(220, 180, 410, 30);
 
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel7.setText("Data do lançamento");
-        Novo_Lancamento.getContentPane().add(jLabel7);
-        jLabel7.setBounds(70, 260, 127, 17);
+        Alterar_Lancamento.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        Alterar_Lancamento.setTitle("Alterar lançamento");
+        Alterar_Lancamento.setModal(true);
+        Alterar_Lancamento.setResizable(false);
+        Alterar_Lancamento.getContentPane().setLayout(null);
 
-        try {
-            txtDataLanNovoLancamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtDataLanNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        Novo_Lancamento.getContentPane().add(txtDataLanNovoLancamento);
-        txtDataLanNovoLancamento.setBounds(220, 250, 150, 30);
+        jLabel7.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15.png"))); // NOI18N
+        jLabel7.setText("Alterar lançamento no caixa");
+        Alterar_Lancamento.getContentPane().add(jLabel7);
+        jLabel7.setBounds(0, 30, 690, 30);
 
         jLabel8.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel8.setText("Hora do lançamento");
-        Novo_Lancamento.getContentPane().add(jLabel8);
-        jLabel8.setBounds(400, 260, 130, 17);
+        jLabel8.setText("Descrição do lançamento");
+        Alterar_Lancamento.getContentPane().add(jLabel8);
+        jLabel8.setBounds(40, 150, 170, 17);
 
-        try {
-            txtHoraNovoLancamento.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##:##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        txtHoraNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        Novo_Lancamento.getContentPane().add(txtHoraNovoLancamento);
-        txtHoraNovoLancamento.setBounds(549, 250, 80, 30);
+        txtDescricaoAlterarLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        Alterar_Lancamento.getContentPane().add(txtDescricaoAlterarLancamento);
+        txtDescricaoAlterarLancamento.setBounds(220, 140, 410, 30);
+
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel9.setText(" Forma de pagamento");
+        Alterar_Lancamento.getContentPane().add(jLabel9);
+        jLabel9.setBounds(60, 190, 150, 17);
+
+        jLabel10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel10.setText(" Tipo de lançamento");
+        Alterar_Lancamento.getContentPane().add(jLabel10);
+        jLabel10.setBounds(70, 110, 140, 17);
+
+        jLabel12.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel12.setText("Valor do lançamento");
+        Alterar_Lancamento.getContentPane().add(jLabel12);
+        jLabel12.setBounds(70, 230, 140, 17);
+
+        txtValorAlterarLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtValorAlterarLancamento.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtValorAlterarLancamentoKeyTyped(evt);
+            }
+        });
+        Alterar_Lancamento.getContentPane().add(txtValorAlterarLancamento);
+        txtValorAlterarLancamento.setBounds(220, 220, 150, 30);
+
+        btnSalvarAlterarLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnSalvarAlterarLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/white65.png"))); // NOI18N
+        btnSalvarAlterarLancamento.setText("Salvar");
+        btnSalvarAlterarLancamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarAlterarLancamentoActionPerformed(evt);
+            }
+        });
+        Alterar_Lancamento.getContentPane().add(btnSalvarAlterarLancamento);
+        btnSalvarAlterarLancamento.setBounds(230, 310, 100, 30);
+
+        btnSairAlterarLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnSairAlterarLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/man349.png"))); // NOI18N
+        btnSairAlterarLancamento.setText("Sair");
+        btnSairAlterarLancamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairAlterarLancamentoActionPerformed(evt);
+            }
+        });
+        Alterar_Lancamento.getContentPane().add(btnSairAlterarLancamento);
+        btnSairAlterarLancamento.setBounds(340, 310, 100, 30);
+
+        lblTipoAlterarLancamento.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblTipoAlterarLancamento.setForeground(new java.awt.Color(255, 0, 0));
+        lblTipoAlterarLancamento.setText("lblTipoLancamento");
+        Alterar_Lancamento.getContentPane().add(lblTipoAlterarLancamento);
+        lblTipoAlterarLancamento.setBounds(220, 110, 410, 17);
+
+        comboFormaAlterarLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        comboFormaAlterarLancamento.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Dinheiro", "Cheque" }));
+        Alterar_Lancamento.getContentPane().add(comboFormaAlterarLancamento);
+        comboFormaAlterarLancamento.setBounds(220, 180, 410, 30);
 
         setLayout(null);
 
@@ -214,7 +315,7 @@ public class Painel_Caixa extends javax.swing.JPanel {
         lblTituloCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15.png"))); // NOI18N
         lblTituloCaixa.setText("Gerenciamento de caixa por usuário");
         add(lblTituloCaixa);
-        lblTituloCaixa.setBounds(0, 30, 930, 29);
+        lblTituloCaixa.setBounds(0, 30, 1020, 29);
 
         tabelaMovimentacoesCaixa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         tabelaMovimentacoesCaixa.setModel(new javax.swing.table.DefaultTableModel(
@@ -222,14 +323,14 @@ public class Painel_Caixa extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Descrição", "Forma Pagto", "Parcelas", "Valor", "Tipo", "Data", "Responsável", "Cod"
+                "Descrição", "Forma Pagto", "Valor", "Tipo", "Data", "Responsável", "Cod"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -247,14 +348,13 @@ public class Painel_Caixa extends javax.swing.JPanel {
         tabelaMovimentacoesCaixa.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabelaMovimentacoesCaixa);
         if (tabelaMovimentacoesCaixa.getColumnModel().getColumnCount() > 0) {
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(0).setPreferredWidth(250);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(1).setPreferredWidth(180);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(2).setPreferredWidth(60);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(3).setPreferredWidth(70);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(0).setPreferredWidth(300);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(2).setPreferredWidth(70);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(3).setPreferredWidth(120);
             tabelaMovimentacoesCaixa.getColumnModel().getColumn(4).setPreferredWidth(120);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(5).setPreferredWidth(120);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(6).setPreferredWidth(90);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(7).setPreferredWidth(50);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(5).setPreferredWidth(90);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(6).setPreferredWidth(50);
         }
 
         add(jScrollPane1);
@@ -282,21 +382,31 @@ public class Painel_Caixa extends javax.swing.JPanel {
             }
         });
         add(btnNovoLancamento);
-        btnNovoLancamento.setBounds(170, 460, 180, 30);
+        btnNovoLancamento.setBounds(220, 460, 180, 30);
 
         btnAlterarLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnAlterarLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
         btnAlterarLancamento.setText("Alterar lançamento");
         btnAlterarLancamento.setToolTipText("Altere as informações de algum lançamento");
+        btnAlterarLancamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarLancamentoActionPerformed(evt);
+            }
+        });
         add(btnAlterarLancamento);
-        btnAlterarLancamento.setBounds(360, 460, 180, 30);
+        btnAlterarLancamento.setBounds(410, 460, 180, 30);
 
         btnExcluirLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnExcluirLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
         btnExcluirLancamento.setText("Excluir lançamento");
         btnExcluirLancamento.setToolTipText("Exclua lançamentos indesejados");
+        btnExcluirLancamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirLancamentoActionPerformed(evt);
+            }
+        });
         add(btnExcluirLancamento);
-        btnExcluirLancamento.setBounds(550, 460, 180, 30);
+        btnExcluirLancamento.setBounds(600, 460, 180, 30);
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/printer11.png"))); // NOI18N
         jButton1.setToolTipText("Imprima a movimentação deste caixa");
@@ -306,7 +416,6 @@ public class Painel_Caixa extends javax.swing.JPanel {
 
     private void btnSalvarNovoLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarNovoLancamentoActionPerformed
         
-        String forma = comboFormaNovoLancamento.getSelectedItem().toString();
         if (txtDescricaoNovoLancamento.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Digite a descrição do lançamento!", "Atenção", JOptionPane.WARNING_MESSAGE);
             txtDescricaoNovoLancamento.grabFocus();
@@ -314,27 +423,34 @@ public class Painel_Caixa extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Digite o valor do lançamento!", "Atenção", JOptionPane.WARNING_MESSAGE);
             txtValorNovoLancamento.grabFocus();
         } else {
-            //Retornando o id da forma de pagamento
-            Class_Formas_Pagto formas = new Class_Formas_Pagto();
-            int id_forma_pagto = formas.retornaIdFormaPagamento(forma);
+            String forma = comboFormaNovoLancamento.getSelectedItem().toString();
             //Adicionando a movimentação
             Class_Caixa caixa = new Class_Caixa();
             int id_caixa = caixa.getIdCaixa(id_centro_custo);
-            Class_Manipular_Data data = new Class_Manipular_Data();
-            String data_pagamento = data.retornaDataFormatoMySQL(txtDataLanNovoLancamento.getText(), txtHoraNovoLancamento.getText());
-            caixa.registraMovimentacaoCaixa(id_caixa, txtDescricaoNovoLancamento.getText(), id_forma_pagto, 1, txtValorNovoLancamento.getText(), comboTipoNovoLancamento.getSelectedItem().toString(), id_usuario, data_pagamento);
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            String data = sdf.format(new Date());
+            
+            caixa.registraMovimentacaoCaixa(id_caixa, txtDescricaoNovoLancamento.getText(), forma, 1, 
+                    txtValorNovoLancamento.getText(), comboTipoNovoLancamento.getSelectedItem().toString(), id_usuario, 
+                    data);
             caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel(), id_caixa);
-            if (comboTipoNovoLancamento.getSelectedItem().toString().equals("Receita")) {
-                int id_movimentacao_caixa = caixa.getIdUltimaMovimentacaoCaixa();
-                
+            
+            int id_movimentacao_caixa = caixa.getIdUltimaMovimentacaoCaixa();
+            if (comboTipoNovoLancamento.getSelectedItem().toString().equals("Receita")) {                
                 Class_Receitas receitas = new Class_Receitas();
                 receitas.cadastraReceita(txtDescricaoNovoLancamento.getText(), 0, "", "Entrada no caixa", forma, 
-                        txtValorNovoLancamento.getText(), "0", "0", 
-                        Integer.valueOf(comboParcelasNovoLancamento.getSelectedItem().toString()), id_movimentacao_caixa, 
-                        data_pagamento, data_pagamento);
-            } else {
-                
+                        txtValorNovoLancamento.getText(), "0", "0", 1, id_movimentacao_caixa, 
+                        data, data);
+            } else if (comboTipoNovoLancamento.getSelectedItem().equals("Despesa")) {
+                Class_Despesas despesas = new Class_Despesas();
+                despesas.cadastraDespesa(0, txtDescricaoNovoLancamento.getText(), nome_usuario, "", 1, data, data, forma, 
+                        txtValorNovoLancamento.getText(), "0", "0", 0, 1, "Saída no caixa", id_usuario, 
+                        id_movimentacao_caixa);
             }
+            
+            JOptionPane.showMessageDialog(null, "Lançamento realizado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            Novo_Lancamento.dispose();
         }
         
     }//GEN-LAST:event_btnSalvarNovoLancamentoActionPerformed
@@ -352,22 +468,32 @@ public class Painel_Caixa extends javax.swing.JPanel {
                 Class_Consumir_Letras cons = new Class_Consumir_Letras();
                 valor = cons.retiraLetras(valor);
                 
-                Class_Formas_Pagto formas = new Class_Formas_Pagto();
-                int id_forma_pagamento = formas.retornaIdFormaPagamento("Dinheiro");
+                Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
+                float Valor = troca.trocaVirgulaPorPonto(valor);
+                valor = String.valueOf(Valor);
 
                 Class_Caixa caixa = new Class_Caixa();
                 caixa.abrirCaixa(id_centro_custo);
                 int id_caixa = caixa.getIdCaixa(id_centro_custo);
-                Class_Manipular_Data data = new Class_Manipular_Data();
-                String data_pagamento = data.retornaDataFormatoMySQL(txtDataLanNovoLancamento.getText(), txtHoraNovoLancamento.getText());
-                caixa.registraMovimentacaoCaixa(id_caixa, "Abertura do caixa", id_forma_pagamento, 1, valor, "Abertura", id_usuario, data_pagamento);
+                
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                String data_pagamento = sdf.format(new Date());
+                
+                caixa.registraMovimentacaoCaixa(id_caixa, "Abertura do caixa", "Dinheiro", 1, valor, "Abertura", id_usuario, data_pagamento);
                 caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel(), id_caixa);
                 btnAbrirFecharCaixa.setText("Fechar caixa");
             }
         }
         else
         {
-
+            if (JOptionPane.showConfirmDialog(null, "Deseja realmente fechar o caixa? Não será possível abrí-lo novamente!", "Atenção", JOptionPane.YES_NO_OPTION) == 0) {
+                Class_Caixa caixa = new Class_Caixa();
+                int id_caixa = caixa.getIdCaixa(id_centro_custo);
+                caixa.fecharCaixa(id_caixa);
+                DefaultTableModel modelo = (DefaultTableModel) tabelaMovimentacoesCaixa.getModel();
+                modelo.setRowCount(0);
+                btnAbrirFecharCaixa.setText("Abrir caixa");
+            }
         }
 
     }//GEN-LAST:event_btnAbrirFecharCaixaActionPerformed
@@ -376,28 +502,19 @@ public class Painel_Caixa extends javax.swing.JPanel {
 
         if (btnAbrirFecharCaixa.getText().equals("Abrir caixa")) {
             JOptionPane.showMessageDialog(null, "Abra uma caixa para fazer um lançamento!", "Atenção", JOptionPane.WARNING_MESSAGE);
-        } else {
-            Class_Formas_Pagto formas = new Class_Formas_Pagto();
-            formas.carregaFormasPagamento(comboFormaNovoLancamento);
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            txtDataLanNovoLancamento.setText(sdf.format(new Date()));
-            sdf.applyPattern("HH:mm");
-            txtHoraNovoLancamento.setText(sdf.format(new Date()));
+        } else {                        
             Novo_Lancamento.setBounds(0, 0, 690, 410);
             Novo_Lancamento.setLocationRelativeTo(null);
             Novo_Lancamento.setVisible(true);
+            
+            limpaCamposNovoLancamento();
         }
 
     }//GEN-LAST:event_btnNovoLancamentoActionPerformed
 
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         
-        comboTipoNovoLancamento.setSelectedIndex(0);
-        txtDescricaoNovoLancamento.setText("");
-        comboFormaNovoLancamento.setSelectedIndex(0);
-        comboParcelasNovoLancamento.setSelectedIndex(0);
-        txtValorNovoLancamento.setText("");
-        txtDescricaoNovoLancamento.grabFocus();
+        limpaCamposNovoLancamento();
         
     }//GEN-LAST:event_btnLimparActionPerformed
 
@@ -414,34 +531,140 @@ public class Painel_Caixa extends javax.swing.JPanel {
         
     }//GEN-LAST:event_txtValorNovoLancamentoKeyTyped
 
+    private void btnAlterarLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarLancamentoActionPerformed
+        
+        int linha = tabelaMovimentacoesCaixa.getSelectedRow();
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um lançamento para alterar!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } else {
+            Class_Usuarios usuarios = new Class_Usuarios();
+            if (!usuarios.getTipoUsuario(nome_usuario).equals("Administrador")) {
+                Painel_Senha_Administrador painel_senha = new Painel_Senha_Administrador();
+                painel_senha.txtSenha.grabFocus();
+                JOptionPane.showMessageDialog(null, new Object[]{painel_senha.lblSenha, painel_senha.txtSenha}, "Atenção", JOptionPane.PLAIN_MESSAGE);
+                String senha = painel_senha.txtSenha.getText();
+                if (usuarios.verificaSenhaAdministrador(senha) == true) {
+                    carregaCamposAlterarLancamento(linha);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Senha inválida!", "Atenção", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                carregaCamposAlterarLancamento(linha);
+            }
+        }
+        
+    }//GEN-LAST:event_btnAlterarLancamentoActionPerformed
+
+    private void txtValorAlterarLancamentoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorAlterarLancamentoKeyTyped
+        
+        Class_Consumir_Letras cons = new Class_Consumir_Letras();
+        cons.consome("1234567890,.", evt);
+        
+    }//GEN-LAST:event_txtValorAlterarLancamentoKeyTyped
+
+    private void btnSalvarAlterarLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarAlterarLancamentoActionPerformed
+        
+        if (txtDescricaoAlterarLancamento.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Digite a descrição do lançamento!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtDescricaoAlterarLancamento.grabFocus();
+        } else if (txtValorAlterarLancamento.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Digite o valor do lançamento!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtValorAlterarLancamento.grabFocus();
+        } else {
+            DefaultTableModel modelo = (DefaultTableModel) tabelaMovimentacoesCaixa.getModel();
+            int id_movimentacao = Integer.valueOf(modelo.getValueAt(tabelaMovimentacoesCaixa.getSelectedRow(), 6).toString());
+            
+            Class_Caixa caixa = new Class_Caixa();
+            caixa.alteraMovimentacaoCaixa(id_movimentacao, txtDescricaoAlterarLancamento.getText(), 
+                    comboFormaAlterarLancamento.getSelectedItem().toString(), txtValorAlterarLancamento.getText());
+            
+            int id_caixa = caixa.getIdCaixa(id_centro_custo);
+            caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel(), id_caixa);
+            
+            if (lblTipoAlterarLancamento.getText().equals("Receita")) {                
+                Class_Receitas receitas = new Class_Receitas();
+                receitas.alteraReceitaPelaMovimentacaoCaixa(id_movimentacao, txtDescricaoAlterarLancamento.getText(),
+                        comboFormaAlterarLancamento.getSelectedItem().toString(), txtValorAlterarLancamento.getText());
+            } else if (lblTipoAlterarLancamento.getText().equals("Despesa")) {
+                Class_Despesas despesas = new Class_Despesas();
+                despesas.alteraDespesaPelaMovimentacaoCaixa(id_movimentacao, txtDescricaoAlterarLancamento.getText(),
+                        comboFormaAlterarLancamento.getSelectedItem().toString(), txtValorAlterarLancamento.getText());                
+            }
+            
+            JOptionPane.showMessageDialog(null, "Lançamento alterado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+            Alterar_Lancamento.dispose();
+        }
+        
+    }//GEN-LAST:event_btnSalvarAlterarLancamentoActionPerformed
+
+    private void btnSairAlterarLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairAlterarLancamentoActionPerformed
+        
+        Alterar_Lancamento.dispose();
+        
+    }//GEN-LAST:event_btnSairAlterarLancamentoActionPerformed
+
+    private void btnExcluirLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirLancamentoActionPerformed
+        
+        int linha = tabelaMovimentacoesCaixa.getSelectedRow();
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um lançamento para excluir!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } else {
+            if (tabelaMovimentacoesCaixa.getModel().getValueAt(linha, 3).toString().equals("Abertura")) {
+                JOptionPane.showMessageDialog(null, "A abertura do caixa não pode ser excluída!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            } else {
+                Class_Usuarios usuarios = new Class_Usuarios();
+                if (!usuarios.getTipoUsuario(nome_usuario).equals("Administrador")) {
+                    Painel_Senha_Administrador painel_senha = new Painel_Senha_Administrador();
+                    painel_senha.txtSenha.grabFocus();
+                    JOptionPane.showMessageDialog(null, new Object[]{painel_senha.lblSenha, painel_senha.txtSenha}, "Atenção", JOptionPane.PLAIN_MESSAGE);
+                    String senha = painel_senha.txtSenha.getText();
+                    if (usuarios.verificaSenhaAdministrador(senha) == true) {
+                        excluiMovimentacao(linha);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Senha inválida!", "Atenção", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    excluiMovimentacao(linha);
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_btnExcluirLancamentoActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog Alterar_Lancamento;
     private javax.swing.JDialog Novo_Lancamento;
     private javax.swing.JButton btnAbrirFecharCaixa;
     private javax.swing.JButton btnAlterarLancamento;
     private javax.swing.JButton btnExcluirLancamento;
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnNovoLancamento;
+    private javax.swing.JButton btnSairAlterarLancamento;
     private javax.swing.JButton btnSairNovoLancamento;
+    private javax.swing.JButton btnSalvarAlterarLancamento;
     private javax.swing.JButton btnSalvarNovoLancamento;
+    private javax.swing.JComboBox comboFormaAlterarLancamento;
     private javax.swing.JComboBox comboFormaNovoLancamento;
-    private javax.swing.JComboBox comboParcelasNovoLancamento;
     private javax.swing.JComboBox comboTipoNovoLancamento;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTipoAlterarLancamento;
     private javax.swing.JLabel lblTituloCaixa;
     private javax.swing.JTable tabelaMovimentacoesCaixa;
-    private javax.swing.JFormattedTextField txtDataLanNovoLancamento;
+    private javax.swing.JTextField txtDescricaoAlterarLancamento;
     private javax.swing.JTextField txtDescricaoNovoLancamento;
-    private javax.swing.JFormattedTextField txtHoraNovoLancamento;
+    private javax.swing.JTextField txtValorAlterarLancamento;
     private javax.swing.JTextField txtValorNovoLancamento;
     // End of variables declaration//GEN-END:variables
 }

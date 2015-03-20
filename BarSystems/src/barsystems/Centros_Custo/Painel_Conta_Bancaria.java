@@ -1,22 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package barsystems.Centros_Custo;
 
-/**
- *
- * @author Marcos
- */
+import java.util.Date;
+
 public class Painel_Conta_Bancaria extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Painel_Conta_Bancaria
-     */
-    public Painel_Conta_Bancaria() {
+    protected String nome_usuario, nome_conta;
+    protected int id_centro_custo, id_usuario;
+    
+    public Painel_Conta_Bancaria(int id_centro_custo, String nome_conta, int id_usuario, String nome_usuario) {
         initComponents();
+        
+        this.nome_conta = nome_conta;
+        this.id_usuario = id_usuario;
+        this.nome_usuario = nome_usuario;
+        this.id_centro_custo = id_centro_custo;
+        
+        lblTituloCaixa.setText("Gerenciamento da conta bancária "+this.nome_conta+": Usuário "+this.nome_usuario);
+        
+        dataPesquisa1.setDate(new Date());
+        dataPesquisa2.setDate(new Date());
     }
 
     /**
@@ -28,19 +31,153 @@ public class Painel_Conta_Bancaria extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        lblTituloCaixa = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaMovimentacoesCaixa = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        btnNovoLancamento = new javax.swing.JButton();
+        btnAlterarLancamento = new javax.swing.JButton();
+        btnExcluirLancamento = new javax.swing.JButton();
+        dataPesquisa1 = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        dataPesquisa2 = new com.toedter.calendar.JDateChooser();
+
+        setLayout(null);
+
+        lblTituloCaixa.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        lblTituloCaixa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloCaixa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15.png"))); // NOI18N
+        lblTituloCaixa.setText("Gerenciamento da conta bancária");
+        add(lblTituloCaixa);
+        lblTituloCaixa.setBounds(0, 30, 1020, 29);
+
+        tabelaMovimentacoesCaixa.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tabelaMovimentacoesCaixa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Descrição", "Forma Pagto", "Valor", "Tipo", "Data", "Responsável", "Cod"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Integer.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaMovimentacoesCaixa.setToolTipText("Movimentações do caixa");
+        tabelaMovimentacoesCaixa.setRowHeight(25);
+        tabelaMovimentacoesCaixa.setSelectionBackground(new java.awt.Color(204, 255, 255));
+        tabelaMovimentacoesCaixa.setSelectionForeground(new java.awt.Color(0, 0, 0));
+        tabelaMovimentacoesCaixa.getTableHeader().setReorderingAllowed(false);
+        jScrollPane1.setViewportView(tabelaMovimentacoesCaixa);
+        if (tabelaMovimentacoesCaixa.getColumnModel().getColumnCount() > 0) {
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(0).setPreferredWidth(300);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(2).setPreferredWidth(70);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(3).setPreferredWidth(120);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(4).setPreferredWidth(120);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(5).setPreferredWidth(90);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(6).setPreferredWidth(50);
+        }
+
+        add(jScrollPane1);
+        jScrollPane1.setBounds(20, 120, 980, 300);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/printer11.png"))); // NOI18N
+        jButton1.setToolTipText("Imprima a movimentação deste caixa");
+        add(jButton1);
+        jButton1.setBounds(370, 80, 50, 30);
+
+        btnNovoLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnNovoLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/plus24.png"))); // NOI18N
+        btnNovoLancamento.setText("Novo lançamento");
+        btnNovoLancamento.setToolTipText("Faça lançamentos de receita e despesa no caixa");
+        btnNovoLancamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoLancamentoActionPerformed(evt);
+            }
+        });
+        add(btnNovoLancamento);
+        btnNovoLancamento.setBounds(220, 460, 180, 30);
+
+        btnAlterarLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnAlterarLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/drawing4.png"))); // NOI18N
+        btnAlterarLancamento.setText("Alterar lançamento");
+        btnAlterarLancamento.setToolTipText("Altere as informações de algum lançamento");
+        btnAlterarLancamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarLancamentoActionPerformed(evt);
+            }
+        });
+        add(btnAlterarLancamento);
+        btnAlterarLancamento.setBounds(410, 460, 180, 30);
+
+        btnExcluirLancamento.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnExcluirLancamento.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/prohibition9.png"))); // NOI18N
+        btnExcluirLancamento.setText("Excluir lançamento");
+        btnExcluirLancamento.setToolTipText("Exclua lançamentos indesejados");
+        btnExcluirLancamento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirLancamentoActionPerformed(evt);
+            }
+        });
+        add(btnExcluirLancamento);
+        btnExcluirLancamento.setBounds(600, 460, 180, 30);
+
+        dataPesquisa1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        add(dataPesquisa1);
+        dataPesquisa1.setBounds(20, 80, 140, 30);
+
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel1.setText("Até");
+        add(jLabel1);
+        jLabel1.setBounds(180, 90, 21, 17);
+
+        dataPesquisa2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        add(dataPesquisa2);
+        dataPesquisa2.setBounds(220, 80, 140, 30);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNovoLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoLancamentoActionPerformed
+
+        
+        
+    }//GEN-LAST:event_btnNovoLancamentoActionPerformed
+
+    private void btnAlterarLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarLancamentoActionPerformed
+
+        
+
+    }//GEN-LAST:event_btnAlterarLancamentoActionPerformed
+
+    private void btnExcluirLancamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirLancamentoActionPerformed
+
+        
+
+    }//GEN-LAST:event_btnExcluirLancamentoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterarLancamento;
+    private javax.swing.JButton btnExcluirLancamento;
+    private javax.swing.JButton btnNovoLancamento;
+    private com.toedter.calendar.JDateChooser dataPesquisa1;
+    private com.toedter.calendar.JDateChooser dataPesquisa2;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTituloCaixa;
+    private javax.swing.JTable tabelaMovimentacoesCaixa;
     // End of variables declaration//GEN-END:variables
 }

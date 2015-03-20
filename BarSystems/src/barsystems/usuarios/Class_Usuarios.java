@@ -115,7 +115,8 @@ public class Class_Usuarios {
         try {
             Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection con = banco.getConexaoMySQL();
-            PreparedStatement stmt = con.prepareStatement("SELECT nome FROM usuarios WHERE nome = '"+nome+"'");
+            PreparedStatement stmt = con.prepareStatement("SELECT nome FROM usuarios WHERE nome = '"+nome+"' "
+                    + "AND excluido = 0");
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 flag = true;
@@ -177,6 +178,58 @@ public class Class_Usuarios {
             e.printStackTrace();
         }
         return id_usuario;
+    }
+    
+    public String getTipoUsuario(String nome) {
+        String tipo = null;
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection con = banco.getConexaoMySQL();
+            String query = "select tipo from usuarios where nome = '"+nome+"' and excluido = 0";
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                tipo = rs.getString(1);
+            }
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return tipo;
+    }
+    
+    public boolean verificaSenhaAdministrador(String senha) {
+        boolean flag = false;
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection con = banco.getConexaoMySQL();
+            String query = "select senha from usuarios where nome = 'Administrador' and senha = '"+senha+"' "
+                    + "and excluido = 0";
+            PreparedStatement ps = con.prepareStatement(query);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                flag = true;
+            }
+            rs.close();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
+    }
+    
+    public boolean pedeSenhaAdministrador(String nome_usuario) {
+        boolean flag = false;
+        if (getTipoUsuario(nome_usuario).equals("Administrador")) {
+            String senha = JOptionPane.showInputDialog(null, "Digite a senha do administrador!", "Atenção", JOptionPane.PLAIN_MESSAGE);
+            if (verificaSenhaAdministrador(senha) == true) {
+                flag = true;
+            }
+        }
+        return flag;
     }
     
 }
