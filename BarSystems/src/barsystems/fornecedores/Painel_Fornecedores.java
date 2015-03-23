@@ -327,8 +327,6 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         edita_fornecedor.setModal(true);
         edita_fornecedor.setResizable(false);
         edita_fornecedor.getContentPane().setLayout(null);
-
-        email_fornecedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edita_fornecedor.getContentPane().add(email_fornecedor2);
         email_fornecedor2.setBounds(180, 360, 290, 30);
 
@@ -341,12 +339,8 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         jLabel26.setText("Telefone");
         edita_fornecedor.getContentPane().add(jLabel26);
         jLabel26.setBounds(110, 330, 56, 17);
-
-        telefone_fornecedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edita_fornecedor.getContentPane().add(telefone_fornecedor2);
         telefone_fornecedor2.setBounds(180, 320, 290, 30);
-
-        bairro_fornecedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edita_fornecedor.getContentPane().add(bairro_fornecedor2);
         bairro_fornecedor2.setBounds(180, 280, 290, 30);
 
@@ -359,12 +353,8 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         jLabel28.setText(" Endereço");
         edita_fornecedor.getContentPane().add(jLabel28);
         jLabel28.setBounds(100, 250, 65, 17);
-
-        endereco_fornecedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edita_fornecedor.getContentPane().add(endereco_fornecedor2);
         endereco_fornecedor2.setBounds(180, 240, 290, 30);
-
-        cidade_fornecedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edita_fornecedor.getContentPane().add(cidade_fornecedor2);
         cidade_fornecedor2.setBounds(180, 200, 200, 30);
 
@@ -377,12 +367,8 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         jLabel30.setText("UF");
         edita_fornecedor.getContentPane().add(jLabel30);
         jLabel30.setBounds(400, 210, 20, 17);
-
-        estado_fornecedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edita_fornecedor.getContentPane().add(estado_fornecedor2);
         estado_fornecedor2.setBounds(430, 200, 40, 30);
-
-        cnpj_fornecedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edita_fornecedor.getContentPane().add(cnpj_fornecedor2);
         cnpj_fornecedor2.setBounds(180, 160, 110, 30);
 
@@ -395,12 +381,8 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         jLabel32.setText("Nome Fantasia");
         edita_fornecedor.getContentPane().add(jLabel32);
         jLabel32.setBounds(70, 130, 95, 17);
-
-        fantasia_fornecedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edita_fornecedor.getContentPane().add(fantasia_fornecedor2);
         fantasia_fornecedor2.setBounds(180, 120, 290, 30);
-
-        nome_fornecedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edita_fornecedor.getContentPane().add(nome_fornecedor2);
         nome_fornecedor2.setBounds(180, 80, 290, 30);
 
@@ -408,8 +390,6 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         jLabel33.setText("Razão Social");
         edita_fornecedor.getContentPane().add(jLabel33);
         jLabel33.setBounds(80, 90, 90, 17);
-
-        inscricao_fornecedor3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edita_fornecedor.getContentPane().add(inscricao_fornecedor3);
         inscricao_fornecedor3.setBounds(350, 160, 120, 30);
 
@@ -417,8 +397,6 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         jLabel34.setText("I.E.");
         edita_fornecedor.getContentPane().add(jLabel34);
         jLabel34.setBounds(320, 170, 30, 17);
-
-        obs_fornecedor2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         edita_fornecedor.getContentPane().add(obs_fornecedor2);
         obs_fornecedor2.setBounds(180, 400, 290, 30);
 

@@ -18,7 +18,7 @@ public class Class_Receitas {
     
     public void cadastraReceita(String descricao, int id_cliente, String nome_cliente, String setor, String forma_pagamento, 
             String valor, String acrescimo, String desconto, int numeroParcelas, int id_movimentacao_caixa, 
-            int id_movimentacao_conta_bancaria, String data_pagamento, String data_vencimento) {
+            String data_pagamento, String data_vencimento) {
         int liquidada = 1;
         int dias = 0;
         if (forma_pagamento.contains("Cartão")) {
@@ -115,46 +115,6 @@ public class Class_Receitas {
             PreparedStatement ps = conn.prepareStatement("UPDATE receitas SET "
                     + "excluido = 1 "
                     + "WHERE id_movimentacao_caixa_fk = '"+id_movimentacao_caixa+"'");
-            ps.executeUpdate();
-            ps.close();
-            conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void alteraReceitaPelaMovimentacaoContaBancaria(int id_movimentacao_conta_bancaria, String descricao, 
-            String forma_pagamento, String valor) {
-        
-        Class_Formas_Pagto formas = new Class_Formas_Pagto();
-        int id_forma_pagamento = formas.retornaIdFormaPagamento(forma_pagamento);
-        
-        Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
-        float Valor = troca.trocaVirgulaPorPonto(valor);
-        
-        try {
-            Class_Conexao_Banco banco = new Class_Conexao_Banco();
-            Connection conn = banco.getConexaoMySQL();
-            PreparedStatement ps = conn.prepareStatement("UPDATE receitas SET "
-                    + "descricao = '"+descricao+"', "
-                    + "id_forma_pagamento = '"+id_forma_pagamento+"', "
-                    + "valor = '"+Valor+"' "
-                    + "WHERE id_movimentacao_conta_bancaria_fk = '"+id_movimentacao_conta_bancaria+"'");
-            ps.executeUpdate();
-            ps.close();
-            conn.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void excluiReceitaPelaMovimentacaoContaBancaria(int id_movimentacao_conta_bancaria) {
-        try {            
-            Class_Conexao_Banco banco = new Class_Conexao_Banco();
-            Connection conn = banco.getConexaoMySQL();
-            PreparedStatement ps = conn.prepareStatement("UPDATE receitas SET "
-                    + "excluido = 1 "
-                    + "WHERE id_movimentacao_conta_bancaria_fk = '"+id_movimentacao_conta_bancaria+"'");
             ps.executeUpdate();
             ps.close();
             conn.close();

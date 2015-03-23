@@ -23,7 +23,6 @@ public class Class_Formas_Pagto {
             while (rs.next()) {
                 combo.addItem(rs.getString("descricao"));
             }
-            combo.setSelectedIndex(0);
             rs.close();
             ps.close();
             conn.close();
