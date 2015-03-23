@@ -1,6 +1,7 @@
 
 package barsystems.Centros_Custo;
 
+import barsystems.Class_Troca_Virgula_Por_Ponto;
 import barsystems.conexaoBanco.Class_Conexao_Banco;
 import barsystems.usuarios.Class_Usuarios;
 import java.awt.Component;
@@ -16,7 +17,6 @@ import javax.swing.JTabbedPane;
 
 public class Class_Centros_Custo {
     
-    Class_Conexao_Banco banco = new Class_Conexao_Banco();
     protected String id_centro_custo, nome, tipo, saldo;
     
     public Class_Centros_Custo() {
@@ -42,6 +42,7 @@ public class Class_Centros_Custo {
     public DefaultListModel refreshCaixas() {
         DefaultListModel lista = new DefaultListModel();
         try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection conn = banco.getConexaoMySQL();
             PreparedStatement ps = conn.prepareStatement("SELECT nome FROM centros_custo WHERE tipo = 'Caixa' "
                     + "AND excluido = 0");
@@ -61,6 +62,7 @@ public class Class_Centros_Custo {
     public int retornaIdCentroCusto(String nome) {
         int centro_custo = 0;
         try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection con = banco.getConexaoMySQL();
             PreparedStatement ps = con.prepareStatement("SELECT id_centro_custo FROM centros_custo "
                     + "WHERE nome = '"+nome+"'");
@@ -83,6 +85,7 @@ public class Class_Centros_Custo {
         try{
             
            String sql = "SELECT nome FROM centros_custo where excluido = 0 order by nome";  
+           Class_Conexao_Banco banco = new Class_Conexao_Banco();
            Connection con = banco.getConexaoMySQL();
            PreparedStatement stmt = con.prepareStatement(sql);    
            
@@ -107,6 +110,7 @@ public class Class_Centros_Custo {
         String sql = "INSERT INTO centros_custo(nome, tipo) VALUES (?, ?)";    
         
         try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection con = banco.getConexaoMySQL();
             PreparedStatement stmt = con.prepareStatement(sql);    
             stmt.setString(1, nome);
@@ -129,7 +133,8 @@ public class Class_Centros_Custo {
             NumberFormat z = NumberFormat.getCurrencyInstance();
             
            String sql = "SELECT id_centro_custo, nome, tipo, saldo FROM centros_custo where excluido = 0 and nome = '"+nome+"'";  
-            Connection con = banco.getConexaoMySQL();
+           Class_Conexao_Banco banco = new Class_Conexao_Banco(); 
+           Connection con = banco.getConexaoMySQL();
                 PreparedStatement stmt = con.prepareStatement(sql);    
    
             ResultSet rs = stmt.executeQuery();              
@@ -154,7 +159,8 @@ public class Class_Centros_Custo {
         
         String sql = "Update centros_custo set nome= '"+nome+"' WHERE id_centro_custo = "+codigo;
     
-        try {    
+        try {   
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection con = banco.getConexaoMySQL();
             PreparedStatement stmt = con.prepareStatement(sql);    
 
@@ -173,6 +179,7 @@ public class Class_Centros_Custo {
         String sql = "UPDATE centros_custo set excluido = 1 where id_centro_custo = '"+codigo+"'";    
     
         try {    
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection con = banco.getConexaoMySQL();
             PreparedStatement stmt = con.prepareStatement(sql);    
             stmt.execute();
@@ -185,7 +192,8 @@ public class Class_Centros_Custo {
     }
     
     public void getCentrosCusto(JTabbedPane painel_centros_custo, int id_usuario, String nome_usuario) {
-        try {            
+        try {     
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection conn = banco.getConexaoMySQL();
             PreparedStatement ps = null;
             ResultSet rs = null;
@@ -233,6 +241,31 @@ public class Class_Centros_Custo {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public void alteraSaldoCentroCusto(String tipo, String valorInicial, String valorAtual, int id_centro_custo) {
+        
+        Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
+        float ValorInicial = troca.trocaVirgulaPorPonto(valorInicial);
+        float ValorAtual = troca.trocaVirgulaPorPonto(valorAtual);
+        
+        if (tipo.equals("Receita")) {
+            ValorAtual = ValorAtual - ValorInicial;
+        } else {
+            ValorAtual = ValorInicial - ValorAtual;
+        }
+        
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection con = banco.getConexaoMySQL();
+            PreparedStatement stmt = con.prepareStatement("UPDATE centros_custo SET saldo = saldo + '"+ValorAtual+"' "
+                    + "WHERE id_centro_custo = '"+id_centro_custo+"'");    
+            stmt.execute();
+            stmt.close();
+            con.close();
+        } catch (SQLException e) {    
+            e.printStackTrace();
+        } 
     }
     
 }

@@ -103,6 +103,8 @@ public class Principal extends javax.swing.JFrame {
         jMenuItem21 = new javax.swing.JMenuItem();
         jMenuItem22 = new javax.swing.JMenuItem();
         jMenuItem23 = new javax.swing.JMenuItem();
+        jMenu10 = new javax.swing.JMenu();
+        jMenuItem24 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
@@ -285,6 +287,15 @@ public class Principal extends javax.swing.JFrame {
 
         jMenu6.add(jMenu7);
 
+        jMenu10.setText("Usuários");
+        jMenu10.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+
+        jMenuItem24.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem24.setText("Movimentações financeiras");
+        jMenu10.add(jMenuItem24);
+
+        jMenu6.add(jMenu10);
+
         jMenu2.setText("Clientes");
         jMenu2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
@@ -381,7 +392,7 @@ public class Principal extends javax.swing.JFrame {
 
         menuItemCentrosCusto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         menuItemCentrosCusto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemCentrosCusto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png"))); // NOI18N
+        menuItemCentrosCusto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/barsystems/imagens/money9.png"))); // NOI18N
         menuItemCentrosCusto.setText("Centros de custo");
         menuItemCentrosCusto.setToolTipText("Gerenciar caixa");
         menuItemCentrosCusto.addActionListener(new java.awt.event.ActionListener() {
@@ -588,7 +599,7 @@ public class Principal extends javax.swing.JFrame {
         else
         {
             Painel_Centros_Custo centros_custo = new Painel_Centros_Custo(this, painel_principal, this.id_usuario, this.nome_usuario);
-            painel_principal.addTab("Centros de custo   ", new ImageIcon(getClass().getResource("/barsystems/imagens/coins15 (1).png")), centros_custo, "Gerencie os seus recebimentos!");
+            painel_principal.addTab("Centros de custo   ", new ImageIcon(getClass().getResource("/barsystems/imagens/money9.png")), centros_custo, "Gerencie os seus recebimentos!");
             centros_custo.setBounds(0, 0, 1000, 700);
             centros_custo.adicionaCentrosCusto();
             centros_custo.setVisible(true);
@@ -663,6 +674,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
@@ -688,6 +700,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem21;
     private javax.swing.JMenuItem jMenuItem22;
     private javax.swing.JMenuItem jMenuItem23;
+    private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;

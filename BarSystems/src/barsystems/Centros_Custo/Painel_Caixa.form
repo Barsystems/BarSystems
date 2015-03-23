@@ -137,13 +137,14 @@
               <Image iconType="3" name="/barsystems/imagens/white65.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Salvar"/>
+            <Property name="toolTipText" type="java.lang.String" value="Cadastra o lan&#xe7;amento no caixa"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarNovoLancamentoActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="170" y="310" width="100" height="30"/>
+              <AbsoluteConstraints x="180" y="310" width="100" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -156,13 +157,14 @@
               <Image iconType="3" name="/barsystems/imagens/drawing4.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Limpar"/>
+            <Property name="toolTipText" type="java.lang.String" value="Limpa os campos para um novo lan&#xe7;amento"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLimparActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="280" y="310" width="100" height="30"/>
+              <AbsoluteConstraints x="290" y="310" width="100" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -175,13 +177,14 @@
               <Image iconType="3" name="/barsystems/imagens/man349.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Sair"/>
+            <Property name="toolTipText" type="java.lang.String" value="Cancela o lan&#xe7;amento"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSairNovoLancamentoActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="390" y="310" width="100" height="30"/>
+              <AbsoluteConstraints x="400" y="310" width="100" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -328,7 +331,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="230" y="310" width="100" height="30"/>
+              <AbsoluteConstraints x="240" y="310" width="100" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -347,7 +350,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="340" y="310" width="100" height="30"/>
+              <AbsoluteConstraints x="350" y="310" width="100" height="30"/>
             </Constraint>
           </Constraints>
         </Component>
