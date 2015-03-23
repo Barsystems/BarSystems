@@ -662,7 +662,6 @@ public class Painel_Financeiro extends javax.swing.JPanel {
         usuarios.carregaUsuariosComboBox(comboUsuario);
         comboUsuario.setSelectedIndex(0);
         lblCaixaSelecionado.setVisible(false);
-        //lista_responsaveis.removeAll();
         Configurar_Responsaveis_Caixa.setBounds(0, 0, 660, 490);
         Configurar_Responsaveis_Caixa.setLocationRelativeTo(null);
         Configurar_Responsaveis_Caixa.setVisible(true);

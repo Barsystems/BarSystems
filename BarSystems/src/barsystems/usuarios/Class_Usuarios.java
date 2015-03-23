@@ -43,10 +43,12 @@ public class Class_Usuarios {
         try {
             Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection conn = banco.getConexaoMySQL();
-            PreparedStatement ps = conn.prepareStatement("SELECT nome FROM usuarios WHERE Excluido = 0");
+            PreparedStatement ps = conn.prepareStatement("SELECT nome FROM usuarios WHERE excluido = 0");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                combo_usuario.addItem(rs.getString(1));
+                if (!rs.getString(1).equals("Administrador")) {
+                    combo_usuario.addItem(rs.getString(1));
+                }
             }
             rs.close();
             ps.close();
