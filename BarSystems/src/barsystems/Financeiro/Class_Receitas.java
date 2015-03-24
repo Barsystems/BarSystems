@@ -47,8 +47,8 @@ public class Class_Receitas {
             Connection conn = banco.getConexaoMySQL();
             PreparedStatement ps = conn.prepareStatement("insert into receitas (descricao, id_cliente_fk, nome_cliente, "
                     + "id_setor, id_forma_pagamento, valor, acrescimo, desconto, qnt_parcelas, numero_parcela, "
-                    + "id_movimentacao_caixa_fk, liquidado, data_pagamento, data_vencimento) "
-                    + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    + "id_movimentacao_caixa_fk, id_movimentacao_conta_bancaria_fk, liquidado, data_pagamento, data_vencimento) "
+                    + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
             for (int i = 1; i <= numeroParcelas; i++) {
                 ps.setString(1, descricao);
@@ -62,9 +62,10 @@ public class Class_Receitas {
                 ps.setInt(9, numeroParcelas);
                 ps.setInt(10, i);
                 ps.setInt(11, id_movimentacao_caixa);
-                ps.setInt(12, liquidada);
-                ps.setString(13, data_pagamento);
-                ps.setString(14, data_vencimento);
+                ps.setInt(12, id_movimentacao_conta_bancaria);
+                ps.setInt(13, liquidada);
+                ps.setString(14, data_pagamento);
+                ps.setString(15, data_vencimento);
                 ps.executeUpdate();
                 
                 calendar.add(Calendar.DAY_OF_MONTH, dias);

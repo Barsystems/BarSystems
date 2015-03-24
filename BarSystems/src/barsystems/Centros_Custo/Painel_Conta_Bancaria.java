@@ -49,12 +49,12 @@ public class Painel_Conta_Bancaria extends javax.swing.JPanel {
         txtDescricaoAlterarLancamento.setText(modelo.getValueAt(linha, 0).toString());
         if (lblTipoAlterarLancamento.getText().equals("Receita")) {
             Class_Formas_Pagto formas = new Class_Formas_Pagto();
-            formas.carregaFormasPagamento(comboFormaNovoLancamento);
-            comboFormaNovoLancamento.setEnabled(true);
+            formas.carregaFormasPagamento(comboFormaAlterarLancamento);
+            comboFormaAlterarLancamento.setEnabled(true);
         } else {
-            comboFormaNovoLancamento.removeAllItems();
-            comboFormaNovoLancamento.addItem("Dinheiro");
-            comboFormaNovoLancamento.setEnabled(false);
+            comboFormaAlterarLancamento.removeAllItems();
+            comboFormaAlterarLancamento.addItem("Dinheiro");
+            comboFormaAlterarLancamento.setEnabled(false);
         }
         comboFormaAlterarLancamento.setSelectedItem(modelo.getValueAt(linha, 1).toString());
         txtValorAlterarLancamento.setText(modelo.getValueAt(linha, 2).toString().replace("R$ ", ""));

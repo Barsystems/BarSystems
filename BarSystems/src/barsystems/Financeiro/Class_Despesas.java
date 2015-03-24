@@ -55,7 +55,7 @@ public class Class_Despesas {
             PreparedStatement ps = conn.prepareStatement("insert into despesas "
                     + "(id_compra_fk, descricao, responsavel, id_fornecedor_fk, qnt_parcelas, parcela_numero, data_pagamento, "
                     + "data_vencimento, id_forma_pagamento_fk, valor, acrescimo, desconto, fixo, variavel, liquidado, id_setor_fk, "
-                    + "id_usuario_fk, id_movimentacao_caixa_fk) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    + "id_usuario_fk, id_movimentacao_caixa_fk, id_movimentacao_conta_bancaria_fk) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             for (int i = 1; i <= qnt_parcelas; i++) {
                 ps.setInt(1, id_compra);
                 ps.setString(2, descricao);
@@ -75,6 +75,7 @@ public class Class_Despesas {
                 ps.setInt(16, id_setor);
                 ps.setInt(17, id_usuario);
                 ps.setInt(18, id_movimentacao_caixa);
+                ps.setInt(19, id_movimentacao_conta_bancaria);
                 ps.executeUpdate();
 
                 if (forma_pagamento.contains("Cartão")) {
