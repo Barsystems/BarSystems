@@ -539,6 +539,7 @@ public class Painel_Produtos extends javax.swing.JPanel {
         btnSetores.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnSetores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Categoria 16px.png"))); // NOI18N
         btnSetores.setText("Gerenciar setores");
+        btnSetores.setToolTipText("Clique para cadastrar os setores dos produtos");
         btnSetores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSetoresActionPerformed(evt);

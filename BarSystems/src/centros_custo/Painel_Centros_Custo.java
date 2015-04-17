@@ -1,6 +1,7 @@
 
 package centros_custo;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import principal.Principal;
 import javax.swing.JTabbedPane;
@@ -9,6 +10,7 @@ public class Painel_Centros_Custo extends javax.swing.JPanel {
 
     int id_usuario;
     String nome_usuario;
+    protected ArrayList array = new ArrayList(), arrayNome = new ArrayList();
      
     public Painel_Centros_Custo(Principal principal, JTabbedPane painel_principal, int id_usuario, String usuario) {
         initComponents();
@@ -21,6 +23,8 @@ public class Painel_Centros_Custo extends javax.swing.JPanel {
         painel_centros_custo.setBounds(0, 0, 2000, 2000);
         Class_Centros_Custo centros_custo = new Class_Centros_Custo();
         centros_custo.getCentrosCusto(painel_centros_custo, id_usuario, nome_usuario);
+        array = centros_custo.getArray();
+        arrayNome = centros_custo.getArrayNome();
     }
 
     /**
@@ -37,9 +41,42 @@ public class Painel_Centros_Custo extends javax.swing.JPanel {
         setLayout(null);
 
         painel_centros_custo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        painel_centros_custo.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                painel_centros_custoStateChanged(evt);
+            }
+        });
         add(painel_centros_custo);
         painel_centros_custo.setBounds(0, 0, 530, 390);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void painel_centros_custoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_painel_centros_custoStateChanged
+        
+        if (this.isVisible()) {
+            //AGORA IREMOS CARREGAR O CENTRO DE CUSTO QUE FOI FEITO O LANÇAMENTO
+            String nome = "";
+            String centro = painel_centros_custo.getTitleAt(painel_centros_custo.getSelectedIndex());
+            String tipo_centro = "";
+            Class_Centros_Custo centros = new Class_Centros_Custo();
+            for (int i = 0; i < array.size(); i++) {
+                nome = arrayNome.get(i).toString();
+                if (nome.equals(centro)) {
+                    tipo_centro = centros.retornaTipoCentroCusto(nome);
+                    if (tipo_centro.equals("Caixa")) {
+                        Painel_Caixa painel_caixa = (Painel_Caixa) array.get(i);
+                        painel_caixa.refreshMovimentacaoCaixa();
+                    } else if (tipo_centro.equals("Conta bancária")) {
+                        Painel_Conta_Bancaria painel_conta = (Painel_Conta_Bancaria) array.get(i);
+                        painel_conta.refreshMovimentacoes();
+                    } else {
+                        Painel_Agendamentos agendamentos = (Painel_Agendamentos) array.get(i);
+                        agendamentos.refreshLancamentos();
+                    }
+                }
+            }
+        }
+        
+    }//GEN-LAST:event_painel_centros_custoStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

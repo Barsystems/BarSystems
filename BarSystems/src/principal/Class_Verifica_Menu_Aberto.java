@@ -1,6 +1,8 @@
 
 package principal;
 
+import centros_custo.Class_Centros_Custo;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 public class Class_Verifica_Menu_Aberto {

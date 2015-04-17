@@ -486,6 +486,7 @@ public class Painel_Fornecedores extends javax.swing.JPanel {
         lblFornecedoresCadastrados.setBounds(20, 100, 180, 17);
 
         pesquisa_fornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Pesquisar 16px.png"))); // NOI18N
+        pesquisa_fornecedores.setToolTipText("Clique para pesquisar um fornecedor específico");
         pesquisa_fornecedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pesquisa_fornecedoresActionPerformed(evt);

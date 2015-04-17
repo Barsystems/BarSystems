@@ -387,13 +387,13 @@ public class Painel_Conta_Bancaria extends javax.swing.JPanel {
         tabelaMovimentacoesContaBancaria.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabelaMovimentacoesContaBancaria);
         if (tabelaMovimentacoesContaBancaria.getColumnModel().getColumnCount() > 0) {
-            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(0).setPreferredWidth(300);
-            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(0).setPreferredWidth(280);
+            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(1).setPreferredWidth(180);
             tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(2).setPreferredWidth(70);
-            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(3).setPreferredWidth(120);
-            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(4).setPreferredWidth(120);
+            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(3).setPreferredWidth(60);
+            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(4).setPreferredWidth(100);
             tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(5).setPreferredWidth(90);
-            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(6).setPreferredWidth(50);
+            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(6).setPreferredWidth(20);
         }
 
         add(jScrollPane1);

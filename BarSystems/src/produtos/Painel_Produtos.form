@@ -873,6 +873,7 @@
           <Image iconType="3" name="/imagens/Categoria 16px.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Gerenciar setores"/>
+        <Property name="toolTipText" type="java.lang.String" value="Clique para cadastrar os setores dos produtos"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSetoresActionPerformed"/>

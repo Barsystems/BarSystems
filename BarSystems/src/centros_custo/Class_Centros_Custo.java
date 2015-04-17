@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -18,6 +19,7 @@ import javax.swing.JTabbedPane;
 public class Class_Centros_Custo {
     
     protected String id_centro_custo, nome, tipo, saldo;
+    protected ArrayList array = new ArrayList(), arrayNome = new ArrayList();
     
     public Class_Centros_Custo() {
         
@@ -37,6 +39,33 @@ public class Class_Centros_Custo {
     
     public String getSaldoCentroCusto() {
         return this.saldo;
+    }
+    
+    public ArrayList getArray() {
+        return this.array;
+    }
+    
+    public ArrayList getArrayNome() {
+        return this.arrayNome;
+    }
+    
+    public void retornaCentrosCustoComboBoxComExcessao(javax.swing.JComboBox combo, String centroExcessao) {
+        combo.removeAllItems();
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("SELECT nome FROM centros_custo WHERE excluido = 0 "
+                    + "AND nome != '"+centroExcessao+"'");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                combo.addItem(rs.getString(1));
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public DefaultListModel refreshCaixas() {
@@ -192,7 +221,7 @@ public class Class_Centros_Custo {
     }
     
     public void getCentrosCusto(JTabbedPane painel_centros_custo, int id_usuario, String nome_usuario) {
-        try {     
+        try {                 
             Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection conn = banco.getConexaoMySQL();
             PreparedStatement ps = null;
@@ -206,7 +235,7 @@ public class Class_Centros_Custo {
                 String tip = null;
                 
                 ps = conn.prepareStatement("SELECT centros_custo.id_centro_custo, centros_custo.nome, "
-                        + "centros_custo.tipo FROM centros_custo WHERE centros_custo.Excluido = 0");
+                        + "centros_custo.tipo FROM centros_custo WHERE centros_custo.Excluido = 0 ORDER BY centros_custo.tipo");
                 rs = ps.executeQuery();
                 while (rs.next()) {
                     if (rs.getString("centros_custo.tipo").equals("Caixa")) {
@@ -221,6 +250,8 @@ public class Class_Centros_Custo {
                         tip = "Gerencie sua conta bancária!";
                     }
                     painel_centros_custo.addTab(rs.getString("centros_custo.nome")+"   ", icon, component, tip);
+                    array.add(component);
+                    arrayNome.add(rs.getString("centros_custo.nome"));
                 }
             } else {
                 ps = conn.prepareStatement("SELECT centros_custo.id_centro_custo, centros_custo.nome, "
@@ -233,6 +264,8 @@ public class Class_Centros_Custo {
                 while (rs.next()) {
                     Painel_Caixa caixa = new Painel_Caixa(rs.getInt("centros_custo.id_centro_custo"), rs.getString("centros_custo.nome"), id_usuario, nome_usuario);
                     painel_centros_custo.addTab(rs.getString("centros_custo.nome")+"   ", new ImageIcon(getClass().getResource("/imagens/Dinheiro 16px.png")), caixa, "Gerencie seu caixa!");
+                    array.add(caixa);
+                    arrayNome.add(rs.getString("centros_custo.nome"));
                 }
             }
             
@@ -292,6 +325,42 @@ public class Class_Centros_Custo {
             e.printStackTrace();
         }
         return tipo;
+    }
+    
+    public void carregaCentrosCustoComboBox(javax.swing.JComboBox combo, String condicao, int id_usuario, String tipo_usuario) {
+        combo.removeAllItems();
+        try {
+            String sql;
+            if (condicao.equals("Caixa")) {
+                if (tipo_usuario.equals("Administrador")) {
+                    sql = "SELECT nome FROM centros_custo WHERE excluido = 0 AND tipo = 'Caixa'"; 
+                } else {
+                    sql = "SELECT centros_custo.nome, responsaveis_caixa.id_usuario "
+                        + "FROM centros_custo "
+                        + "INNER JOIN responsaveis_caixa ON centros_custo.id_centro_custo = responsaveis_caixa.id_centro_custo "
+                        + "WHERE centros_custo.Excluido = 0 AND responsaveis_caixa.id_usuario = '"+id_usuario+"' "
+                        + "AND centros_custo.tipo = 'Caixa'";
+                }
+            } else if (condicao.equals("Conta bancária")) {
+                sql = "SELECT nome FROM centros_custo WHERE excluido = 0 AND tipo = 'Conta bancária' order by nome"; 
+            } else {
+                sql = "SELECT nome FROM centros_custo where excluido = 0 order by nome"; 
+            }
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection con = banco.getConexaoMySQL();
+            PreparedStatement stmt = con.prepareStatement(sql);    
+           
+            ResultSet rs = stmt.executeQuery();  
+              
+            while(rs.next()){  
+               combo.addItem(rs.getString(1));
+            }              
+            rs.close();  
+            stmt.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }

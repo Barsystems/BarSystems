@@ -74,6 +74,7 @@ public class Principal extends javax.swing.JFrame {
         menuItemCadastroFornecedores = new javax.swing.JMenuItem();
         menuItemCadastroMesas = new javax.swing.JMenuItem();
         menuItemCadastroClientes = new javax.swing.JMenuItem();
+        menuItemCadastroEmpresas = new javax.swing.JMenuItem();
         menuEstoque = new javax.swing.JMenu();
         menuItemCentrosEstoque = new javax.swing.JMenuItem();
         menuItemCompras = new javax.swing.JMenuItem();
@@ -210,6 +211,11 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         menuCadastros.add(menuItemCadastroClientes);
+
+        menuItemCadastroEmpresas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCadastroEmpresas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Empresário 16px.png"))); // NOI18N
+        menuItemCadastroEmpresas.setText("Empresas");
+        menuCadastros.add(menuItemCadastroEmpresas);
 
         jMenuBar1.add(menuCadastros);
 
@@ -769,6 +775,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu menuEstoque;
     private javax.swing.JMenu menuFinanceiro;
     private javax.swing.JMenuItem menuItemCadastroClientes;
+    private javax.swing.JMenuItem menuItemCadastroEmpresas;
     private javax.swing.JMenuItem menuItemCadastroFornecedores;
     private javax.swing.JMenuItem menuItemCadastroMesas;
     private javax.swing.JMenuItem menuItemCadastroProdutos;

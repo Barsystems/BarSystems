@@ -112,17 +112,35 @@ public class Painel_Caixa extends javax.swing.JPanel {
         if (JOptionPane.showConfirmDialog(null, "Deseja realmente desliquidar este lançamento?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) {
             String tipo = modelo.getValueAt(linha, 3).toString();
             int id = Integer.valueOf(modelo.getValueAt(linha, 6).toString());
+            String valor = modelo.getValueAt(linha, 2).toString().replace("R$ ", "");
 
             Class_Caixa caixa = new Class_Caixa();
             caixa.excluiMovimentacaoCaixa(id);
 
             if (tipo.equals("Receita")) {
                 Class_Receitas receitas = new Class_Receitas();
-                receitas.desliquidarReceitaPelaMovimentacaoCaixa(id);
+                if (receitas.verificaReceitaAgendadaPelaMovimentacaoCaixa(id) == true) {
+                    receitas.desliquidarReceitaPelaMovimentacaoCaixa(id);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Este lançamento não pode ser desliquidado pois ele nunca foi agendado!"
+                            + "\nEste é um lançamento avulso que foi feito neste centro de custo!"
+                            + "\n\neste lançamento será EXCLUÍDO automaticamente!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                    receitas.excluiReceitaPelaMovimentacaoCaixa(id);
+                }
             } else {
                 Class_Despesas despesas = new Class_Despesas();
-                despesas.desliquidarDespesaPelaMovimentacaoCaixa(id);
+                if (despesas.verificaDespesaAgendadaPelaMovimentacaoCaixa(id) == true) {
+                    despesas.desliquidarDespesaPelaMovimentacaoCaixa(id);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Este lançamento não pode ser desliquidado pois ele nunca foi agendado!"
+                            + "\nEste é um lançamento avulso que foi feito neste centro de custo!"
+                            + "\n\neste lançamento será EXCLUÍDO automaticamente!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                    despesas.excluiDespesaPelaMovimentacaoCaixa(id);
+                }
             }
+            
+            Class_Centros_Custo centros = new Class_Centros_Custo();
+            centros.alteraSaldoCentroCusto("Despesa", "0,00", valor, id_centro_custo);
             
             int id_caixa = caixa.getIdCaixa(id_centro_custo);
             caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel(), id_caixa);
@@ -387,13 +405,13 @@ public class Painel_Caixa extends javax.swing.JPanel {
         tabelaMovimentacoesCaixa.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tabelaMovimentacoesCaixa);
         if (tabelaMovimentacoesCaixa.getColumnModel().getColumnCount() > 0) {
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(0).setPreferredWidth(300);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(1).setPreferredWidth(120);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(0).setPreferredWidth(280);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(1).setPreferredWidth(180);
             tabelaMovimentacoesCaixa.getColumnModel().getColumn(2).setPreferredWidth(70);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(3).setPreferredWidth(120);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(4).setPreferredWidth(120);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(3).setPreferredWidth(60);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(4).setPreferredWidth(100);
             tabelaMovimentacoesCaixa.getColumnModel().getColumn(5).setPreferredWidth(90);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(6).setPreferredWidth(50);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(6).setPreferredWidth(20);
         }
 
         add(jScrollPane1);
@@ -698,6 +716,8 @@ public class Painel_Caixa extends javax.swing.JPanel {
         int linha = tabelaMovimentacoesCaixa.getSelectedRow();
         if (linha == -1) {
             JOptionPane.showMessageDialog(null, "Selecione um lançamento na tabela para desliquidar!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } else if (tabelaMovimentacoesCaixa.getModel().getValueAt(linha, 2).toString().equals("Abertura")) {
+            JOptionPane.showMessageDialog(null, "A abertura do caixa não pode ser desliquidada!", "Atenção", JOptionPane.WARNING_MESSAGE);
         } else {
             Class_Usuarios usuarios = new Class_Usuarios();
             if (!usuarios.getTipoUsuario(nome_usuario).equals("Administrador")) {

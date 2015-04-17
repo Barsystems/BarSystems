@@ -139,6 +139,7 @@ public class Painel_Clientes extends javax.swing.JPanel {
         btnExcluir = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         btnPesquisar = new javax.swing.JButton();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
 
         novo_cliente.setModal(true);
         novo_cliente.setResizable(false);
@@ -539,6 +540,8 @@ public class Painel_Clientes extends javax.swing.JPanel {
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Pesquisar 16px.png"))); // NOI18N
         add(btnPesquisar);
         btnPesquisar.setBounds(250, 90, 40, 30);
+        add(jTabbedPane1);
+        jTabbedPane1.setBounds(290, 60, 100, 100);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -726,6 +729,7 @@ public class Painel_Clientes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblIdadeCliente;
     private javax.swing.JLabel lblIdadeClienteCadastrar;
     private javax.swing.JList list_clientes;

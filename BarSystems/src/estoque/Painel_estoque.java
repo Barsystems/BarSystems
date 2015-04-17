@@ -287,7 +287,7 @@ public class Painel_estoque extends javax.swing.JPanel {
        } else if(lista_centro2.isSelectionEmpty()){
            JOptionPane.showMessageDialog(null, "Selecione um centro de estoque para enviar");
        } else {
-            if (!(Integer.parseInt(quantidade.getText()) > Integer.parseInt(quant_unidade.getText()))){
+            if (!(Integer.parseInt(quantidade.getText()) >= Integer.parseInt(quant_unidade.getText()))){
                 estoque.transferencia(lista_centro2.getSelectedValue().toString(), produto.getText(), 
                     Integer.parseInt(quantidade.getText()), centro_estoque.getText());
             } else {

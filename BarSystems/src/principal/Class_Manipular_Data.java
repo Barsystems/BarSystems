@@ -36,4 +36,15 @@ public class Class_Manipular_Data {
         return diasVividos;
     }
     
+    public Date transformaDataStringParaDate(String dataFormatoBrasil) {
+        Date data = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            data = sdf.parse(dataFormatoBrasil+ " 00:00:00");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+    
 }

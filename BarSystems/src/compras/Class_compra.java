@@ -12,7 +12,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -76,7 +75,7 @@ public class Class_compra {
             String sql = "SELECT id_compra, descricao, nome_fantasia, numero_nota, data, responsavel, valor "
                     + "from compras, fornecedores "
                     + "where id_compra = '"+codigo+"'"
-                    + "and codigo_fornecedor = id_fornecedor "
+                    + "and compras.id_fornecedor = fornecedores.id_fornecedor "
                     + "and compras.excluido = 0";
             PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
            
@@ -135,7 +134,7 @@ public class Class_compra {
         DefaultListModel listModel = new DefaultListModel();
         try{
             
-            String sql = "SELECT DISTINCT tipo from produtos where excluido = 0";
+            String sql = "SELECT nome from setores_produtos where excluido = 0";
             PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
            
             ResultSet rs = stmt.executeQuery();  
@@ -155,11 +154,13 @@ public class Class_compra {
         return listModel;
     }// FIM CARREGA LISTA
     
+    
+    
     public DefaultListModel carregaListaProduto(String tipo){
         DefaultListModel listModel = new DefaultListModel();
         try{
             
-            String sql = "SELECT descricao from produtos where excluido = 0 and tipo = '"+tipo+"'";
+            String sql = "select produtos.descricao from produtos inner join setores_produtos on produtos.id_setor = setores_produtos.id_setor where produtos.excluido = 0 and setores_produtos.nome = '"+tipo+"'";
             PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
            
             ResultSet rs = stmt.executeQuery();  
@@ -204,18 +205,18 @@ public class Class_compra {
         return lista;
     }// FIM CARREGA LISTA
     
-    public String carrega_valor(String produto){
-       String valor = "0";
+     public List carrega_Formas_pagamento(){
+        List lista = new List();
         try{
             
-            String sql = "SELECT DISTINCT valor_compra_unidade from produtos where excluido = 0 and descricao ='"+produto+"'";
+            String sql = "SELECT descricao from formas_pagamento where excluido = 0";
             PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
            
             ResultSet rs = stmt.executeQuery();  
             
             while(rs.next())
             {
-                valor = rs.getString(1);
+                lista.add(rs.getString(1));
             }
             
             rs.close();  
@@ -225,9 +226,178 @@ public class Class_compra {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
-        return valor;
+        return lista;
+    }// FIM CARREGA LISTA
+     
+     public List carrega_Centros_estoque(){
+        List lista = new List();
+        try{
+            
+            String sql = "SELECT nome from centros_estoque where excluido = 0";
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           
+            ResultSet rs = stmt.executeQuery();  
+            
+            while(rs.next())
+            {
+                lista.add(rs.getString(1));
+            }
+            
+            rs.close();  
+            stmt.close();
+            banco.FecharConexao();
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return lista;
+    }// FIM CARREGA LISTA
+     
+      public String getCodProduto(String produto){
+        String id_produto = "";
+         try{
+            
+            String sql = "SELECT id_produto from produtos where excluido = 0 and descricao='"+produto+"'";
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           
+            ResultSet rs = stmt.executeQuery();  
+            
+            while(rs.next())
+            {
+                id_produto = rs.getString(1);
+            }
+            
+            rs.close();  
+            stmt.close();
+            banco.FecharConexao();
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return id_produto;
+    }// FIM CARREGA LISTA
+      
+      public String getCodForma_pagamento(String forma){
+        String forma_p = "";
+         try{
+            
+            String sql = "SELECT id_forma_pagamento from formas_pagamento where excluido = 0 and descricao='"+forma+"'";
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           
+            ResultSet rs = stmt.executeQuery();  
+            
+            while(rs.next())
+            {
+                forma_p = rs.getString(1);
+            }
+            
+            rs.close();  
+            stmt.close();
+            banco.FecharConexao();
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return forma_p;
+    }// FIM CARREGA LISTA
+      
+      public String getCodCentro(String centro){
+        String id_produto = "";
+         try{
+            
+            String sql = "SELECT id_centro_estoque from centros_estoque where excluido = 0 and nome='"+centro+"'";
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           
+            ResultSet rs = stmt.executeQuery();  
+            
+            while(rs.next())
+            {
+                id_produto = rs.getString(1);
+            }
+            
+            rs.close();  
+            stmt.close();
+            banco.FecharConexao();
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return id_produto;
+    }// FIM CARREGA LISTA
+      
+      public String getCodFornecedor(String fornecedor){
+        String id_fornecedor = "";
+         try{
+            String sql = "SELECT id_fornecedor from fornecedores where excluido = 0 and nome_fantasia='"+fornecedor+"'";
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           
+            ResultSet rs = stmt.executeQuery();  
+            
+            while(rs.next())
+            {
+                id_fornecedor = rs.getString(1);
+            }
+            
+            rs.close();  
+            stmt.close();
+            banco.FecharConexao();
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return id_fornecedor;
+    }// FIM CARREGA 
+      
+      public String getCodUltimaCompra(){
+        String id_compra = "";
+         try{
+            String sql = "SELECT MAX(id_compra) from compras where excluido = 0";
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           
+            ResultSet rs = stmt.executeQuery();  
+            
+            while(rs.next())
+            {
+                id_compra = rs.getString(1);
+            }
+            
+            rs.close();  
+            stmt.close();
+            banco.FecharConexao();
+
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return id_compra;
     }// FIM CARREGA LISTA
     
+    public boolean verfica_se_produto_ja_existe(String id_produto, String id_centro){
+        boolean verifica = false;
+        String id_teste = "";
+         try{
+            String sql = "SELECT id_produto from produtos_centro_estoque where id_produto='"+id_produto+"' and id_centro_estoque = '"+id_centro+"'";
+            PreparedStatement stmt = banco.getConexaoMySQL().prepareStatement(sql);  
+           
+            ResultSet rs = stmt.executeQuery();  
+            
+            while(rs.next())
+            
+                id_teste = rs.getString(1);
+            
+            rs.close();
+            banco.FecharConexao();
+            
+            if(!id_teste.equals(""))
+                return true;
+            else
+                return false;
+                        
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return verifica;
+    }// FIM CARREGA LISTA
+      
     /**
      * 
      * @param descricao
@@ -248,166 +418,78 @@ public class Class_compra {
                                 String data,
                                 String valor,
                                 String parcelas,
-                                TableModel tabela,
-                                String id_centro_estoque,
+                                DefaultTableModel tabela_produtos,
                                 String forma_pagamento,
-                                int n_parcelas){
-        int valor_unidade = 0;
-        String id_compra = "";
-        String id_produto = "";
-        String sql = "INSERT INTO compras ( descricao, codigo_fornecedor, numero_nota, data, valor, parcelas)"+
-                "VALUES(?,?,?,?,?,?)";    
-    
-        Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
-        try {
-            Connection con = banco.getConexaoMySQL();
-            PreparedStatement stmt = con.prepareStatement(sql);    
-            stmt.setString(1, descricao);
-            stmt.setInt(2, Integer.parseInt(cod_fornecedor));        
-            stmt.setString(3, numero_nota); 
-            stmt.setString(4, data);
-            stmt.setFloat(5, troca.trocaVirgulaPorPonto(valor));
-            stmt.setString(6, parcelas);
-
-            if(!stmt.execute()){
-                stmt.close();
-                con.close();
-            }
-            else{
-                stmt.execute();
-                stmt.close();
-                con.close();
-                JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
-            }
-        } catch (SQLException u) {    
-            throw new RuntimeException(u);    
-        } 
+                                TableModel tabela_parcelas
+                                ){
         
-       try{
-            sql = "SELECT MAX(id_compra) from compras where excluido = 0";
-            PreparedStatement stmt2 = banco.getConexaoMySQL().prepareStatement(sql);  
-           
-            ResultSet rs2 = stmt2.executeQuery();  
-            
-            while(rs2.next())
-            {
-                id_compra = rs2.getString(1);
-            }
-            
-            rs2.close();  
-            stmt2.close();
-            banco.FecharConexao();
-
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, e);
-        }
-       
-       try {
-           for(int i=0;i<tabela.getRowCount();i++){
-               id_produto = retornaId_Produtos_da_Compra((String) tabela.getValueAt(i, 2));
-                sql = "INSERT INTO produtos_compra ( id_produtos, valor_compra, quantidade_em_unidade, data_compra, id_centro_estoque, id_compras_fk)"+
-                     "VALUES(?,?,?,?,?,?)";  
-                 Connection con = banco.getConexaoMySQL();
-                 PreparedStatement stmt3 = con.prepareStatement(sql);    
-                 stmt3.setString(1, id_produto);
-                 stmt3.setFloat(2, Float.parseFloat((String) tabela.getValueAt(i, 6)));        
-                 stmt3.setInt(3, Integer.parseInt((String) tabela.getValueAt(i, 0))*Integer.parseInt((String) tabela.getValueAt(i, 1))); 
-                 stmt3.setString(4, data);
-                 stmt3.setInt(5, Integer.parseInt(id_centro_estoque));
-                 stmt3.setInt(6, Integer.parseInt(id_compra));
-
-                 if(!stmt3.execute()){
-                     stmt3.close();
-                     con.close();
-                 }
-                 else{
-                     stmt3.execute();
-                     stmt3.close();
-                     con.close();
-                     JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
-                 }
-            }
-        } catch (SQLException u) {    
-            throw new RuntimeException(u);    
-        } 
-       
-       try {
-           String val="";
-           for(int i=0;i<tabela.getRowCount();i++){
-                id_produto = retornaId_Produtos_da_Compra((String) tabela.getValueAt(i, 2));
-                sql = "SELECT id_produto from produtos_centro_estoque where  id_produto='"+id_produto+"' and id_centro_estoque='"+id_centro_estoque+"'";
-                PreparedStatement stmt10 = banco.getConexaoMySQL().prepareStatement(sql);  
-
-                ResultSet rs10= stmt10.executeQuery();  
-
-                while(rs10.next())
-                {
-                   val = rs10.getString(1);
-                }
-                if(val.equals("")){
-                    JOptionPane.showMessageDialog(null, "ENTROU AQUI!!");
-                sql = "INSERT INTO produtos_centro_estoque (id_produto, id_centro_estoque, quantidade_em_unidade)"+
-                 "VALUES(?,?,?)";  
-                 Connection con = banco.getConexaoMySQL();
-                 PreparedStatement stmt11 = con.prepareStatement(sql);    
-                 stmt11.setString(1, id_produto);
-                 stmt11.setString(2, id_centro_estoque);        
-                 valor_unidade = Integer.parseInt((String) tabela.getValueAt(i, 0))*Integer.parseInt((String) tabela.getValueAt(i, 1));
-                 stmt11.setInt(3, valor_unidade); 
-                 if(!stmt11.execute()){
-                     stmt11.close();
-                     con.close();
-                 }
-                 else{
-                     stmt11.execute();
-                     stmt11.close();
-                     con.close();
-                     JOptionPane.showMessageDialog(null,"Produto cadastrado com sucesso!");
-                 }
-                }else{
-                valor_unidade = Integer.parseInt((String) tabela.getValueAt(i, 0))*Integer.parseInt((String) tabela.getValueAt(i, 1));    
-                sql = "Update produtos_centro_estoque set quantidade_em_unidade='"+valor_unidade+"'+quantidade_em_unidade where id_produto='"+id_produto+"' and id_centro_estoque = '"+id_centro_estoque+"'";
-                Connection con = banco.getConexaoMySQL();
-                PreparedStatement stmt20 = con.prepareStatement(sql);    
-                
+        String sql = "INSERT INTO compras (descricao, id_fornecedor, numero_nota, data, valor, parcelas, id_forma_pagamento) VALUES (?, ?, ?, ?, ?, ?, ?)";    
     
-                stmt20.executeUpdate();
-                stmt20.close();
-                con.close();
+            try {    
+                Class_Conexao_Banco banco = new Class_Conexao_Banco();
+                Connection conn = banco.getConexaoMySQL();
+                PreparedStatement ps = conn.prepareStatement(sql);    
+                ps.setString(1, descricao);
+                ps.setInt(2, Integer.parseInt(getCodFornecedor(cod_fornecedor)));    
+                ps.setString(3, numero_nota);    
+                ps.setString(4, data);
+                ps.setString(5, valor);
+                ps.setString(6, parcelas);
+                ps.setString(7, getCodForma_pagamento(forma_pagamento));
+                ps.execute();
                 
+                /**** ARRRUMAAARRR AQUI!! */
+                sql = "INSERT INTO pagamentos_compra (id_compra, parcela, valor, data, liquidada) VALUES (?, ?, ?, ?, ?)";
+                for(int i = 0;i<tabela_parcelas.getRowCount();i++){
+                    ps = conn.prepareStatement(sql);
+                    ps.setString(1, getCodUltimaCompra());
+                    ps.setInt(2, (int) tabela_parcelas.getValueAt(i, 0));    
+                    ps.setFloat(3, (float) tabela_parcelas.getValueAt(i,1));    
+                    ps.setString(4, (String)tabela_parcelas.getValueAt(i, 3));
+                    ps.setBoolean(5,(boolean)tabela_parcelas.getValueAt(i, 2) );
+                    ps.execute();
                 }
-                rs10.close();  
-                stmt10.close();
+                /***** TERMINARR!!! ****/
                 
-           }
-       } catch (SQLException u) {    
-            throw new RuntimeException(u);    
+                sql = "INSERT INTO produtos_compra (id_produtos, valor_compra, quantidade_em_unidade, id_centro_estoque, id_compras_fk) VALUES (?, ?, ?, ?, ?)";
+                
+                for(int i = 0;i<tabela_produtos.getRowCount();i++){
+                    ps = conn.prepareStatement(sql);
+                    ps.setString(1, getCodProduto((String) tabela_produtos.getValueAt(i, 0)));
+                    ps.setFloat(2, (float) tabela_produtos.getValueAt(i, 3));    
+                    ps.setString(3, (String) tabela_produtos.getValueAt(i, 1));    
+                    ps.setString(4, getCodCentro((String) tabela_produtos.getValueAt(i, 4)));
+                    ps.setString(5, getCodUltimaCompra());
+                    ps.execute();
+                }
+                 
+                String sql_insert = "INSERT INTO produtos_centro_estoque (id_produto, id_centro_estoque, quantidade_em_unidade ) VALUES (?, ?, ?)";
+                String sql_update = "UPDATE produtos_centro_estoque SET quantidade_em_unidade = (?+ quantidade_em_unidade) WHERE id_produto = ? and id_centro_estoque = ?";
+                
+                for(int i = 0;i<tabela_produtos.getRowCount();i++){
+                    if(verfica_se_produto_ja_existe(getCodProduto((String) tabela_produtos.getValueAt(i, 0)), getCodCentro((String) tabela_produtos.getValueAt(i, 4)))){
+                        ps = conn.prepareStatement(sql_update);
+                        ps.setString(1, (String) tabela_produtos.getValueAt(i, 1));
+                        ps.setString(2, getCodProduto((String) tabela_produtos.getValueAt(i, 0)));
+                        ps.setString(3, getCodCentro((String) tabela_produtos.getValueAt(i, 4))); 
+                        
+                        ps.execute();
+                    } else{
+                        ps = conn.prepareStatement(sql_insert);
+                        ps.setString(1, getCodProduto((String) tabela_produtos.getValueAt(i, 0)));
+                        ps.setString(2, getCodCentro((String) tabela_produtos.getValueAt(i, 4))); 
+                        ps.setString(3, (String) tabela_produtos.getValueAt(i, 1));
+                        ps.execute();
+                    }
+                }
+                
+                ps.close();
+                conn.close();
+                JOptionPane.showMessageDialog(null,"Compra cadastrada com sucesso");
+            } catch (SQLException u) {    
+                throw new RuntimeException(u);    
         } 
-       
-       try {
-                sql = "INSERT INTO pagamentos_compra (id_compra, forma_pagamento, parcelas, valor)"+
-                 "VALUES(?,?,?,?)";  
-                 Connection con = banco.getConexaoMySQL();
-                 PreparedStatement stmt21 = con.prepareStatement(sql);    
-                 stmt21.setString(1, id_compra);
-                 stmt21.setString(2, forma_pagamento);        
-                 stmt21.setString(3, String.valueOf(n_parcelas)); 
-                 stmt21.setString(4, valor);
-                 if(!stmt21.execute()){
-                     stmt21.close();
-                     con.close();
-                 }
-                 else{
-                     stmt21.execute();
-                     stmt21.close();
-                     con.close();
-                 }
-       } catch (SQLException u) {    
-            throw new RuntimeException(u);    
-        }
-       
-       
-        
+   
     }
     
     public String retornaId_Produtos_da_Compra(String produto){

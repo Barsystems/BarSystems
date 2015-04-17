@@ -170,9 +170,10 @@ public class Class_estoque {
         return codigo;
     }
     
-    public void transferencia(String centro, String produto, int quantidade_passada, String centro_de_transferencia) {
+    public void transferencia(String centro_de_transferencia, String produto, int quantidade_passada, String centro) {
         
         int count = 0;
+        boolean verfica = false;
         int id_centro_origem = retornaIdCentroEstoque(centro);
         int id_centro_transferencia = retornaIdCentroEstoque(centro_de_transferencia);
         Class_produtos produtos = new Class_produtos();
@@ -184,17 +185,16 @@ public class Class_estoque {
             Connection conn = banco.getConexaoMySQL();
             
             //Verificar se o produto já existe no centro de estoque
-            String sql = "Select produtos_centro_estoque.id_produto, centros_estoque.id_centro_estoque "
-                    + "from produtos_centro_estoque, produtos, centros_estoque "
-                    + "where centros_estoque.nome = '"+centro+"' "
-                    + "and centros_estoque.id_centro_estoque = produtos_centro_estoque.id_centro_estoque "
-                    + "and descricao = '"+produto+"' "
-                    + "and produtos.id_produto = produtos_centro_estoque.id_produto";
+            String sql = "Select id_produto, id_centro_estoque from produtos_centro_estoque "
+                    + "where id_produto='"+codigo_produto+"'"
+                    + "and id_centro_estoque='"+id_centro_transferencia+"'";
             
             PreparedStatement ps = conn.prepareStatement(sql);  
             ResultSet rs = ps.executeQuery();  
             while(rs.next()){
+                
                 count++;
+                
             }
             
             //Se o produto já existe só acrescenta
@@ -205,6 +205,7 @@ public class Class_estoque {
                 ps = conn.prepareStatement(sql);
                 ps.executeUpdate();
             } else { //Se não, devemos fazer um novo insert
+                
                 sql = "INSERT INTO produtos_centro_estoque (id_produto, id_centro_estoque, quantidade_em_unidade) "
                         + "VALUES (?, ?, ?)";
                 ps = conn.prepareStatement(sql);    
@@ -224,6 +225,8 @@ public class Class_estoque {
             ps.close();
             rs.close();
             conn.close();
+            
+            JOptionPane.showMessageDialog(null,"Transferido com sucesso!","Sucesso",JOptionPane.PLAIN_MESSAGE);
         }
          catch (Exception e) {    
             e.printStackTrace();
