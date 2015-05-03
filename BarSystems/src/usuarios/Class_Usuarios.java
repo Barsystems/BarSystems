@@ -263,4 +263,18 @@ public class Class_Usuarios {
         }
     }
     
+    public void excluiResponsavelCaixa(int id_usuario) {
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection con = banco.getConexaoMySQL();
+            String query = "DELETE FROM responsaveis_caixa WHERE id_usuario = '"+id_usuario+"'";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.executeUpdate();
+            ps.close();
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

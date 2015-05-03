@@ -19,7 +19,7 @@ public class Class_Receitas {
         
     }
     
-    public void cadastraReceita(String descricao, int id_cliente, String nome_cliente, String setor, String forma_pagamento, 
+    public void cadastraReceita(String descricao, int id_cliente, String nome_cliente, int id_setor, String forma_pagamento, 
             String valor, String acrescimo, String desconto, int numeroParcelas, int id_movimentacao_caixa, 
             int id_movimentacao_conta_bancaria, String data_pagamento, String data_vencimento, int liquidada, int agendada) { 
         int dias = 30;
@@ -27,8 +27,6 @@ public class Class_Receitas {
             Class_Formas_Pagto formas = new Class_Formas_Pagto();
             dias = formas.retornaDiasCartao(forma_pagamento);
         }
-        Class_Setores_Financeiros setores = new Class_Setores_Financeiros();
-        int id_setor = setores.retornaIdSetorFinanceiro(setor);
         Class_Formas_Pagto formas = new Class_Formas_Pagto();
         int id_forma_pagamento = formas.retornaIdFormaPagamento(forma_pagamento);
         

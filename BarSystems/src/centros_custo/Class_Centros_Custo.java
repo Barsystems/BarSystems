@@ -330,16 +330,16 @@ public class Class_Centros_Custo {
     public void carregaCentrosCustoComboBox(javax.swing.JComboBox combo, String condicao, int id_usuario, String tipo_usuario) {
         combo.removeAllItems();
         try {
-            String sql;
-            if (condicao.equals("Caixa")) {
+            String sql, sql2 = "";
+            if (condicao.equals("Todos")) {
                 if (tipo_usuario.equals("Administrador")) {
-                    sql = "SELECT nome FROM centros_custo WHERE excluido = 0 AND tipo = 'Caixa'"; 
+                    sql = "SELECT nome FROM centros_custo WHERE excluido = 0"; 
                 } else {
-                    sql = "SELECT centros_custo.nome, responsaveis_caixa.id_usuario "
-                        + "FROM centros_custo "
+                    sql = "SELECT nome FROM centros_custo "
                         + "INNER JOIN responsaveis_caixa ON centros_custo.id_centro_custo = responsaveis_caixa.id_centro_custo "
                         + "WHERE centros_custo.Excluido = 0 AND responsaveis_caixa.id_usuario = '"+id_usuario+"' "
                         + "AND centros_custo.tipo = 'Caixa'";
+                    sql2 = "SELECT nome FROM centros_custo WHERE excluido = 0 AND tipo = 'Conta bancária' order by nome";
                 }
             } else if (condicao.equals("Conta bancária")) {
                 sql = "SELECT nome FROM centros_custo WHERE excluido = 0 AND tipo = 'Conta bancária' order by nome"; 
@@ -354,7 +354,16 @@ public class Class_Centros_Custo {
               
             while(rs.next()){  
                combo.addItem(rs.getString(1));
-            }              
+            }
+            
+            if (!sql2.equals("")) {
+                stmt = con.prepareStatement(sql2);    
+                rs = stmt.executeQuery();  
+                while(rs.next()){  
+                   combo.addItem(rs.getString(1));
+                }
+            }
+            
             rs.close();  
             stmt.close();
             con.close();

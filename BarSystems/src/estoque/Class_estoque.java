@@ -7,7 +7,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.text.NumberFormat;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import produtos.Class_produtos;
 
@@ -15,6 +17,26 @@ public class Class_estoque {
  
     public Class_estoque(){
         
+    }
+    
+    public void carregaCentrosEstoqueComboBox(JComboBox combo) {
+        combo.removeAllItems();
+        try {
+            String sql = "SELECT nome FROM centros_estoque WHERE excluido = 0";
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement stmt = conn.prepareStatement(sql);  
+            ResultSet rs = stmt.executeQuery();  
+            while(rs.next())
+            {
+                combo.addItem(rs.getString(1));
+            }
+            rs.close();  
+            stmt.close();
+            conn.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public void cadastraCentro(String centro) {
@@ -231,5 +253,66 @@ public class Class_estoque {
          catch (Exception e) {    
             e.printStackTrace();
         }
-    }    
+    }
+    
+    public boolean verficaProdutoExistenteCentroEstoque(int id_produto, int id_centro){
+        boolean flag = false;
+         try{
+            String sql = "SELECT id_produto FROM produtos_centro_estoque WHERE id_produto = '"+id_produto+"' AND id_centro_estoque = '"+id_centro+"'";
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement(sql);  
+            ResultSet rs = ps.executeQuery();  
+            if (rs.next()) {
+                flag = true;
+            }
+            
+            rs.close();
+            ps.close();
+            conn.close();        
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+        return flag;
+    }
+    
+    public void cadastraProdutosCentroEstoque(JTable tabela_produtos) {
+        try {
+            String sql_insert = "INSERT INTO produtos_centro_estoque (id_produto, id_centro_estoque, quantidade_em_unidade ) VALUES (?, ?, ?)";
+            String sql_update = "UPDATE produtos_centro_estoque SET quantidade_em_unidade = (?+ quantidade_em_unidade) WHERE id_produto = ? and id_centro_estoque = ?";
+
+            Class_produtos produtos = new Class_produtos();
+            Class_estoque estoque = new Class_estoque();
+            DefaultTableModel modelo = (DefaultTableModel) tabela_produtos.getModel();
+            
+            int id_produto, id_centro_estoque, quantidade;
+            
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = null;
+            for (int i = 0; i < tabela_produtos.getRowCount(); i++) {
+                id_produto = produtos.retornaIdProduto((String) modelo.getValueAt(i, 0));
+                id_centro_estoque = estoque.retornaIdCentroEstoque((String) modelo.getValueAt(i, 4));
+                quantidade = (int) modelo.getValueAt(i, 1);
+                if (verficaProdutoExistenteCentroEstoque(id_produto, id_centro_estoque)) {
+                    ps = conn.prepareStatement(sql_update);
+                    ps.setInt(1, quantidade);
+                    ps.setInt(2, id_produto);
+                    ps.setInt(3, id_centro_estoque); 
+                    ps.executeUpdate();
+                } else {
+                    ps = conn.prepareStatement(sql_insert);
+                    ps.setInt(1, id_produto);
+                    ps.setInt(2, id_centro_estoque); 
+                    ps.setInt(3, quantidade);
+                    ps.executeUpdate();
+                }
+            }
+            ps.close();
+            conn.close();
+        } catch (Exception e) {    
+            e.printStackTrace();
+        } 
+   
+    }
 }

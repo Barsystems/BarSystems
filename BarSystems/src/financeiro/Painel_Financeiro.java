@@ -4,6 +4,7 @@ package financeiro;
 import renderers.Class_Renderer_Receitas_Despesas;
 import centros_custo.Class_Caixa;
 import centros_custo.Class_Centros_Custo;
+import centros_custo.Class_Conta_Bancaria;
 import formas_pagamento.Class_Formas_Pagto;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
@@ -1936,17 +1937,18 @@ public class Painel_Financeiro extends javax.swing.JPanel {
             String pagamento = null;
             String vencimento = sdf.format(dataVencimentoNovoLancamento.getDate());
             
-            if (comboTipoNovoLancamento.getSelectedItem().toString().equals("Receita")) {
+            Class_Setores_Financeiros setores = new Class_Setores_Financeiros();
+            int id_setor = setores.retornaIdSetorFinanceiro(comboCategoriaNovoAgendamento.getSelectedItem().toString());
+            if (comboTipoNovoLancamento.getSelectedItem().toString().equals("Receita")) {               
                 Class_Receitas receitas = new Class_Receitas();
                 receitas.cadastraReceita(txtDescricaoNovoLancamento.getText(), 0, "", 
-                        comboCategoriaNovoAgendamento.getSelectedItem().toString(), forma, txtValorNovoLancamento.getText(), "0",
+                        id_setor, forma, txtValorNovoLancamento.getText(), "0",
                         "0", Integer.valueOf(comboParcelasNovoLancamento.getSelectedItem().toString()), 0, 0, pagamento, vencimento, 0, 1);
             } else if (comboTipoNovoLancamento.getSelectedItem().equals("Despesa")) {
                 Class_Despesas despesas = new Class_Despesas();
-                despesas.cadastraDespesa(0, txtDescricaoNovoLancamento.getText(), nome_usuario, "", 
+                despesas.cadastraDespesa(txtDescricaoNovoLancamento.getText(), nome_usuario, 
                     Integer.valueOf(comboParcelasNovoLancamento.getSelectedItem().toString()), pagamento, vencimento, forma,
-                    txtValorNovoLancamento.getText(), "0", "0", 0, 1, comboCategoriaNovoAgendamento.getSelectedItem().toString(),
-                    id_usuario, 0, 0, 0, 1);
+                    txtValorNovoLancamento.getText(), "0", "0", 0, 1, id_setor, id_usuario, 0, 0, 0, 1);
             }
 
             carregaLancamentos();
@@ -2241,13 +2243,45 @@ public class Painel_Financeiro extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "O valor a transferir não pode ser maior que o valor disponível!", "Atenção", JOptionPane.WARNING_MESSAGE);
             } else {
                 Class_Centros_Custo centros = new Class_Centros_Custo();
+                Class_Caixa caixa = new Class_Caixa();
+                Class_Conta_Bancaria conta = new Class_Conta_Bancaria();
+                Class_Formas_Pagto formas = new Class_Formas_Pagto();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                
+                int id_caixa, id_forma = formas.retornaIdFormaPagamento("Dinheiro");
+                float valor_transferir = troca.trocaVirgulaPorPonto(txtSaldoTransferirSaldo.getText());
+                String data_transferencia = sdf.format(new Date());
+                
+                String centro_sair = lblCentroCustoTransferirSaldo.getText();
+                String centro_entrar = comboCentroDestinoTransferirSaldo.getSelectedItem().toString();
                 
                 //debitamos do centro inicial
-                int id_centro = centros.retornaIdCentroCusto(lblCentroCustoTransferirSaldo.getText());
+                int id_centro = centros.retornaIdCentroCusto(centro_sair);
                 centros.alteraSaldoCentroCusto("Despesa", "0,00", txtSaldoTransferirSaldo.getText(), id_centro);
+                
+                //agora devemos adicionar a movimentacao no centro de custo
+                if (centros.retornaTipoCentroCusto(centro_sair).equals("Caixa")) {
+                    id_caixa = caixa.getIdCaixa(id_centro);
+                    caixa.registraMovimentacaoCaixa(id_caixa, "Sangria", id_forma, 1, valor_transferir, "Sangria", id_usuario, 
+                            data_transferencia);
+                } else {
+                    conta.registraMovimentacaoContaBancaria(id_centro, "Sangria", id_forma, 1, valor_transferir, "Sangria", 
+                            id_usuario, data_transferencia);
+                }
+                
                 //acrescentamos no centro de destino
-                id_centro = centros.retornaIdCentroCusto(comboCentroDestinoTransferirSaldo.getSelectedItem().toString());
+                id_centro = centros.retornaIdCentroCusto(centro_entrar);
                 centros.alteraSaldoCentroCusto("Receita", "0,00", txtSaldoTransferirSaldo.getText(), id_centro);
+                
+                //acrescentamos a movimentacao no centro de custo
+                if (centros.retornaTipoCentroCusto(centro_entrar).equals("Caixa")) {
+                    id_caixa = caixa.getIdCaixa(id_centro);
+                    caixa.registraMovimentacaoCaixa(id_caixa, "Saldo vindo do centro de custo "+centro_sair, id_forma, 1, 
+                            valor_transferir, "Sangria", id_usuario, data_transferencia);
+                } else {
+                    conta.registraMovimentacaoContaBancaria(id_centro, "Saldo vindo do centro de custo "+centro_sair, id_forma, 
+                            1, valor_transferir, "Sangria", id_usuario, data_transferencia);
+                }
                 
                 JOptionPane.showMessageDialog(null, "Saldo transferido com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
                 Transferir_Saldo.dispose();

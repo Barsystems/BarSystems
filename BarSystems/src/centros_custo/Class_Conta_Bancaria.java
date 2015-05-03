@@ -62,15 +62,8 @@ public class Class_Conta_Bancaria {
         
     }
     
-    public void registraMovimentacaoContaBancaria(int id_conta_bancaria, String descricao, String forma_pagamento, 
-            int numero_parcelas, String valor, String tipo, int id_usuario, String data_pagamento) {
-        
-        Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
-        float Valor = troca.trocaVirgulaPorPonto(valor);
-        
-        Class_Formas_Pagto formas = new Class_Formas_Pagto();
-        int id_forma_pagamento = formas.retornaIdFormaPagamento(forma_pagamento);
-        
+    public void registraMovimentacaoContaBancaria(int id_conta_bancaria, String descricao, int id_forma_pagamento, 
+            int numero_parcelas, float valor, String tipo, int id_usuario, String data_pagamento) {        
         try 
         {
             String query = "insert into movimentacoes_conta_bancaria (id_centro_custo, descricao, id_forma_pagamento_fk, numero_parcelas,"
@@ -82,7 +75,7 @@ public class Class_Conta_Bancaria {
             ps.setString(2, descricao);
             ps.setInt(3, id_forma_pagamento);
             ps.setInt(4, numero_parcelas);
-            ps.setFloat(5, Valor);
+            ps.setFloat(5, valor);
             ps.setString(6, tipo);
             ps.setString(7, data_pagamento);
             ps.setInt(8, id_usuario);

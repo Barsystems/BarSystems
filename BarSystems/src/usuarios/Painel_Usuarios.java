@@ -584,6 +584,7 @@ public class Painel_Usuarios extends javax.swing.JPanel {
                     if (JOptionPane.showConfirmDialog(null, "Deseja realmente excluir?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) {
                         Class_Usuarios usuarios = new Class_Usuarios();
                         usuarios.excluiUsuario(id_usuario);
+                        usuarios.excluiResponsavelCaixa(id_usuario);
 
                         refreshList();
                     }

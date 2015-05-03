@@ -60,6 +60,52 @@ public class Painel_Clientes extends javax.swing.JPanel {
         lblIdadeClienteCadastrar.setText("");
         txtNomeCadastrar.grabFocus();
     }
+    
+    public void calcularIdadeNovoCadastro() {
+        Class_Consumir_Letras cons = new Class_Consumir_Letras();
+        String a = cons.retiraLetrasEPontos(txtNascimentoCadastrar.getText());
+        if (a.length() == 8) {
+            try {
+                Class_Manipular_Data data = new Class_Manipular_Data();
+                int diasVividos = data.retornaQntAnos(txtNascimentoCadastrar.getText());
+                if (diasVividos <= 0) {
+                    lblIdadeClienteCadastrar.setText("");
+                } else if (diasVividos == 1) {
+                    lblIdadeClienteCadastrar.setText("Este cliente possui "+diasVividos+" ano");
+                } else {
+                    lblIdadeClienteCadastrar.setText("Este cliente possui "+diasVividos+" anos");
+                }
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            lblIdadeClienteCadastrar.setText("");
+        }
+    }
+    
+    public void calcularIdadeEditarCadastro() {
+        Class_Consumir_Letras cons = new Class_Consumir_Letras();
+        String a = cons.retiraLetrasEPontos(txtNascimentoEditar.getText());
+        if (a.length() == 8) {
+            try {
+                Class_Manipular_Data data = new Class_Manipular_Data();
+                int diasVividos = data.retornaQntAnos(txtNascimentoEditar.getText());
+                if (diasVividos <= 0) {
+                    lblIdadeClienteEditar.setText("");
+                } else if (diasVividos == 1) {
+                    lblIdadeClienteEditar.setText("Este cliente possui "+diasVividos+" ano");
+                } else {
+                    lblIdadeClienteEditar.setText("Este cliente possui "+diasVividos+" anos");
+                }
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            lblIdadeClienteEditar.setText("");
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -102,6 +148,37 @@ public class Painel_Clientes extends javax.swing.JPanel {
         btnSalvarCadastro = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
         btnSairCadastro = new javax.swing.JButton();
+        editar_cliente = new javax.swing.JDialog();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        jLabel32 = new javax.swing.JLabel();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        jLabel35 = new javax.swing.JLabel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel41 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        txtNomeEditar = new javax.swing.JTextField();
+        txtNascimentoEditar = new javax.swing.JFormattedTextField();
+        txtRgEditar = new javax.swing.JTextField();
+        txtCPFEditar = new javax.swing.JFormattedTextField();
+        txtTelefoneEditar = new javax.swing.JTextField();
+        txtCelularEditar = new javax.swing.JTextField();
+        txtCEPEditar = new javax.swing.JFormattedTextField();
+        txtEnderecoEditar = new javax.swing.JTextField();
+        txtBairroEditar = new javax.swing.JTextField();
+        txtCidadeEditar = new javax.swing.JTextField();
+        txtEstadoEditar = new javax.swing.JTextField();
+        txtPaisEditar = new javax.swing.JTextField();
+        txtObservacoesEditar = new javax.swing.JTextField();
+        lblIdadeClienteEditar = new javax.swing.JLabel();
+        jLabel43 = new javax.swing.JLabel();
+        btnSalvarEdicao = new javax.swing.JButton();
+        btnSairEdicao = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -133,13 +210,11 @@ public class Painel_Clientes extends javax.swing.JPanel {
         txtObservacoes = new javax.swing.JTextField();
         lblIdadeCliente = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        btnVisualizarObservacoes = new javax.swing.JButton();
         btnNovo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
         btnPesquisar = new javax.swing.JButton();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
 
         novo_cliente.setModal(true);
         novo_cliente.setResizable(false);
@@ -336,6 +411,192 @@ public class Painel_Clientes extends javax.swing.JPanel {
         novo_cliente.getContentPane().add(btnSairCadastro);
         btnSairCadastro.setBounds(410, 520, 100, 30);
 
+        editar_cliente.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        editar_cliente.setTitle("Editar cadastro");
+        editar_cliente.setModal(true);
+        editar_cliente.setResizable(false);
+        editar_cliente.getContentPane().setLayout(null);
+
+        jLabel30.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel30.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Cliente 24px.png"))); // NOI18N
+        jLabel30.setText("Editar cadastro");
+        editar_cliente.getContentPane().add(jLabel30);
+        jLabel30.setBounds(0, 30, 670, 30);
+
+        jLabel31.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel31.setText("Nome");
+        editar_cliente.getContentPane().add(jLabel31);
+        jLabel31.setBounds(120, 100, 50, 17);
+
+        jLabel32.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel32.setText(" Nascimento");
+        editar_cliente.getContentPane().add(jLabel32);
+        jLabel32.setBounds(80, 140, 80, 17);
+
+        jLabel33.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel33.setText(" RG");
+        editar_cliente.getContentPane().add(jLabel33);
+        jLabel33.setBounds(130, 180, 30, 17);
+
+        jLabel34.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel34.setText("CPF");
+        editar_cliente.getContentPane().add(jLabel34);
+        jLabel34.setBounds(350, 180, 28, 17);
+
+        jLabel35.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel35.setText("Telefone");
+        editar_cliente.getContentPane().add(jLabel35);
+        jLabel35.setBounds(100, 220, 56, 17);
+
+        jLabel36.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel36.setText("Celular");
+        editar_cliente.getContentPane().add(jLabel36);
+        jLabel36.setBounds(340, 220, 45, 17);
+
+        jLabel37.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel37.setText("CEP");
+        editar_cliente.getContentPane().add(jLabel37);
+        jLabel37.setBounds(130, 270, 28, 17);
+
+        jLabel38.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel38.setText(" Endereço");
+        editar_cliente.getContentPane().add(jLabel38);
+        jLabel38.setBounds(90, 310, 70, 17);
+
+        jLabel39.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel39.setText(" Cidade");
+        editar_cliente.getContentPane().add(jLabel39);
+        jLabel39.setBounds(110, 390, 50, 17);
+
+        jLabel40.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel40.setText(" Estado");
+        editar_cliente.getContentPane().add(jLabel40);
+        jLabel40.setBounds(110, 430, 50, 17);
+
+        jLabel41.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel41.setText("País");
+        editar_cliente.getContentPane().add(jLabel41);
+        jLabel41.setBounds(260, 430, 27, 17);
+
+        jLabel42.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel42.setText(" Observações");
+        editar_cliente.getContentPane().add(jLabel42);
+        jLabel42.setBounds(70, 470, 90, 17);
+
+        txtNomeEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        editar_cliente.getContentPane().add(txtNomeEditar);
+        txtNomeEditar.setBounds(180, 90, 350, 30);
+
+        try {
+            txtNascimentoEditar.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtNascimentoEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtNascimentoEditar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtNascimentoEditarKeyReleased(evt);
+            }
+        });
+        editar_cliente.getContentPane().add(txtNascimentoEditar);
+        txtNascimentoEditar.setBounds(180, 130, 140, 30);
+
+        txtRgEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        editar_cliente.getContentPane().add(txtRgEditar);
+        txtRgEditar.setBounds(180, 170, 140, 30);
+
+        try {
+            txtCPFEditar.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtCPFEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        editar_cliente.getContentPane().add(txtCPFEditar);
+        txtCPFEditar.setBounds(400, 170, 130, 30);
+
+        txtTelefoneEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        editar_cliente.getContentPane().add(txtTelefoneEditar);
+        txtTelefoneEditar.setBounds(180, 210, 140, 30);
+
+        txtCelularEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        editar_cliente.getContentPane().add(txtCelularEditar);
+        txtCelularEditar.setBounds(400, 210, 130, 30);
+
+        try {
+            txtCEPEditar.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtCEPEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        editar_cliente.getContentPane().add(txtCEPEditar);
+        txtCEPEditar.setBounds(180, 260, 110, 30);
+
+        txtEnderecoEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        editar_cliente.getContentPane().add(txtEnderecoEditar);
+        txtEnderecoEditar.setBounds(180, 300, 350, 30);
+
+        txtBairroEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        editar_cliente.getContentPane().add(txtBairroEditar);
+        txtBairroEditar.setBounds(180, 340, 350, 30);
+
+        txtCidadeEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        editar_cliente.getContentPane().add(txtCidadeEditar);
+        txtCidadeEditar.setBounds(180, 380, 350, 30);
+
+        txtEstadoEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtEstadoEditar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtEstadoEditarKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEstadoEditarKeyTyped(evt);
+            }
+        });
+        editar_cliente.getContentPane().add(txtEstadoEditar);
+        txtEstadoEditar.setBounds(180, 420, 50, 30);
+
+        txtPaisEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        editar_cliente.getContentPane().add(txtPaisEditar);
+        txtPaisEditar.setBounds(310, 420, 220, 30);
+
+        txtObservacoesEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        editar_cliente.getContentPane().add(txtObservacoesEditar);
+        txtObservacoesEditar.setBounds(180, 460, 350, 30);
+
+        lblIdadeClienteEditar.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        lblIdadeClienteEditar.setForeground(new java.awt.Color(255, 0, 0));
+        lblIdadeClienteEditar.setText("Este cliente possui 18 anos");
+        editar_cliente.getContentPane().add(lblIdadeClienteEditar);
+        lblIdadeClienteEditar.setBounds(340, 140, 200, 17);
+
+        jLabel43.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel43.setText("Bairro");
+        editar_cliente.getContentPane().add(jLabel43);
+        jLabel43.setBounds(120, 350, 50, 17);
+
+        btnSalvarEdicao.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnSalvarEdicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Salvar 16px.png"))); // NOI18N
+        btnSalvarEdicao.setText("Salvar");
+        btnSalvarEdicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarEdicaoActionPerformed(evt);
+            }
+        });
+        editar_cliente.getContentPane().add(btnSalvarEdicao);
+        btnSalvarEdicao.setBounds(240, 520, 100, 30);
+
+        btnSairEdicao.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        btnSairEdicao.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Sair02 16px.png"))); // NOI18N
+        btnSairEdicao.setText("Sair");
+        btnSairEdicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairEdicaoActionPerformed(evt);
+            }
+        });
+        editar_cliente.getContentPane().add(btnSairEdicao);
+        btnSairEdicao.setBounds(350, 520, 100, 30);
+
         setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
@@ -486,7 +747,7 @@ public class Painel_Clientes extends javax.swing.JPanel {
         txtObservacoes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         txtObservacoes.setEnabled(false);
         add(txtObservacoes);
-        txtObservacoes.setBounds(440, 490, 300, 30);
+        txtObservacoes.setBounds(440, 490, 350, 30);
 
         lblIdadeCliente.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         lblIdadeCliente.setForeground(new java.awt.Color(255, 0, 0));
@@ -498,10 +759,6 @@ public class Painel_Clientes extends javax.swing.JPanel {
         jLabel17.setText("Bairro");
         add(jLabel17);
         jLabel17.setBounds(380, 380, 50, 17);
-
-        btnVisualizarObservacoes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Pesquisar 16px.png"))); // NOI18N
-        add(btnVisualizarObservacoes);
-        btnVisualizarObservacoes.setBounds(750, 490, 40, 30);
 
         btnNovo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Adicionar 16px.png"))); // NOI18N
@@ -517,12 +774,22 @@ public class Painel_Clientes extends javax.swing.JPanel {
         btnEditar.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Editar 16px.png"))); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
         add(btnEditar);
         btnEditar.setBounds(310, 570, 100, 30);
 
         btnExcluir.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Excluir 16px.png"))); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
         add(btnExcluir);
         btnExcluir.setBounds(420, 570, 100, 30);
 
@@ -540,8 +807,6 @@ public class Painel_Clientes extends javax.swing.JPanel {
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Pesquisar 16px.png"))); // NOI18N
         add(btnPesquisar);
         btnPesquisar.setBounds(250, 90, 40, 30);
-        add(jTabbedPane1);
-        jTabbedPane1.setBounds(290, 60, 100, 100);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
@@ -634,26 +899,7 @@ public class Painel_Clientes extends javax.swing.JPanel {
 
     private void txtNascimentoCadastrarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNascimentoCadastrarKeyReleased
        
-        Class_Consumir_Letras cons = new Class_Consumir_Letras();
-        String a = cons.retiraLetrasEPontos(txtNascimentoCadastrar.getText());
-        if (a.length() == 8) {
-            try {
-                Class_Manipular_Data data = new Class_Manipular_Data();
-                int diasVividos = data.retornaQntAnos(txtNascimentoCadastrar.getText());
-                if (diasVividos <= 0) {
-                    lblIdadeClienteCadastrar.setText("");
-                } else if (diasVividos == 1) {
-                    lblIdadeClienteCadastrar.setText("Este cliente possui "+diasVividos+" ano");
-                } else {
-                    lblIdadeClienteCadastrar.setText("Este cliente possui "+diasVividos+" anos");
-                }
-                
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            lblIdadeClienteCadastrar.setText("");
-        }
+        calcularIdadeNovoCadastro();
         
     }//GEN-LAST:event_txtNascimentoCadastrarKeyReleased
 
@@ -688,6 +934,127 @@ public class Painel_Clientes extends javax.swing.JPanel {
         
     }//GEN-LAST:event_list_clientesValueChanged
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        
+        Object cliente = list_clientes.getSelectedValue();
+        if (cliente == null) {
+            JOptionPane.showMessageDialog(null, "Selecione um cliente para editar!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } else {
+            txtNascimentoEditar.setValue(null);
+            txtCPFEditar.setValue(null);
+            txtCEPEditar.setValue(null);
+            
+            txtNomeEditar.setText(txtNome.getText());
+            txtNascimentoEditar.setText(txtNascimento.getText());
+            txtRgEditar.setText(txtRG.getText());
+            txtCPFEditar.setText(txtCPF.getText());
+            txtTelefoneEditar.setText(txtTelefone.getText());
+            txtCelularEditar.setText(txtCelular.getText());
+            txtCEPEditar.setText(txtCEP.getText());
+            txtEnderecoEditar.setText(txtEndereco.getText());
+            txtBairroEditar.setText(txtBairro.getText());
+            txtCidadeEditar.setText(txtCidade.getText());
+            txtEstadoEditar.setText(txtEstado.getText());
+            txtPaisEditar.setText(txtPais.getText());
+            txtObservacoesEditar.setText(txtObservacoes.getText());
+            
+            calcularIdadeEditarCadastro();
+            
+            txtNomeEditar.grabFocus();
+            
+            editar_cliente.setBounds(0, 0, 670, 600);
+            editar_cliente.setLocationRelativeTo(null);
+            editar_cliente.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void txtNascimentoEditarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNascimentoEditarKeyReleased
+        
+        calcularIdadeEditarCadastro();
+        
+    }//GEN-LAST:event_txtNascimentoEditarKeyReleased
+
+    private void txtEstadoEditarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoEditarKeyReleased
+        
+        int index = txtEstadoCadastrar.getCaretPosition();
+        txtEstadoCadastrar.setText(txtEstadoCadastrar.getText().toUpperCase());
+        txtEstadoCadastrar.setCaretPosition(index);    
+        
+    }//GEN-LAST:event_txtEstadoEditarKeyReleased
+
+    private void txtEstadoEditarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoEditarKeyTyped
+        
+        Class_Consumir_Letras cons = new Class_Consumir_Letras();
+        cons.consomeQntDeCaracteres(txtEstadoCadastrar, 1, evt);
+        cons.consome("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNMçÇ", evt);
+        
+    }//GEN-LAST:event_txtEstadoEditarKeyTyped
+
+    private void btnSalvarEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarEdicaoActionPerformed
+        
+        if (txtNomeEditar.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "O campo nome não pode ficar vazio!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtNomeEditar.grabFocus();
+        } else if (txtNomeEditar.getText().length() >45) {
+            JOptionPane.showMessageDialog(null, "O campo nome ultrapassou o limite de caracteres!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtNomeEditar.grabFocus();
+        } else if (txtRgEditar.getText().length() > 15) {
+            JOptionPane.showMessageDialog(null, "O campo RG ultrapassou o limite de caracteres!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtRgEditar.grabFocus();
+        } else if (txtTelefoneEditar.getText().length() > 15) {
+            JOptionPane.showMessageDialog(null, "O campo telefone ultrapassou o limite de caracteres!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtTelefoneEditar.grabFocus();
+        } else if (txtCelularEditar.getText().length() > 15) {
+            JOptionPane.showMessageDialog(null, "O campo celular ultrapassou o limite de caracteres!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtCelularEditar.grabFocus();
+        } else if (txtEnderecoEditar.getText().length() > 45) {
+            JOptionPane.showMessageDialog(null, "O campo endereço ultrapassou o limite de caracteres!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtEnderecoEditar.grabFocus();
+        } else if (txtBairroEditar.getText().length() > 45) {
+            JOptionPane.showMessageDialog(null, "O campo bairro ultrapassou o limite de caracteres!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtBairroEditar.grabFocus();
+        } else if (txtCidadeEditar.getText().length() > 45) {
+            JOptionPane.showMessageDialog(null, "O campo cidade ultrapassou o limite de caracteres!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtCidadeEditar.grabFocus();
+        } else if (txtPaisEditar.getText().length() > 30) {
+            JOptionPane.showMessageDialog(null, "O campo país ultrapassou o limite de caracteres!", "Atenção", JOptionPane.WARNING_MESSAGE);
+            txtPaisEditar.grabFocus();
+        } else {
+            int id_cliente = Integer.valueOf(arrayList.get(list_clientes.getSelectedIndex()).toString());
+            Class_Clientes clientes = new Class_Clientes();
+            clientes.editarCliente(txtNomeEditar.getText(), txtNascimentoEditar.getText(), txtRgEditar.getText(), 
+                    txtCPFEditar.getText(), txtTelefoneEditar.getText(), txtCelularEditar.getText(), 
+                    txtCEPEditar.getText(), txtEnderecoEditar.getText(), txtBairroEditar.getText(), 
+                    txtCidadeEditar.getText(), txtEstadoEditar.getText(), txtPaisEditar.getText(), 
+                    txtObservacoesEditar.getText(), id_cliente);
+            
+            editar_cliente.dispose();
+            refreshList();
+        }
+        
+    }//GEN-LAST:event_btnSalvarEdicaoActionPerformed
+
+    private void btnSairEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairEdicaoActionPerformed
+        
+        editar_cliente.dispose();
+        
+    }//GEN-LAST:event_btnSairEdicaoActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        
+        Object cliente = list_clientes.getSelectedValue();
+        if (cliente == null) {
+            JOptionPane.showMessageDialog(null, "Selecione um cliente para excluir!", "Atenção", JOptionPane.WARNING_MESSAGE);
+        } else if (JOptionPane.showConfirmDialog(null, "Deseja realmente excluir?", "Atenção", JOptionPane.YES_NO_OPTION) == 0) {
+            int id_cliente = Integer.valueOf(arrayList.get(list_clientes.getSelectedIndex()).toString());
+            Class_Clientes clientes = new Class_Clientes();
+            clientes.excluiCliente(id_cliente);
+            refreshList();
+        }
+        
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
@@ -697,8 +1064,10 @@ public class Painel_Clientes extends javax.swing.JPanel {
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSairCadastro;
+    private javax.swing.JButton btnSairEdicao;
     private javax.swing.JButton btnSalvarCadastro;
-    private javax.swing.JButton btnVisualizarObservacoes;
+    private javax.swing.JButton btnSalvarEdicao;
+    private javax.swing.JDialog editar_cliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -722,43 +1091,70 @@ public class Painel_Clientes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel40;
+    private javax.swing.JLabel jLabel41;
+    private javax.swing.JLabel jLabel42;
+    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblIdadeCliente;
     private javax.swing.JLabel lblIdadeClienteCadastrar;
+    private javax.swing.JLabel lblIdadeClienteEditar;
     private javax.swing.JList list_clientes;
     private javax.swing.JDialog novo_cliente;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JTextField txtBairroCadastrar;
+    private javax.swing.JTextField txtBairroEditar;
     private javax.swing.JTextField txtCEP;
     private javax.swing.JFormattedTextField txtCEPCadastrar;
+    private javax.swing.JFormattedTextField txtCEPEditar;
     private javax.swing.JTextField txtCPF;
     private javax.swing.JFormattedTextField txtCPFCadastrar;
+    private javax.swing.JFormattedTextField txtCPFEditar;
     private javax.swing.JTextField txtCelular;
     private javax.swing.JTextField txtCelularCadastrar;
+    private javax.swing.JTextField txtCelularEditar;
     private javax.swing.JTextField txtCidade;
     private javax.swing.JTextField txtCidadeCadastrar;
+    private javax.swing.JTextField txtCidadeEditar;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtEnderecoCadastrar;
+    private javax.swing.JTextField txtEnderecoEditar;
     private javax.swing.JTextField txtEstado;
     private javax.swing.JTextField txtEstadoCadastrar;
+    private javax.swing.JTextField txtEstadoEditar;
     private javax.swing.JTextField txtNascimento;
     private javax.swing.JFormattedTextField txtNascimentoCadastrar;
+    private javax.swing.JFormattedTextField txtNascimentoEditar;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtNomeCadastrar;
+    private javax.swing.JTextField txtNomeEditar;
     private javax.swing.JTextField txtObservacoes;
     private javax.swing.JTextField txtObservacoesCadastrar;
+    private javax.swing.JTextField txtObservacoesEditar;
     private javax.swing.JTextField txtPais;
     private javax.swing.JTextField txtPaisCadastrar;
+    private javax.swing.JTextField txtPaisEditar;
     private javax.swing.JTextField txtRG;
     private javax.swing.JTextField txtRgCadastrar;
+    private javax.swing.JTextField txtRgEditar;
     private javax.swing.JTextField txtTelefone;
     private javax.swing.JTextField txtTelefoneCadastrar;
+    private javax.swing.JTextField txtTelefoneEditar;
     // End of variables declaration//GEN-END:variables
 }

@@ -19,6 +19,15 @@ public class Class_Manipular_Data {
         return data;
     }
     
+    public String retornaDataFormatoMySQLSemHora(String dataFormatoBrasil) {
+        String dia = dataFormatoBrasil.substring(0, 2);
+        String mes = dataFormatoBrasil.substring(3, 5);
+        String ano = dataFormatoBrasil.substring(6, 10);
+        
+        String data = ano+"/"+mes+"/"+dia;
+        return data;
+    }
+    
     public int retornaQntAnos(String dataNascimentoFormatoBrasil) {
         int diasVividos = 0;
         try {

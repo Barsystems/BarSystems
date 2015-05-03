@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import principal.Class_Troca_Virgula_Por_Ponto;
 import usuarios.Class_Usuarios;
 
 public class Painel_Agendamentos extends javax.swing.JPanel {
@@ -474,7 +475,7 @@ public class Painel_Agendamentos extends javax.swing.JPanel {
             Class_Usuarios usuarios = new Class_Usuarios();
             String tipo_usuario = usuarios.getTipoUsuario(nome_usuario);
             if (forma.equals("Dinheiro") || forma.equals("Cheque")) {
-                centros.carregaCentrosCustoComboBox(comboCentroCusto, "Caixa", id_usuario, tipo_usuario);
+                centros.carregaCentrosCustoComboBox(comboCentroCusto, "Todos", id_usuario, tipo_usuario);
             } else {
                 centros.carregaCentrosCustoComboBox(comboCentroCusto, "Conta bancária", id_usuario, tipo_usuario);
             }
@@ -507,6 +508,10 @@ public class Painel_Agendamentos extends javax.swing.JPanel {
         Class_Centros_Custo centros = new Class_Centros_Custo();
         String tipo_centro_custo = centros.retornaTipoCentroCusto(centro);
         int id_centro_custo = centros.retornaIdCentroCusto(centro);
+        Class_Formas_Pagto formas = new Class_Formas_Pagto();
+        int id_forma_pagamento = formas.retornaIdFormaPagamento(forma_pagamento);
+        
+        Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
 
         if (tipo_centro_custo.equals("Caixa")) {
             Class_Caixa caixa = new Class_Caixa();
@@ -515,13 +520,14 @@ public class Painel_Agendamentos extends javax.swing.JPanel {
                 flag = 0;
                 JOptionPane.showMessageDialog(null, "O caixa que você está tentando realizar o lançamento não se encontra aberto no momento.\nAntes de liquidar este lançamento você terá que abrir este caixa!", "Atenção", JOptionPane.WARNING_MESSAGE);
             } else {
-                caixa.registraMovimentacaoCaixa(id_caixa, descricao, forma_pagamento, 1, valor, tipo, id_usuario, data_pagamento);
+                caixa.registraMovimentacaoCaixa(id_caixa, descricao, id_forma_pagamento, 1, troca.trocaVirgulaPorPonto(valor), 
+                        tipo, id_usuario, data_pagamento);
                 id_movimentacao = caixa.getIdUltimaMovimentacaoCaixa();
             }
         } else {
             Class_Conta_Bancaria conta = new Class_Conta_Bancaria();
-            conta.registraMovimentacaoContaBancaria(id_centro_custo, descricao, forma_pagamento, 1, valor, tipo, id_usuario, 
-                    data_pagamento);
+            conta.registraMovimentacaoContaBancaria(id_centro_custo, descricao, id_forma_pagamento, 1, 
+                    troca.trocaVirgulaPorPonto(valor), tipo, id_usuario, data_pagamento);
             id_movimentacao = conta.getIdUltimaMovimentacaoContaBancaria();
         }
         

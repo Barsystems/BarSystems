@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 public class Class_Fornecedores {
@@ -149,6 +150,27 @@ public class Class_Fornecedores {
      */
     public String getObservacoes() {
         return observacoes;
+    }
+    
+    public  void carregaFornecedorComboBox(JComboBox combo) {
+        combo.removeAllItems();
+        try {
+            String sql = "SELECT nome_fantasia FROM fornecedores WHERE excluido = 0";
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();  
+            while(rs.next())
+            {
+                combo.addItem(rs.getString(1));
+            }
+            
+            rs.close();  
+            stmt.close();
+            conn.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public boolean verificaRazaoSocialRepetidaFornecedor(String razao_social) {

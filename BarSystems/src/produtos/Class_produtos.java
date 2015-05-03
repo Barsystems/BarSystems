@@ -14,26 +14,81 @@ import javax.swing.JOptionPane;
 
 public class Class_produtos {
     
-    protected String descricao, tipo, valor_unidade_venda, codigo;
+    protected String descricao, tipo, valor_unidade_venda, codigo, porcentagem, valor_compra;
     
-    public Class_produtos(){
+    public Class_produtos() {
         
     }
     
-    public String getCodigo(){
+    public String getCodigo() {
         return codigo;
     }
     
-    public String getDescricao(){
+    public String getDescricao() {
         return descricao;
     }
     
-    public String getTipo(){
+    public String getTipo() {
         return tipo;
     }
     
-    public String getValor_Venda(){
+    public String getValor_Compra() {
+        return this.valor_compra;
+    }
+    
+    public String getPorcentagem() {
+        return this.porcentagem;
+    }
+    
+    public String getValor_Venda() {
         return valor_unidade_venda;
+    }
+    
+    public String retornaProdutoPesquisa(int id_produto, String descricao) {
+        String produto = "";
+        try {
+            String sql = "";
+            if (id_produto > 0) {
+                sql = "SELECT descricao FROM produtos WHERE excluido = 0 AND id_produto = '"+id_produto+"'";
+            } else {
+                sql = "SELECT descricao FROM produtos WHERE excluido = 0 AND descricao LIKE '"+descricao+"%'";
+            }
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement stmt = conn.prepareStatement(sql);  
+            ResultSet rs = stmt.executeQuery();  
+            if (rs.next())
+            {
+                produto = rs.getString(1);
+            }
+            rs.close();  
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return produto;
+    }
+    
+    public void carregaProdutosComboBox(JComboBox combo) {
+        combo.removeAllItems();
+        combo.addItem("<Selecione>");
+        try {
+            String sql = "SELECT produtos.descricao FROM produtos WHERE produtos.excluido = 0";
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement stmt = conn.prepareStatement(sql);  
+            ResultSet rs = stmt.executeQuery();  
+            while(rs.next())
+            {
+                combo.addItem(rs.getString(1));
+            }
+            rs.close();  
+            stmt.close();
+            conn.close();
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public int retornaIdProduto(String produto) {
@@ -64,12 +119,10 @@ public class Class_produtos {
      * @param id_setor
      * @param valor_venda
      */
-    public void Cadastra(int id_produto, String descricao, int id_setor, String valor_venda) {
+    public void Cadastra(int id_produto, String descricao, int id_setor, float porcentagem_venda) {
         
         String sql = "INSERT INTO produtos(id_produto, descricao, id_setor, valor_venda_unidade)"+
                 "VALUES(?, ?, ?, ?)";    
-    
-        Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
         
         try {
             Class_Conexao_Banco banco = new Class_Conexao_Banco();
@@ -78,7 +131,7 @@ public class Class_produtos {
             ps.setInt(1, id_produto);
             ps.setString(2, descricao);        
             ps.setInt(3, id_setor); 
-            ps.setFloat(4, troca.trocaVirgulaPorPonto(valor_venda));
+            ps.setFloat(4, porcentagem_venda);
             ps.execute();
             
             ps.close();
@@ -96,16 +149,16 @@ public class Class_produtos {
      * @param codigo
      * @param descricao
      * @param id_setor
+     * @param porcentagem
      * @param valor_venda
      */
-    public void edita(int codigo, String descricao, int id_setor, String valor_venda) {
-        
-        Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
+    public void edita(int codigo, String descricao, int id_setor, float porcentagem, float valor_venda) {
         
         String sql = "UPDATE produtos SET "
                 + "descricao = '"+descricao+"', "
                 + "id_setor = '"+id_setor+"', "
-                + "valor_venda_unidade = "+troca.trocaVirgulaPorPonto(valor_venda)+" WHERE id_produto = "+codigo;
+                + "porcentagem_lucro = '"+porcentagem+"', "
+                + "valor_venda_unidade = "+valor_venda+" WHERE id_produto = "+codigo;
     
             try {
                 Class_Conexao_Banco banco = new Class_Conexao_Banco();
@@ -115,6 +168,8 @@ public class Class_produtos {
                 
                 ps.close();
                 con.close();
+                
+                JOptionPane.showMessageDialog(null,"Produto editado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
                 
             } catch (SQLException e) {    
                 e.printStackTrace();  
@@ -211,7 +266,7 @@ public class Class_produtos {
             
             NumberFormat z = NumberFormat.getCurrencyInstance();
             
-            String sql = "SELECT produtos.id_produto, produtos.descricao, setores_produtos.nome, produtos.valor_venda_unidade "
+            String sql = "SELECT produtos.*, setores_produtos.nome "
                     + "FROM produtos "
                     + "INNER JOIN setores_produtos ON produtos.id_setor = setores_produtos.id_setor "
                     + "WHERE produtos.excluido = 0 and produtos.descricao = '"+nome+"'";  
@@ -221,10 +276,12 @@ public class Class_produtos {
    
             ResultSet rs = ps.executeQuery();              
             while(rs.next()) {                
-                this.codigo = rs.getString(1);
-                this.descricao = rs.getString(2);
-                this.tipo = rs.getString(3);
-                this.valor_unidade_venda = z.format(rs.getFloat(4));
+                this.codigo = rs.getString("produtos.id_produto");
+                this.descricao = rs.getString("produtos.descricao");
+                this.tipo = rs.getString("setores_produtos.nome");
+                this.valor_compra = z.format(rs.getFloat("produtos.valor_compra"));
+                this.porcentagem = rs.getString("porcentagem_lucro") + " %";
+                this.valor_unidade_venda = z.format(rs.getFloat("produtos.valor_venda_unidade"));
             }              
             rs.close();  
             ps.close();
@@ -535,6 +592,39 @@ public class Class_produtos {
             e.printStackTrace();
         }
         return flag;
+    }
+    
+    public void AtualizaValorCompraProduto(int id_produto, float valor_compra_unidade) {
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            
+            float valor = 0;
+            
+            //PRIMEIRO VAMOS VERIFICAR SE O VALOR ATUAL É MAIOR QUE O VALOR ANTERIOR
+            PreparedStatement ps = conn.prepareStatement("SELECT valor_compra FROM produtos "
+                    + "WHERE id_produto = '"+id_produto+"'");
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                valor = rs.getFloat(1);
+            }
+            
+            //SE O NOVO VALOR FOR MAIOR QUE O VALOR ANTERIOR, ENTÃO PROSSEGUIMOS
+            if (valor_compra_unidade > valor) {
+                //ATUALIZAMOS O VALOR DE COMPRA DESTE PRODUTO, E TAMBÉM ATUALIZAMOS O VALOR DE VENDA
+                ps = conn.prepareStatement("UPDATE produtos SET "
+                        + "valor_compra = '"+valor_compra_unidade+"', "
+                        + "valor_venda_unidade = ((valor_compra * porcentagem_lucro) / 100) + valor_compra "
+                        + "WHERE id_produto = '"+id_produto+"'");
+                ps.executeUpdate();
+            }
+            
+            ps.close();
+            rs.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
 }

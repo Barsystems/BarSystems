@@ -5,11 +5,14 @@ import principal.Class_Consumir_Letras;
 import principal.Class_Troca_Virgula_Por_Ponto;
 import financeiro.Class_Despesas;
 import financeiro.Class_Receitas;
+import financeiro.Class_Setores_Financeiros;
+import formas_pagamento.Class_Formas_Pagto;
+import java.awt.Font;
 import usuarios.Class_Usuarios;
-import usuarios.Painel_Senha_Administrador;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.table.DefaultTableModel;
 
 public class Painel_Caixa extends javax.swing.JPanel {
@@ -491,7 +494,9 @@ public class Painel_Caixa extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Digite o valor do lançamento!", "Atenção", JOptionPane.WARNING_MESSAGE);
             txtValorNovoLancamento.grabFocus();
         } else {
+            Class_Formas_Pagto formas = new Class_Formas_Pagto();
             String forma = comboFormaNovoLancamento.getSelectedItem().toString();
+            int id_forma_pagamento = formas.retornaIdFormaPagamento(forma);
             //Adicionando a movimentação
             Class_Caixa caixa = new Class_Caixa();
             int id_caixa = caixa.getIdCaixa(id_centro_custo);
@@ -499,20 +504,27 @@ public class Painel_Caixa extends javax.swing.JPanel {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             String data = sdf.format(new Date());
             
-            caixa.registraMovimentacaoCaixa(id_caixa, txtDescricaoNovoLancamento.getText(), forma, 1, 
-                    txtValorNovoLancamento.getText(), comboTipoNovoLancamento.getSelectedItem().toString(), id_usuario, 
+            caixa.registraMovimentacaoCaixa(id_caixa, txtDescricaoNovoLancamento.getText(), id_forma_pagamento, 1, 
+                    Float.valueOf(txtValorNovoLancamento.getText()), comboTipoNovoLancamento.getSelectedItem().toString(), id_usuario, 
                     data);
             caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel(), id_caixa);
             
             int id_movimentacao_caixa = caixa.getIdUltimaMovimentacaoCaixa();
+            
+            Class_Setores_Financeiros setores = new Class_Setores_Financeiros();
+            int id_setor = 0;
             if (comboTipoNovoLancamento.getSelectedItem().toString().equals("Receita")) {
+                id_setor = setores.retornaIdSetorFinanceiro("Entrada no caixa");
+                
                 Class_Receitas receitas = new Class_Receitas();
-                receitas.cadastraReceita(txtDescricaoNovoLancamento.getText(), 0, "", "Entrada no caixa", forma, 
+                receitas.cadastraReceita(txtDescricaoNovoLancamento.getText(), 0, "", id_setor, forma, 
                         txtValorNovoLancamento.getText(), "0", "0", 1, id_movimentacao_caixa, 0, data, data, 1, 0);
             } else if (comboTipoNovoLancamento.getSelectedItem().equals("Despesa")) {
+                id_setor = setores.retornaIdSetorFinanceiro("Saída no caixa");
+                
                 Class_Despesas despesas = new Class_Despesas();
-                despesas.cadastraDespesa(0, txtDescricaoNovoLancamento.getText(), nome_usuario, "", 1, data, data, forma, 
-                        txtValorNovoLancamento.getText(), "0", "0", 0, 1, "Saída no caixa", id_usuario, 
+                despesas.cadastraDespesa(txtDescricaoNovoLancamento.getText(), nome_usuario, 1, data, data, forma, 
+                        txtValorNovoLancamento.getText(), "0", "0", 0, 1, id_setor, id_usuario, 
                         id_movimentacao_caixa, 0, 1, 0);
             }
             
@@ -550,7 +562,10 @@ public class Painel_Caixa extends javax.swing.JPanel {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                 String data_pagamento = sdf.format(new Date());
                 
-                caixa.registraMovimentacaoCaixa(id_caixa, "Abertura do caixa", "Dinheiro", 1, valor, "Abertura", id_usuario, 
+                Class_Formas_Pagto formas = new Class_Formas_Pagto();
+                int id_forma_pagamento = formas.retornaIdFormaPagamento("Dinheiro");
+                
+                caixa.registraMovimentacaoCaixa(id_caixa, "Abertura do caixa", id_forma_pagamento, 1, Float.valueOf(valor), "Abertura", id_usuario, 
                         data_pagamento);
                 caixa.carregaMovimentacoesCaixa((DefaultTableModel) tabelaMovimentacoesCaixa.getModel(), id_caixa);
                 
@@ -615,10 +630,10 @@ public class Painel_Caixa extends javax.swing.JPanel {
         } else {
             Class_Usuarios usuarios = new Class_Usuarios();
             if (!usuarios.getTipoUsuario(nome_usuario).equals("Administrador")) {
-                Painel_Senha_Administrador painel_senha = new Painel_Senha_Administrador();
-                painel_senha.txtSenha.grabFocus();
-                JOptionPane.showMessageDialog(null, new Object[]{painel_senha.lblSenha, painel_senha.txtSenha}, "Atenção", JOptionPane.PLAIN_MESSAGE);
-                String senha = painel_senha.txtSenha.getText();
+                JPasswordField pass = new JPasswordField();
+                pass.setFont(new Font("Arial", Font.PLAIN, 12));
+                JOptionPane.showMessageDialog(null, new Object[]{"Digite a senha do administrador", pass}, "Atenção", JOptionPane.PLAIN_MESSAGE);
+                String senha = pass.getText();
                 if (usuarios.verificaSenhaAdministrador(senha) == true) {
                     carregaCamposAlterarLancamento(linha);
                 } else {
@@ -694,10 +709,10 @@ public class Painel_Caixa extends javax.swing.JPanel {
             } else {
                 Class_Usuarios usuarios = new Class_Usuarios();
                 if (!usuarios.getTipoUsuario(nome_usuario).equals("Administrador")) {
-                    Painel_Senha_Administrador painel_senha = new Painel_Senha_Administrador();
-                    painel_senha.txtSenha.grabFocus();
-                    JOptionPane.showMessageDialog(null, new Object[]{painel_senha.lblSenha, painel_senha.txtSenha}, "Atenção", JOptionPane.PLAIN_MESSAGE);
-                    String senha = painel_senha.txtSenha.getText();
+                    JPasswordField pass = new JPasswordField();
+                    pass.setFont(new Font("Arial", Font.PLAIN, 12));
+                    JOptionPane.showMessageDialog(null, new Object[]{"Digite a senha do administrador", pass}, "Atenção", JOptionPane.PLAIN_MESSAGE);
+                    String senha = pass.getText();
                     if (usuarios.verificaSenhaAdministrador(senha) == true) {
                         excluiMovimentacao(linha);
                     } else {
@@ -721,10 +736,10 @@ public class Painel_Caixa extends javax.swing.JPanel {
         } else {
             Class_Usuarios usuarios = new Class_Usuarios();
             if (!usuarios.getTipoUsuario(nome_usuario).equals("Administrador")) {
-                Painel_Senha_Administrador painel_senha = new Painel_Senha_Administrador();
-                painel_senha.txtSenha.grabFocus();
-                JOptionPane.showMessageDialog(null, new Object[]{painel_senha.lblSenha, painel_senha.txtSenha}, "Atenção", JOptionPane.PLAIN_MESSAGE);
-                String senha = painel_senha.txtSenha.getText();
+                JPasswordField pass = new JPasswordField();
+                pass.setFont(new Font("Arial", Font.PLAIN, 12));
+                JOptionPane.showMessageDialog(null, new Object[]{"Digite a senha do administrador", pass}, "Atenção", JOptionPane.PLAIN_MESSAGE);
+                String senha = pass.getText();
                 if (usuarios.verificaSenhaAdministrador(senha) == true) {
                     desliquidarMovimentacao(linha);
                 } else {

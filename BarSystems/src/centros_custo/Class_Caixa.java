@@ -161,15 +161,8 @@ public class Class_Caixa {
         
     }
     
-    public void registraMovimentacaoCaixa(int id_caixa, String descricao, String forma_pagamento, 
-            int numero_parcelas, String valor, String tipo, int id_usuario, String data_pagamento) {
-        
-        Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
-        float Valor = troca.trocaVirgulaPorPonto(valor);
-        
-        Class_Formas_Pagto formas = new Class_Formas_Pagto();
-        int id_forma_pagamento = formas.retornaIdFormaPagamento(forma_pagamento);
-        
+    public void registraMovimentacaoCaixa(int id_caixa, String descricao, int id_forma_pagamento, 
+            int numero_parcelas, float valor, String tipo, int id_usuario, String data_pagamento) {        
         try 
         {
             String query = "insert into movimentacoes_caixa (id_caixa, descricao, id_forma_pagamento_fk, numero_parcelas,"
@@ -181,7 +174,7 @@ public class Class_Caixa {
             ps.setString(2, descricao);
             ps.setInt(3, id_forma_pagamento);
             ps.setInt(4, numero_parcelas);
-            ps.setFloat(5, Valor);
+            ps.setFloat(5, valor);
             ps.setString(6, tipo);
             ps.setString(7, data_pagamento);
             ps.setInt(8, id_usuario);

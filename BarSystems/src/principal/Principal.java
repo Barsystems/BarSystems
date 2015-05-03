@@ -631,7 +631,7 @@ public class Principal extends javax.swing.JFrame {
         }
         else
         {
-            Painel_Centros_Custo centros_custo = new Painel_Centros_Custo(this, painel_principal, this.id_usuario, this.nome_usuario);
+            Painel_Centros_Custo centros_custo = new Painel_Centros_Custo(painel_principal, this.id_usuario, this.nome_usuario);
             painel_principal.addTab("Centros de custo   ", new ImageIcon(getClass().getResource("/imagens/Caixa registradora 16px.png")), centros_custo, "Gerencie os seus recebimentos!");
             centros_custo.adicionaCentrosCusto();
             painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
@@ -641,11 +641,19 @@ public class Principal extends javax.swing.JFrame {
 
     private void menuItemComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemComprasActionPerformed
         
-        Painel_compra compra = new Painel_compra();
-        compra.refreshCombo_Fornecedor();
-        compra.refreshFormaPagamento();
-        painel_principal.add(compra);
-        compra.refreshTable();
+        Class_Verifica_Menu_Aberto verifica = new Class_Verifica_Menu_Aberto();
+        int index = verifica.verificaMenuAberto(painel_principal, "Compras   ");
+        if (index >= 0)
+        {
+            painel_principal.setSelectedIndex(index);
+        }
+        else
+        {
+            Painel_compra compra = new Painel_compra(painel_principal, this.id_usuario, this.nome_usuario);
+            painel_principal.addTab("Compras   ", new ImageIcon(getClass().getResource("/imagens/Comprar 16px.png")), compra, "Gerencie suas compras!");
+            compra.refreshTable();
+            painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+        }
         
     }//GEN-LAST:event_menuItemComprasActionPerformed
 

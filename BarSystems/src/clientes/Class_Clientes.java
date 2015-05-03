@@ -159,4 +159,51 @@ public class Class_Clientes {
         }
     }
     
+    public void editarCliente(String nome, String nascimento, String rg, String cpf, String telefone, String celular, 
+            String cep, String endereco, String bairro, String cidade, String estado, String pais, String observacoes, 
+            int id_cliente) {
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("UPDATE clientes SET "
+                    + "nome = '"+nome+"', "
+                    + "data_nascimento = '"+nascimento+"', "
+                    + "rg = '"+rg+"', "
+                    + "cpf = '"+cpf+"', "
+                    + "telefone = '"+telefone+"', "
+                    + "celular = '"+celular+"', "
+                    + "cep = '"+cep+"', "
+                    + "endereco = '"+endereco+"', "
+                    + "bairro = '"+bairro+"', "
+                    + "cidade = '"+cidade+"', "
+                    + "estado = '"+estado+"', "
+                    + "pais = '"+pais+"', "
+                    + "observacoes = '"+observacoes+"' "
+                    + "WHERE id_cliente = '"+id_cliente+"'");
+            ps.executeUpdate();
+            
+            ps.close();
+            conn.close();
+            
+            JOptionPane.showMessageDialog(null, "Cliente editado com sucesso!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void excluiCliente(int id_cliente) {
+        String sql = "UPDATE clientes SET excluido = 1 WHERE id_cliente = '"+id_cliente+"'";
+        try {
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.executeUpdate();
+            
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

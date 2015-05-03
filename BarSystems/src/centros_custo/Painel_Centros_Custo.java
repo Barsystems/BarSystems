@@ -12,7 +12,7 @@ public class Painel_Centros_Custo extends javax.swing.JPanel {
     String nome_usuario;
     protected ArrayList array = new ArrayList(), arrayNome = new ArrayList();
      
-    public Painel_Centros_Custo(Principal principal, JTabbedPane painel_principal, int id_usuario, String usuario) {
+    public Painel_Centros_Custo(JTabbedPane painel_principal, int id_usuario, String usuario) {
         initComponents();
         
         this.id_usuario = id_usuario;

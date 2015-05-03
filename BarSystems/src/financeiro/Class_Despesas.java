@@ -4,7 +4,6 @@ package financeiro;
 import principal.Class_Troca_Virgula_Por_Ponto;
 import conexao_banco.Class_Conexao_Banco;
 import formas_pagamento.Class_Formas_Pagto;
-import fornecedores.Class_Fornecedores;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,9 +20,9 @@ public class Class_Despesas {
         
     }
     
-    public void cadastraDespesa(int id_compra, String descricao, String responsavel, String fornecedor, int qnt_parcelas, 
+    public void cadastraDespesa(String descricao, String responsavel, int qnt_parcelas, 
             String data_pagamento, String data_vencimento, String forma_pagamento, String valor, String acrescimo, 
-            String desconto, int fixo, int variavel, String setor, int id_usuario, int id_movimentacao_caixa, 
+            String desconto, int fixo, int variavel, int id_setor, int id_usuario, int id_movimentacao_caixa, 
             int id_movimentacao_conta_bancaria, int liquidado, int agendado) {
         try {
             int dias = 30;
@@ -32,13 +31,7 @@ public class Class_Despesas {
                 dias = formas.retornaDiasCartao(forma_pagamento);
             }
             
-            Class_Fornecedores forn = new Class_Fornecedores();
-            int id_fornecedor = forn.retornaIdFornecedor(fornecedor);
-            
             int id_forma_pagamento = formas.retornaIdFormaPagamento(forma_pagamento);
-            
-            Class_Setores_Financeiros setores = new Class_Setores_Financeiros();
-            int id_setor = setores.retornaIdSetorFinanceiro(setor);
 
             Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
             float valorDespesa = troca.trocaVirgulaPorPonto(valor);
@@ -60,10 +53,10 @@ public class Class_Despesas {
                     + " id_setor_fk, id_usuario_fk, id_movimentacao_caixa_fk, id_movimentacao_conta_bancaria_fk) "
                     + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
             for (int i = 1; i <= qnt_parcelas; i++) {
-                ps.setInt(1, id_compra);
+                ps.setInt(1, 0);
                 ps.setString(2, descricao);
                 ps.setString(3, responsavel);
-                ps.setInt(4, id_fornecedor);
+                ps.setInt(4, 0);
                 ps.setInt(5, qnt_parcelas);
                 ps.setInt(6, i);
                 ps.setString(7, data_pagamento);
@@ -86,6 +79,54 @@ public class Class_Despesas {
                 data_vencimento = sdf.format(calendar.getTime());
                 data_pagamento = null;
             }
+
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Ocorreu um erro: " + e, "Atenção", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void cadastraDespesaParaCompra(int id_compra, String descricao, String responsavel, int id_fornecedor, int qnt_parcelas, 
+            int numero_parcela, String data_pagamento, String data_vencimento, int id_forma_pagamento, float valor_parcela, float acrescimo, 
+            float desconto, int fixo, int variavel, int id_setor, int id_usuario, int id_movimentacao_caixa, 
+            int id_movimentacao_conta_bancaria, int liquidado, int agendado) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+            Date data = sdf.parse(data_vencimento);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(data);
+
+            Class_Conexao_Banco banco = new Class_Conexao_Banco();
+            Connection conn = banco.getConexaoMySQL();
+            PreparedStatement ps = conn.prepareStatement("insert into despesas "
+                    + "(id_compra_fk, descricao, responsavel, id_fornecedor_fk, qnt_parcelas, numero_parcela, data_pagamento, "
+                    + "data_vencimento, id_forma_pagamento_fk, valor, acrescimo, desconto, fixo, variavel, liquidado, agendado,"
+                    + " id_setor_fk, id_usuario_fk, id_movimentacao_caixa_fk, id_movimentacao_conta_bancaria_fk) "
+                    + "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            ps.setInt(1, id_compra);
+            ps.setString(2, descricao);
+            ps.setString(3, responsavel);
+            ps.setInt(4, id_fornecedor);
+            ps.setInt(5, qnt_parcelas);
+            ps.setInt(6, numero_parcela);
+            ps.setString(7, data_pagamento);
+            ps.setString(8, data_vencimento);
+            ps.setInt(9, id_forma_pagamento);
+            ps.setFloat(10, valor_parcela);
+            ps.setFloat(11, acrescimo);
+            ps.setFloat(12, desconto);
+            ps.setInt(13, fixo);
+            ps.setInt(14, variavel);
+            ps.setInt(15, liquidado);
+            ps.setInt(16, agendado);
+            ps.setInt(17, id_setor);
+            ps.setInt(18, id_usuario);
+            ps.setInt(19, id_movimentacao_caixa);
+            ps.setInt(20, id_movimentacao_conta_bancaria);
+            ps.executeUpdate();
 
             ps.close();
             conn.close();

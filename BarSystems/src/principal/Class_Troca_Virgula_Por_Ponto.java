@@ -48,7 +48,6 @@ public class Class_Troca_Virgula_Por_Ponto {
                 }
                 contValidacao++;
             }
-            System.out.println(valorFinalValidado);
             Valor = Float.valueOf(valorFinalValidado);
         } else {
             Valor = Float.valueOf(valorfinal);

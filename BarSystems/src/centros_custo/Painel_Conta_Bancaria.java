@@ -4,13 +4,16 @@ package centros_custo;
 import principal.Class_Consumir_Letras;
 import financeiro.Class_Despesas;
 import financeiro.Class_Receitas;
+import financeiro.Class_Setores_Financeiros;
 import formas_pagamento.Class_Formas_Pagto;
+import java.awt.Font;
 import usuarios.Class_Usuarios;
-import usuarios.Painel_Senha_Administrador;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.table.DefaultTableModel;
+import principal.Class_Troca_Virgula_Por_Ponto;
 
 public class Painel_Conta_Bancaria extends javax.swing.JPanel {
 
@@ -504,10 +507,10 @@ public class Painel_Conta_Bancaria extends javax.swing.JPanel {
         } else {
             Class_Usuarios usuarios = new Class_Usuarios();
             if (!usuarios.getTipoUsuario(nome_usuario).equals("Administrador")) {
-                Painel_Senha_Administrador painel_senha = new Painel_Senha_Administrador();
-                painel_senha.txtSenha.grabFocus();
-                JOptionPane.showMessageDialog(null, new Object[]{painel_senha.lblSenha, painel_senha.txtSenha}, "Atenção", JOptionPane.PLAIN_MESSAGE);
-                String senha = painel_senha.txtSenha.getText();
+                JPasswordField pass = new JPasswordField();
+                pass.setFont(new Font("Arial", Font.PLAIN, 12));
+                JOptionPane.showMessageDialog(null, new Object[]{"Digite a senha do administrador", pass}, "Atenção", JOptionPane.PLAIN_MESSAGE);
+                String senha = pass.getText();
                 if (usuarios.verificaSenhaAdministrador(senha) == true) {
                     carregaCamposAlterarLancamento(linha);
                 } else {
@@ -528,10 +531,10 @@ public class Painel_Conta_Bancaria extends javax.swing.JPanel {
         } else {
             Class_Usuarios usuarios = new Class_Usuarios();
             if (!usuarios.getTipoUsuario(nome_usuario).equals("Administrador")) {
-                Painel_Senha_Administrador painel_senha = new Painel_Senha_Administrador();
-                painel_senha.txtSenha.grabFocus();
-                JOptionPane.showMessageDialog(null, new Object[]{painel_senha.lblSenha, painel_senha.txtSenha}, "Atenção", JOptionPane.PLAIN_MESSAGE);
-                String senha = painel_senha.txtSenha.getText();
+                JPasswordField pass = new JPasswordField();
+                pass.setFont(new Font("Arial", Font.PLAIN, 12));
+                JOptionPane.showMessageDialog(null, new Object[]{"Digite a senha do administrador", pass}, "Atenção", JOptionPane.PLAIN_MESSAGE);
+                String senha = pass.getText();
                 if (usuarios.verificaSenhaAdministrador(senha) == true) {
                     excluiMovimentacao(linha);
                 } else {
@@ -562,26 +565,38 @@ public class Painel_Conta_Bancaria extends javax.swing.JPanel {
             txtValorNovoLancamento.grabFocus();
         } else {
             String forma = comboFormaNovoLancamento.getSelectedItem().toString();
+            Class_Formas_Pagto formas = new Class_Formas_Pagto();
+            int id_forma_pagamento = formas.retornaIdFormaPagamento(forma);
+            
             //Adicionando a movimentação
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             String data = sdf.format(new Date());
+            
+            Class_Troca_Virgula_Por_Ponto troca = new Class_Troca_Virgula_Por_Ponto();
+            float valor_lancamento = troca.trocaVirgulaPorPonto(txtValorNovoLancamento.getText());
 
             Class_Conta_Bancaria conta = new Class_Conta_Bancaria();
-            conta.registraMovimentacaoContaBancaria(id_centro_custo, txtDescricaoNovoLancamento.getText(), forma, 1,
-                txtValorNovoLancamento.getText(), comboTipoNovoLancamento.getSelectedItem().toString(), id_usuario,
-                data);
+            conta.registraMovimentacaoContaBancaria(id_centro_custo, txtDescricaoNovoLancamento.getText(), id_forma_pagamento, 1,
+                valor_lancamento, comboTipoNovoLancamento.getSelectedItem().toString(), id_usuario, data);
             conta.carregaMovimentacoesContaBancaria((DefaultTableModel) tabelaMovimentacoesContaBancaria.getModel(), 
                     id_centro_custo, dataPesquisa1.getDate(), dataPesquisa2.getDate());
 
             int id_movimentacao_conta_bancaria = conta.getIdUltimaMovimentacaoContaBancaria();
+            
+            Class_Setores_Financeiros setores = new Class_Setores_Financeiros();
+            int id_setor = 0;
             if (comboTipoNovoLancamento.getSelectedItem().toString().equals("Receita")) {
+                id_setor = setores.retornaIdSetorFinanceiro("Entrada na conta bancária");
+                
                 Class_Receitas receitas = new Class_Receitas();
-                receitas.cadastraReceita(txtDescricaoNovoLancamento.getText(), 0, "", "Entrada na conta bancária", forma,
+                receitas.cadastraReceita(txtDescricaoNovoLancamento.getText(), 0, "", id_setor, forma,
                     txtValorNovoLancamento.getText(), "0", "0", 1, 0, id_movimentacao_conta_bancaria, data, data, 1, 0);
             } else if (comboTipoNovoLancamento.getSelectedItem().equals("Despesa")) {
+                id_setor = setores.retornaIdSetorFinanceiro("Saída na conta bancária");
+                
                 Class_Despesas despesas = new Class_Despesas();
-                despesas.cadastraDespesa(0, txtDescricaoNovoLancamento.getText(), nome_usuario, "", 1, data, data, forma,
-                    txtValorNovoLancamento.getText(), "0", "0", 0, 1, "Saída na conta bancária", id_usuario, 0,
+                despesas.cadastraDespesa(txtDescricaoNovoLancamento.getText(), nome_usuario, 1, data, data, forma,
+                    txtValorNovoLancamento.getText(), "0", "0", 0, 1, id_setor, id_usuario, 0,
                     id_movimentacao_conta_bancaria, 1, 0);
             }
 
@@ -687,10 +702,10 @@ public class Painel_Conta_Bancaria extends javax.swing.JPanel {
         } else {
             Class_Usuarios usuarios = new Class_Usuarios();
             if (!usuarios.getTipoUsuario(nome_usuario).equals("Administrador")) {
-                Painel_Senha_Administrador painel_senha = new Painel_Senha_Administrador();
-                painel_senha.txtSenha.grabFocus();
-                JOptionPane.showMessageDialog(null, new Object[]{painel_senha.lblSenha, painel_senha.txtSenha}, "Atenção", JOptionPane.PLAIN_MESSAGE);
-                String senha = painel_senha.txtSenha.getText();
+                JPasswordField pass = new JPasswordField();
+                pass.setFont(new Font("Arial", Font.PLAIN, 12));
+                JOptionPane.showMessageDialog(null, new Object[]{"Digite a senha do administrador", pass}, "Atenção", JOptionPane.PLAIN_MESSAGE);
+                String senha = pass.getText();
                 if (usuarios.verificaSenhaAdministrador(senha) == true) {
                     desliquidarMovimentacao(linha);
                 } else {
