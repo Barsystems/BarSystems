@@ -272,6 +272,8 @@ public class Class_Centros_Custo {
             if (painel_centros_custo.getTabCount() > 0) {
                 Painel_Agendamentos agendamentos = new Painel_Agendamentos(id_usuario, nome_usuario);
                 painel_centros_custo.addTab("Agendamentos   ", new ImageIcon(getClass().getResource("/imagens/Agendamentos 16px.png")), agendamentos, "Verifique e liquide os agendamentos feitos pelo administrador!");
+                array.add(agendamentos);
+                arrayNome.add("Agendamentos");
             }
             
             rs.close();
@@ -308,7 +310,7 @@ public class Class_Centros_Custo {
     }
     
     public String retornaTipoCentroCusto(String nome) {
-        String tipo = null;
+        String tipo = "";
         try {
             Class_Conexao_Banco banco = new Class_Conexao_Banco();
             Connection con = banco.getConexaoMySQL();

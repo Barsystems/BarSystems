@@ -1,7 +1,11 @@
 
 package principal;
 
+import centros_custo.Class_Centros_Custo;
+import centros_custo.Painel_Agendamentos;
+import centros_custo.Painel_Caixa;
 import centros_custo.Painel_Centros_Custo;
+import centros_custo.Painel_Conta_Bancaria;
 import centros_custo.Painel_Gerenciar_Centros_Custo;
 import clientes.Painel_Clientes;
 import compras.Painel_compra;
@@ -10,7 +14,6 @@ import estoque.Painel_estoque;
 import financeiro.Painel_Categorias_Financeiras;
 import financeiro.Painel_Financeiro;
 import fornecedores.Painel_Fornecedores;
-import funcionarios.Painel_Funcionarios;
 import funcionarios.Painel_Funcionarios;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -24,6 +27,8 @@ public class Principal extends javax.swing.JFrame {
 
     protected String nome_usuario;
     protected int id_usuario;
+    
+    Painel_Centros_Custo centros_custo;
     
     public Principal() {
         initComponents();
@@ -139,6 +144,11 @@ public class Principal extends javax.swing.JFrame {
         });
 
         painel_principal.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        painel_principal.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                painel_principalStateChanged(evt);
+            }
+        });
 
         jMenuBar1.setToolTipText("");
 
@@ -648,10 +658,11 @@ public class Principal extends javax.swing.JFrame {
         if (index >= 0)
         {
             painel_principal.setSelectedIndex(index);
+            centros_custo.adicionaCentrosCusto();
         }
         else
         {
-            Painel_Centros_Custo centros_custo = new Painel_Centros_Custo(painel_principal, this.id_usuario, this.nome_usuario);
+            centros_custo = new Painel_Centros_Custo(painel_principal, this.id_usuario, this.nome_usuario);
             painel_principal.addTab("Centros de custo   ", new ImageIcon(getClass().getResource("/imagens/Notas 16px.png")), centros_custo, "Gerencie os seus recebimentos!");
             centros_custo.adicionaCentrosCusto();
             painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
@@ -765,6 +776,14 @@ public class Principal extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_menuItemCadastroFuncionariosActionPerformed
+
+    private void painel_principalStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_painel_principalStateChanged
+        
+        if (painel_principal.getSelectedIndex() == 0) {
+            menuItemCentrosCustoActionPerformed(null);
+        }
+        
+    }//GEN-LAST:event_painel_principalStateChanged
 
     /**
      * @param args the command line arguments
