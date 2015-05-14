@@ -411,8 +411,8 @@ public class Painel_Caixa extends javax.swing.JPanel {
             tabelaMovimentacoesCaixa.getColumnModel().getColumn(0).setPreferredWidth(280);
             tabelaMovimentacoesCaixa.getColumnModel().getColumn(1).setPreferredWidth(180);
             tabelaMovimentacoesCaixa.getColumnModel().getColumn(2).setPreferredWidth(70);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(3).setPreferredWidth(60);
-            tabelaMovimentacoesCaixa.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(3).setPreferredWidth(70);
+            tabelaMovimentacoesCaixa.getColumnModel().getColumn(4).setPreferredWidth(90);
             tabelaMovimentacoesCaixa.getColumnModel().getColumn(5).setPreferredWidth(90);
             tabelaMovimentacoesCaixa.getColumnModel().getColumn(6).setPreferredWidth(20);
         }

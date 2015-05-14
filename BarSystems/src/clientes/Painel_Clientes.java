@@ -942,7 +942,6 @@ public class Painel_Clientes extends javax.swing.JPanel {
         } else {
             txtNascimentoEditar.setValue(null);
             txtCPFEditar.setValue(null);
-            txtCEPEditar.setValue(null);
             
             txtNomeEditar.setText(txtNome.getText());
             txtNascimentoEditar.setText(txtNascimento.getText());
@@ -977,16 +976,16 @@ public class Painel_Clientes extends javax.swing.JPanel {
 
     private void txtEstadoEditarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoEditarKeyReleased
         
-        int index = txtEstadoCadastrar.getCaretPosition();
-        txtEstadoCadastrar.setText(txtEstadoCadastrar.getText().toUpperCase());
-        txtEstadoCadastrar.setCaretPosition(index);    
+        int index = txtEstadoEditar.getCaretPosition();
+        txtEstadoEditar.setText(txtEstadoEditar.getText().toUpperCase());
+        txtEstadoEditar.setCaretPosition(index);    
         
     }//GEN-LAST:event_txtEstadoEditarKeyReleased
 
     private void txtEstadoEditarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEstadoEditarKeyTyped
         
         Class_Consumir_Letras cons = new Class_Consumir_Letras();
-        cons.consomeQntDeCaracteres(txtEstadoCadastrar, 1, evt);
+        cons.consomeQntDeCaracteres(txtEstadoEditar, 1, evt);
         cons.consome("qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNMçÇ", evt);
         
     }//GEN-LAST:event_txtEstadoEditarKeyTyped

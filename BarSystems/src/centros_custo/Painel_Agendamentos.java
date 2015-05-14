@@ -227,7 +227,7 @@ public class Painel_Agendamentos extends javax.swing.JPanel {
 
         comboCentroCusto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         liquidar_lancamentos.getContentPane().add(comboCentroCusto);
-        comboCentroCusto.setBounds(230, 360, 340, 30);
+        comboCentroCusto.setBounds(240, 360, 330, 30);
 
         btnLiquidarDefinitivo.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         btnLiquidarDefinitivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Salvar 16px.png"))); // NOI18N

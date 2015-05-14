@@ -52,6 +52,15 @@ public class Painel_compra extends javax.swing.JPanel {
         for (int i = 0; i < tabelaProdutosCompradosNovaCompra.getRowCount(); i++) {
             total = troca.trocaVirgulaPorPonto(modelo.getValueAt(i,3).toString().replace("R$ ", "")) + total;      
         }
+        
+        //verifico se tem frete
+        float frete = 0;
+        if (!txtValorFreteNovaCompra.getText().isEmpty()) {
+            frete = troca.trocaVirgulaPorPonto(txtValorFreteNovaCompra.getText());
+        }
+        
+        total = total + frete;
+        
         NumberFormat n = NumberFormat.getCurrencyInstance();
         lbl_total_compra.setText(n.format(total)); 
     }
@@ -207,6 +216,8 @@ public class Painel_compra extends javax.swing.JPanel {
         comboProdutoNovaCompra = new javax.swing.JComboBox();
         jLabel29 = new javax.swing.JLabel();
         txtResponsavelNovaCompra = new javax.swing.JTextField();
+        jLabel31 = new javax.swing.JLabel();
+        txtValorFreteNovaCompra = new javax.swing.JTextField();
         formas_pagamento = new javax.swing.JDialog();
         lbl_total_parcelas = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -496,7 +507,24 @@ public class Painel_compra extends javax.swing.JPanel {
 
         txtResponsavelNovaCompra.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         nova_compra.getContentPane().add(txtResponsavelNovaCompra);
-        txtResponsavelNovaCompra.setBounds(190, 210, 670, 30);
+        txtResponsavelNovaCompra.setBounds(190, 210, 440, 30);
+
+        jLabel31.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel31.setText("Valor do frete");
+        nova_compra.getContentPane().add(jLabel31);
+        jLabel31.setBounds(660, 220, 100, 17);
+
+        txtValorFreteNovaCompra.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        txtValorFreteNovaCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtValorFreteNovaCompraKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtValorFreteNovaCompraKeyTyped(evt);
+            }
+        });
+        nova_compra.getContentPane().add(txtValorFreteNovaCompra);
+        txtValorFreteNovaCompra.setBounds(769, 210, 90, 30);
 
         formas_pagamento.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         formas_pagamento.setTitle("Defina a forma de pagamento");
@@ -1282,6 +1310,20 @@ public class Painel_compra extends javax.swing.JPanel {
         
     }//GEN-LAST:event_tabelaParcelasPropertyChange
 
+    private void txtValorFreteNovaCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorFreteNovaCompraKeyTyped
+        
+        Class_Consumir_Letras cons = new Class_Consumir_Letras();
+        cons.consome("1234567890,.", evt);
+        
+    }//GEN-LAST:event_txtValorFreteNovaCompraKeyTyped
+
+    private void txtValorFreteNovaCompraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtValorFreteNovaCompraKeyReleased
+        
+        DefaultTableModel modelo = (DefaultTableModel) tabelaProdutosCompradosNovaCompra.getModel();
+        refreshTotalCompra(modelo);
+        
+    }//GEN-LAST:event_txtValorFreteNovaCompraKeyReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddProdutosCompra;
@@ -1328,6 +1370,7 @@ public class Painel_compra extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1357,6 +1400,7 @@ public class Painel_compra extends javax.swing.JPanel {
     private javax.swing.JTextField txtQuantidadeNovaCompra;
     private javax.swing.JTextField txtResponsavelNovaCompra;
     private javax.swing.JButton txtSalvarNovaCompra;
+    private javax.swing.JTextField txtValorFreteNovaCompra;
     private javax.swing.JTextField txtValorUnitarioNovaCompra;
     private javax.swing.JButton txtVoltarNovaCompra;
     private javax.swing.JTextField valor_total_compra;

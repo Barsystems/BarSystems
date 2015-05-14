@@ -393,8 +393,8 @@ public class Painel_Conta_Bancaria extends javax.swing.JPanel {
             tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(0).setPreferredWidth(280);
             tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(1).setPreferredWidth(180);
             tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(2).setPreferredWidth(70);
-            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(3).setPreferredWidth(60);
-            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(4).setPreferredWidth(100);
+            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(3).setPreferredWidth(70);
+            tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(4).setPreferredWidth(90);
             tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(5).setPreferredWidth(90);
             tabelaMovimentacoesContaBancaria.getColumnModel().getColumn(6).setPreferredWidth(20);
         }

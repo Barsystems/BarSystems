@@ -21,9 +21,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Configura&#xe7;&#xf5;es 16px.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Configura&#xe7;&#xf5;es do sistema"/>
                 <Property name="toolTipText" type="java.lang.String" value="Alterar as configura&#xe7;&#xf5;es do sistema"/>
               </Properties>
@@ -48,9 +45,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Usuario 16px.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Usu&#xe1;rios"/>
                 <Property name="toolTipText" type="java.lang.String" value="Cadastrar usu&#xe1;rios"/>
               </Properties>
@@ -58,13 +52,21 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCadastroUsuariosActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuItemCadastroProdutos">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemCadastroFuncionarios">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Produtos 16px.png"/>
+                <Property name="text" type="java.lang.String" value="Funcion&#xe1;rios"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCadastroFuncionariosActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemCadastroProdutos">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="14" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Produtos"/>
                 <Property name="toolTipText" type="java.lang.String" value="Cadastrar produtos"/>
@@ -73,13 +75,18 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCadastroProdutosActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuItemCadastroFornecedores">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemCadastroCentrosEstoque">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Fornecedor 16px.png"/>
+                <Property name="text" type="java.lang.String" value="Centros de estoque"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemCadastroFornecedores">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="14" style="0"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Fornecedores"/>
                 <Property name="toolTipText" type="java.lang.String" value="Cadastrar fornecedores"/>
@@ -88,28 +95,10 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCadastroFornecedoresActionPerformed"/>
               </Events>
             </MenuItem>
-            <MenuItem class="javax.swing.JMenuItem" name="menuItemCadastroMesas">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Arial" size="14" style="0"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Mesa 16px.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Mesas"/>
-                <Property name="toolTipText" type="java.lang.String" value="Cadastrar mesas"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCadastroMesasActionPerformed"/>
-              </Events>
-            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemCadastroClientes">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Cliente 16px.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Clientes"/>
                 <Property name="toolTipText" type="java.lang.String" value="Cadastrar clientes"/>
@@ -123,10 +112,37 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Empres&#xe1;rio 16px.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Empresas"/>
+              </Properties>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemCadastroCentrosCusto">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="14" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Centros de custo"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCadastroCentrosCustoActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemCadastroCategoriasFinanceiras">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="14" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Categorias financeiras"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCadastroCategoriasFinanceirasActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemCadastroMaquinasCartoes">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="14" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="M&#xe1;quinas de cart&#xf5;es"/>
               </Properties>
             </MenuItem>
           </SubComponents>
@@ -140,28 +156,22 @@
             </Property>
           </Properties>
           <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="menuItemCentrosEstoque">
+            <MenuItem class="javax.swing.JMenuItem" name="menuItemGerenciarCentrosEstoque">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Centro de estoque 16px.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Centros de estoque"/>
+                <Property name="text" type="java.lang.String" value="Gerenciar centros de estoque"/>
                 <Property name="toolTipText" type="java.lang.String" value="Cadastrar e controlar centros de estoque"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemCentrosEstoqueActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemGerenciarCentrosEstoqueActionPerformed"/>
               </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="menuItemCompras">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Comprar 16px.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Compras"/>
                 <Property name="toolTipText" type="java.lang.String" value="Realizar uma compra"/>
@@ -174,7 +184,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Bar"/>
+            <Property name="text" type="java.lang.String" value="Venda"/>
             <Property name="toolTipText" type="java.lang.String" value="Fa&#xe7;a suas vendas"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Arial" size="14" style="0"/>
@@ -189,10 +199,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Bandeja 16px.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Venda"/>
+                <Property name="text" type="java.lang.String" value="Ordem de servi&#xe7;o"/>
                 <Property name="toolTipText" type="java.lang.String" value="Realizar uma venda"/>
               </Properties>
               <Events>
@@ -483,10 +490,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Caixa registradora 16px.png"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Centros de custo"/>
+                <Property name="text" type="java.lang.String" value="Gerenciar centros de custo"/>
                 <Property name="toolTipText" type="java.lang.String" value="Gerenciar caixa"/>
               </Properties>
               <Events>
@@ -498,14 +502,19 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/S&#xed;mbolo de dinheiro 16px.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Sistema financeiro"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="menuItemSistemaFinanceiroActionPerformed"/>
               </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem29">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Arial" size="14" style="0"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="An&#xe1;lise de receitas e despesas"/>
+              </Properties>
             </MenuItem>
           </SubComponents>
         </Menu>
@@ -522,9 +531,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Ajuda 16px.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Ajuda"/>
               </Properties>
             </MenuItem>
@@ -532,9 +538,6 @@
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Informa&#xe7;&#xe3;o 16px.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sobre a empresa"/>
               </Properties>
@@ -555,9 +558,6 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
                 </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Trocar usu&#xe1;rio 16px.png"/>
-                </Property>
                 <Property name="text" type="java.lang.String" value="Trocar de usu&#xe1;rio"/>
                 <Property name="toolTipText" type="java.lang.String" value="Abre a tela de login para escolher um usu&#xe1;rio"/>
               </Properties>
@@ -569,9 +569,6 @@
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="14" style="0"/>
-                </Property>
-                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/imagens/Sair 16px.png"/>
                 </Property>
                 <Property name="text" type="java.lang.String" value="Sair"/>
                 <Property name="toolTipText" type="java.lang.String" value="Sair do sistema"/>

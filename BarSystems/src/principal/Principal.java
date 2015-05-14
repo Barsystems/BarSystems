@@ -2,20 +2,23 @@
 package principal;
 
 import centros_custo.Painel_Centros_Custo;
+import centros_custo.Painel_Gerenciar_Centros_Custo;
 import clientes.Painel_Clientes;
 import compras.Painel_compra;
 import configuracoes.Painel_Configuracoes;
 import estoque.Painel_estoque;
+import financeiro.Painel_Categorias_Financeiras;
 import financeiro.Painel_Financeiro;
 import fornecedores.Painel_Fornecedores;
+import funcionarios.Painel_Funcionarios;
+import funcionarios.Painel_Funcionarios;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import login.Frm_Login;
-import mesas.Painel_Mesas;
+import ordem_servico.Painel_Ordem_Servico;
 import produtos.Painel_Produtos;
 import usuarios.Class_Usuarios;
 import usuarios.Painel_Usuarios;
-import venda.Painel_Venda;
 
 public class Principal extends javax.swing.JFrame {
 
@@ -43,11 +46,10 @@ public class Principal extends javax.swing.JFrame {
         if (!usuarios.getTipoUsuario(nome_usuario).equals("Administrador")) {
             
             //permissões de menus
-            menuConfiguracoes.setVisible(false);
+            menuCadastros.setVisible(false);
             menuFinanceiro.setVisible(false);
 
             //permissões de itens de menus
-            menuItemCadastroUsuarios.setVisible(false);
             menuRelatoriosAuditoria.setVisible(false);
             menuRelatoriosUsuarios.setVisible(false);
             menuRelatoriosVendas.setVisible(false);
@@ -70,13 +72,17 @@ public class Principal extends javax.swing.JFrame {
         menuItemConfiguracoesSistema = new javax.swing.JMenuItem();
         menuCadastros = new javax.swing.JMenu();
         menuItemCadastroUsuarios = new javax.swing.JMenuItem();
+        menuItemCadastroFuncionarios = new javax.swing.JMenuItem();
         menuItemCadastroProdutos = new javax.swing.JMenuItem();
+        menuItemCadastroCentrosEstoque = new javax.swing.JMenuItem();
         menuItemCadastroFornecedores = new javax.swing.JMenuItem();
-        menuItemCadastroMesas = new javax.swing.JMenuItem();
         menuItemCadastroClientes = new javax.swing.JMenuItem();
         menuItemCadastroEmpresas = new javax.swing.JMenuItem();
+        menuItemCadastroCentrosCusto = new javax.swing.JMenuItem();
+        menuItemCadastroCategoriasFinanceiras = new javax.swing.JMenuItem();
+        menuItemCadastroMaquinasCartoes = new javax.swing.JMenuItem();
         menuEstoque = new javax.swing.JMenu();
-        menuItemCentrosEstoque = new javax.swing.JMenuItem();
+        menuItemGerenciarCentrosEstoque = new javax.swing.JMenuItem();
         menuItemCompras = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         menuItemVenda = new javax.swing.JMenuItem();
@@ -114,6 +120,7 @@ public class Principal extends javax.swing.JFrame {
         menuFinanceiro = new javax.swing.JMenu();
         menuItemCentrosCusto = new javax.swing.JMenuItem();
         menuItemSistemaFinanceiro = new javax.swing.JMenuItem();
+        jMenuItem29 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem25 = new javax.swing.JMenuItem();
@@ -140,7 +147,6 @@ public class Principal extends javax.swing.JFrame {
         menuConfiguracoes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         menuItemConfiguracoesSistema.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemConfiguracoesSistema.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Configurações 16px.png"))); // NOI18N
         menuItemConfiguracoesSistema.setText("Configurações do sistema");
         menuItemConfiguracoesSistema.setToolTipText("Alterar as configurações do sistema");
         menuItemConfiguracoesSistema.addActionListener(new java.awt.event.ActionListener() {
@@ -158,7 +164,6 @@ public class Principal extends javax.swing.JFrame {
         menuCadastros.setName("menu_Produto"); // NOI18N
 
         menuItemCadastroUsuarios.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemCadastroUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Usuario 16px.png"))); // NOI18N
         menuItemCadastroUsuarios.setText("Usuários");
         menuItemCadastroUsuarios.setToolTipText("Cadastrar usuários");
         menuItemCadastroUsuarios.addActionListener(new java.awt.event.ActionListener() {
@@ -168,8 +173,16 @@ public class Principal extends javax.swing.JFrame {
         });
         menuCadastros.add(menuItemCadastroUsuarios);
 
+        menuItemCadastroFuncionarios.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCadastroFuncionarios.setText("Funcionários");
+        menuItemCadastroFuncionarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCadastroFuncionariosActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(menuItemCadastroFuncionarios);
+
         menuItemCadastroProdutos.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemCadastroProdutos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Produtos 16px.png"))); // NOI18N
         menuItemCadastroProdutos.setText("Produtos");
         menuItemCadastroProdutos.setToolTipText("Cadastrar produtos");
         menuItemCadastroProdutos.addActionListener(new java.awt.event.ActionListener() {
@@ -179,8 +192,11 @@ public class Principal extends javax.swing.JFrame {
         });
         menuCadastros.add(menuItemCadastroProdutos);
 
+        menuItemCadastroCentrosEstoque.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCadastroCentrosEstoque.setText("Centros de estoque");
+        menuCadastros.add(menuItemCadastroCentrosEstoque);
+
         menuItemCadastroFornecedores.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemCadastroFornecedores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Fornecedor 16px.png"))); // NOI18N
         menuItemCadastroFornecedores.setText("Fornecedores");
         menuItemCadastroFornecedores.setToolTipText("Cadastrar fornecedores");
         menuItemCadastroFornecedores.addActionListener(new java.awt.event.ActionListener() {
@@ -190,19 +206,7 @@ public class Principal extends javax.swing.JFrame {
         });
         menuCadastros.add(menuItemCadastroFornecedores);
 
-        menuItemCadastroMesas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemCadastroMesas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Mesa 16px.png"))); // NOI18N
-        menuItemCadastroMesas.setText("Mesas");
-        menuItemCadastroMesas.setToolTipText("Cadastrar mesas");
-        menuItemCadastroMesas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemCadastroMesasActionPerformed(evt);
-            }
-        });
-        menuCadastros.add(menuItemCadastroMesas);
-
         menuItemCadastroClientes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemCadastroClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Cliente 16px.png"))); // NOI18N
         menuItemCadastroClientes.setText("Clientes");
         menuItemCadastroClientes.setToolTipText("Cadastrar clientes");
         menuItemCadastroClientes.addActionListener(new java.awt.event.ActionListener() {
@@ -213,9 +217,30 @@ public class Principal extends javax.swing.JFrame {
         menuCadastros.add(menuItemCadastroClientes);
 
         menuItemCadastroEmpresas.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemCadastroEmpresas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Empresário 16px.png"))); // NOI18N
         menuItemCadastroEmpresas.setText("Empresas");
         menuCadastros.add(menuItemCadastroEmpresas);
+
+        menuItemCadastroCentrosCusto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCadastroCentrosCusto.setText("Centros de custo");
+        menuItemCadastroCentrosCusto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCadastroCentrosCustoActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(menuItemCadastroCentrosCusto);
+
+        menuItemCadastroCategoriasFinanceiras.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCadastroCategoriasFinanceiras.setText("Categorias financeiras");
+        menuItemCadastroCategoriasFinanceiras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemCadastroCategoriasFinanceirasActionPerformed(evt);
+            }
+        });
+        menuCadastros.add(menuItemCadastroCategoriasFinanceiras);
+
+        menuItemCadastroMaquinasCartoes.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemCadastroMaquinasCartoes.setText("Máquinas de cartões");
+        menuCadastros.add(menuItemCadastroMaquinasCartoes);
 
         jMenuBar1.add(menuCadastros);
 
@@ -223,19 +248,17 @@ public class Principal extends javax.swing.JFrame {
         menuEstoque.setToolTipText("Manipule seu estoque e faça compras");
         menuEstoque.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
-        menuItemCentrosEstoque.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemCentrosEstoque.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Centro de estoque 16px.png"))); // NOI18N
-        menuItemCentrosEstoque.setText("Centros de estoque");
-        menuItemCentrosEstoque.setToolTipText("Cadastrar e controlar centros de estoque");
-        menuItemCentrosEstoque.addActionListener(new java.awt.event.ActionListener() {
+        menuItemGerenciarCentrosEstoque.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        menuItemGerenciarCentrosEstoque.setText("Gerenciar centros de estoque");
+        menuItemGerenciarCentrosEstoque.setToolTipText("Cadastrar e controlar centros de estoque");
+        menuItemGerenciarCentrosEstoque.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menuItemCentrosEstoqueActionPerformed(evt);
+                menuItemGerenciarCentrosEstoqueActionPerformed(evt);
             }
         });
-        menuEstoque.add(menuItemCentrosEstoque);
+        menuEstoque.add(menuItemGerenciarCentrosEstoque);
 
         menuItemCompras.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemCompras.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Comprar 16px.png"))); // NOI18N
         menuItemCompras.setText("Compras");
         menuItemCompras.setToolTipText("Realizar uma compra");
         menuItemCompras.addActionListener(new java.awt.event.ActionListener() {
@@ -247,14 +270,13 @@ public class Principal extends javax.swing.JFrame {
 
         jMenuBar1.add(menuEstoque);
 
-        jMenu4.setText("Bar");
+        jMenu4.setText("Venda");
         jMenu4.setToolTipText("Faça suas vendas");
         jMenu4.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         menuItemVenda.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F2, 0));
         menuItemVenda.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemVenda.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Bandeja 16px.png"))); // NOI18N
-        menuItemVenda.setText("Venda");
+        menuItemVenda.setText("Ordem de serviço");
         menuItemVenda.setToolTipText("Realizar uma venda");
         menuItemVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -404,8 +426,7 @@ public class Principal extends javax.swing.JFrame {
 
         menuItemCentrosCusto.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F1, 0));
         menuItemCentrosCusto.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemCentrosCusto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Caixa registradora 16px.png"))); // NOI18N
-        menuItemCentrosCusto.setText("Centros de custo");
+        menuItemCentrosCusto.setText("Gerenciar centros de custo");
         menuItemCentrosCusto.setToolTipText("Gerenciar caixa");
         menuItemCentrosCusto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -415,7 +436,6 @@ public class Principal extends javax.swing.JFrame {
         menuFinanceiro.add(menuItemCentrosCusto);
 
         menuItemSistemaFinanceiro.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemSistemaFinanceiro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Símbolo de dinheiro 16px.png"))); // NOI18N
         menuItemSistemaFinanceiro.setText("Sistema financeiro");
         menuItemSistemaFinanceiro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -424,18 +444,20 @@ public class Principal extends javax.swing.JFrame {
         });
         menuFinanceiro.add(menuItemSistemaFinanceiro);
 
+        jMenuItem29.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jMenuItem29.setText("Análise de receitas e despesas");
+        menuFinanceiro.add(jMenuItem29);
+
         jMenuBar1.add(menuFinanceiro);
 
         jMenu1.setText("Utilidades");
         jMenu1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         jMenuItem1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenuItem1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Ajuda 16px.png"))); // NOI18N
         jMenuItem1.setText("Ajuda");
         jMenu1.add(jMenuItem1);
 
         jMenuItem25.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jMenuItem25.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Informação 16px.png"))); // NOI18N
         jMenuItem25.setText("Sobre a empresa");
         jMenu1.add(jMenuItem25);
 
@@ -446,7 +468,6 @@ public class Principal extends javax.swing.JFrame {
         menuSistema.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
 
         menuItemTrocarUsuario.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemTrocarUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Trocar usuário 16px.png"))); // NOI18N
         menuItemTrocarUsuario.setText("Trocar de usuário");
         menuItemTrocarUsuario.setToolTipText("Abre a tela de login para escolher um usuário");
         menuItemTrocarUsuario.addActionListener(new java.awt.event.ActionListener() {
@@ -457,7 +478,6 @@ public class Principal extends javax.swing.JFrame {
         menuSistema.add(menuItemTrocarUsuario);
 
         menuItemSair.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        menuItemSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Sair 16px.png"))); // NOI18N
         menuItemSair.setText("Sair");
         menuItemSair.setToolTipText("Sair do sistema");
         menuItemSair.addActionListener(new java.awt.event.ActionListener() {
@@ -556,7 +576,7 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_menuItemSairActionPerformed
 
-    private void menuItemCentrosEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCentrosEstoqueActionPerformed
+    private void menuItemGerenciarCentrosEstoqueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemGerenciarCentrosEstoqueActionPerformed
         
         Class_Verifica_Menu_Aberto verifica = new Class_Verifica_Menu_Aberto();
         int index = verifica.verificaMenuAberto(painel_principal, "Centros de estoque   ");
@@ -572,7 +592,7 @@ public class Principal extends javax.swing.JFrame {
             painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
         }
         
-    }//GEN-LAST:event_menuItemCentrosEstoqueActionPerformed
+    }//GEN-LAST:event_menuItemGerenciarCentrosEstoqueActionPerformed
 
     private void menuItemTrocarUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemTrocarUsuarioActionPerformed
         
@@ -607,15 +627,15 @@ public class Principal extends javax.swing.JFrame {
     private void menuItemVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemVendaActionPerformed
         
         Class_Verifica_Menu_Aberto verifica = new Class_Verifica_Menu_Aberto();
-        int index = verifica.verificaMenuAberto(painel_principal, "Vendas   ");
+        int index = verifica.verificaMenuAberto(painel_principal, "Ordem de serviço   ");
         if (index >= 0)
         {
             painel_principal.setSelectedIndex(index);
         }
         else
         {
-            Painel_Venda venda = new Painel_Venda(this, painel_principal);
-            painel_principal.addTab("Vendas   ", new ImageIcon(getClass().getResource("/imagens/Bandeja 16px.png")), venda, "Gerencie mesas e venda produtos!");
+            Painel_Ordem_Servico venda = new Painel_Ordem_Servico(this, painel_principal);
+            painel_principal.addTab("Ordem de serviço   ", new ImageIcon(getClass().getResource("/imagens/Bandeja 16px.png")), venda, "Gerencie os serviços prestados pela sua empresa!");
             painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
         }
         
@@ -632,7 +652,7 @@ public class Principal extends javax.swing.JFrame {
         else
         {
             Painel_Centros_Custo centros_custo = new Painel_Centros_Custo(painel_principal, this.id_usuario, this.nome_usuario);
-            painel_principal.addTab("Centros de custo   ", new ImageIcon(getClass().getResource("/imagens/Caixa registradora 16px.png")), centros_custo, "Gerencie os seus recebimentos!");
+            painel_principal.addTab("Centros de custo   ", new ImageIcon(getClass().getResource("/imagens/Notas 16px.png")), centros_custo, "Gerencie os seus recebimentos!");
             centros_custo.adicionaCentrosCusto();
             painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
         }
@@ -674,24 +694,6 @@ public class Principal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_menuItemSistemaFinanceiroActionPerformed
 
-    private void menuItemCadastroMesasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroMesasActionPerformed
-        
-        Class_Verifica_Menu_Aberto verifica = new Class_Verifica_Menu_Aberto();
-        int index = verifica.verificaMenuAberto(painel_principal, "Mesas   ");
-        if (index >= 0)
-        {
-            painel_principal.setSelectedIndex(index);
-        }
-        else
-        {
-            Painel_Mesas mesas = new Painel_Mesas(painel_principal, this.id_usuario, this.nome_usuario);
-            painel_principal.addTab("Mesas   ", new ImageIcon(getClass().getResource("/imagens/Mesa 16px.png")), mesas, "Gerencie o cadastro das mesas!");
-            mesas.refreshList();
-            painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
-        }
-        
-    }//GEN-LAST:event_menuItemCadastroMesasActionPerformed
-
     private void menuItemCadastroClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroClientesActionPerformed
         
         Class_Verifica_Menu_Aberto verifica = new Class_Verifica_Menu_Aberto();
@@ -709,6 +711,60 @@ public class Principal extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_menuItemCadastroClientesActionPerformed
+
+    private void menuItemCadastroCentrosCustoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroCentrosCustoActionPerformed
+        
+        Class_Verifica_Menu_Aberto verifica = new Class_Verifica_Menu_Aberto();
+        int index = verifica.verificaMenuAberto(painel_principal, "Gestão dos centros de custo   ");
+        if (index >= 0)
+        {
+            painel_principal.setSelectedIndex(index);
+        }
+        else
+        {
+            Painel_Gerenciar_Centros_Custo centros = new Painel_Gerenciar_Centros_Custo(painel_principal, this.id_usuario, this.nome_usuario);
+            painel_principal.addTab("Gestão dos centros de custo   ", new ImageIcon(getClass().getResource("/imagens/Caixa registradora 16px.png")), centros, "Cadastre centros de custo para gerenciar melhor seu dinheiro!");
+            centros.refreshCentros();
+            painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+        }
+        
+    }//GEN-LAST:event_menuItemCadastroCentrosCustoActionPerformed
+
+    private void menuItemCadastroCategoriasFinanceirasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroCategoriasFinanceirasActionPerformed
+
+        Class_Verifica_Menu_Aberto verifica = new Class_Verifica_Menu_Aberto();
+        int index = verifica.verificaMenuAberto(painel_principal, "Categorias financeiras   ");
+        if (index >= 0)
+        {
+            painel_principal.setSelectedIndex(index);
+        }
+        else
+        {
+            Painel_Categorias_Financeiras categorias = new Painel_Categorias_Financeiras(painel_principal, id_usuario, nome_usuario);
+            painel_principal.addTab("Categorias financeiras   ", new ImageIcon(getClass().getResource("/imagens/Categoria financeira 16px.png")), categorias, "Cadastre e gerencie as categorias de receitas e despesas!");
+            categorias.refreshList();
+            painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+        }        
+            
+    }//GEN-LAST:event_menuItemCadastroCategoriasFinanceirasActionPerformed
+
+    private void menuItemCadastroFuncionariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemCadastroFuncionariosActionPerformed
+        
+        Class_Verifica_Menu_Aberto verifica = new Class_Verifica_Menu_Aberto();
+        int index = verifica.verificaMenuAberto(painel_principal, "Funcionários   ");
+        if (index >= 0)
+        {
+            painel_principal.setSelectedIndex(index);
+        }
+        else
+        {
+            Painel_Funcionarios funcionarios = new Painel_Funcionarios(painel_principal, id_usuario, nome_usuario);
+            painel_principal.addTab("Funcionários   ", new ImageIcon(getClass().getResource("/imagens/Trabalhador 16px.png")), funcionarios, "Cadastre seus funcionários!");
+            funcionarios.refreshFuncionarios();
+            painel_principal.setSelectedIndex(painel_principal.getTabCount()-1);
+        }
+        
+    }//GEN-LAST:event_menuItemCadastroFuncionariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -771,6 +827,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem23;
     private javax.swing.JMenuItem jMenuItem24;
     private javax.swing.JMenuItem jMenuItem25;
+    private javax.swing.JMenuItem jMenuItem29;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
@@ -782,16 +839,20 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu menuConfiguracoes;
     private javax.swing.JMenu menuEstoque;
     private javax.swing.JMenu menuFinanceiro;
+    private javax.swing.JMenuItem menuItemCadastroCategoriasFinanceiras;
+    private javax.swing.JMenuItem menuItemCadastroCentrosCusto;
+    private javax.swing.JMenuItem menuItemCadastroCentrosEstoque;
     private javax.swing.JMenuItem menuItemCadastroClientes;
     private javax.swing.JMenuItem menuItemCadastroEmpresas;
     private javax.swing.JMenuItem menuItemCadastroFornecedores;
-    private javax.swing.JMenuItem menuItemCadastroMesas;
+    private javax.swing.JMenuItem menuItemCadastroFuncionarios;
+    private javax.swing.JMenuItem menuItemCadastroMaquinasCartoes;
     private javax.swing.JMenuItem menuItemCadastroProdutos;
     private javax.swing.JMenuItem menuItemCadastroUsuarios;
     private javax.swing.JMenuItem menuItemCentrosCusto;
-    private javax.swing.JMenuItem menuItemCentrosEstoque;
     private javax.swing.JMenuItem menuItemCompras;
     private javax.swing.JMenuItem menuItemConfiguracoesSistema;
+    private javax.swing.JMenuItem menuItemGerenciarCentrosEstoque;
     private javax.swing.JMenuItem menuItemSair;
     private javax.swing.JMenuItem menuItemSistemaFinanceiro;
     private javax.swing.JMenuItem menuItemTrocarUsuario;
