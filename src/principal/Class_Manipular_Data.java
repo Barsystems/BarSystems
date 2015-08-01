@@ -19,6 +19,15 @@ public class Class_Manipular_Data {
         return data;
     }
     
+    public String retornaDataFormatoMySQLSemHora(String dataFormatoBrasil) {
+        String dia = dataFormatoBrasil.substring(0, 2);
+        String mes = dataFormatoBrasil.substring(3, 5);
+        String ano = dataFormatoBrasil.substring(6, 10);
+        
+        String data = ano+"/"+mes+"/"+dia;
+        return data;
+    }
+    
     public int retornaQntAnos(String dataNascimentoFormatoBrasil) {
         int diasVividos = 0;
         try {
@@ -34,6 +43,17 @@ public class Class_Manipular_Data {
             e.printStackTrace();
         }
         return diasVividos;
+    }
+    
+    public Date transformaDataStringParaDate(String dataFormatoBrasil) {
+        Date data = null;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            data = sdf.parse(dataFormatoBrasil+ " 00:00:00");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
     }
     
 }
