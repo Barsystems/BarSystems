@@ -13,6 +13,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,6 +47,12 @@ public class LoginJanela extends JFrame implements ActionListener, KeyListener, 
         setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        
+        try {
+            setIconImage(ImageIO.read(new File("resources/icon16.png")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         fonteTitulo = new Font("Tahoma", Font.BOLD, 18);
         fonteGeral = new Font("Tahoma", Font.PLAIN, 12);
