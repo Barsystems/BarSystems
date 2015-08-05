@@ -21,7 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import principal.VerificaMenuAberto;
+import utilidades.VerificaMenuAberto;
 import produto.classe.ProdutoClasse;
 import produto.controller.ProdutoController;
 import produto.table.ProdutoTableModel;

@@ -21,7 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import principal.TrocaVirgulaPorPonto;
+import utilidades.TrocaVirgulaPorPonto;
 import produto.classe.ProdutoClasse;
 import produto.controller.ProdutoController;
 import produto_setor.classe.ProdutoSetorClasse;

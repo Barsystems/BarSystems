@@ -22,8 +22,8 @@ public interface IFormaPagamentoTaxaCartaoDAO {
     
     List<FormaPagamentoTaxaCartaoClasse> findAll (String pesquisa);
     
-    boolean verificaTaxaCartaoExistenteMaquina (String maquina);
+    boolean verificaTaxaCartaoRepetidaMaquina (String maquina);
     
-    boolean verificaTaxaCartaoExistenteFormaPagamento (String forma_pagamento);
+    boolean verificaTaxaCartaoRepetidaFormaPagamento (String forma_pagamento);
     
 }

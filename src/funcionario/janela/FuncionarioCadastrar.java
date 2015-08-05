@@ -32,7 +32,7 @@ import pais.classe.PaisClasse;
 import pais.comboBox.PaisComboBoxCellRenderer;
 import pais.comboBox.PaisComboBoxModel;
 import pais.controller.PaisController;
-import principal.TrocaVirgulaPorPonto;
+import utilidades.TrocaVirgulaPorPonto;
 
 /**
  *

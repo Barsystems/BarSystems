@@ -23,7 +23,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import principal.TrocaVirgulaPorPonto;
+import utilidades.TrocaVirgulaPorPonto;
 
 /**
  *

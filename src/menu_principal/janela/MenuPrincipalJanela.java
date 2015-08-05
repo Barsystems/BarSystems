@@ -29,9 +29,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 import login.janela.LoginJanela;
-import principal.VerificaMenuAberto;
+import utilidades.VerificaMenuAberto;
 import produto.janela.ProdutoJanela;
 import produto_setor.janela.ProdutoSetorJanela;
+import servico_setor.janela.ServicoSetorJanela;
 import usuario.classe.UsuarioClasse;
 import usuario.janela.UsuarioJanela;
 
@@ -537,6 +538,21 @@ public class MenuPrincipalJanela extends JFrame implements ActionListener {
         }
     }
     
+    public void abrirCadastroSetorServicos() {
+        VerificaMenuAberto verifica = new VerificaMenuAberto();
+        int index = verifica.verificaMenuAberto(painel_tabulado, "Cadastro de setores de serviços");
+        if (index >= 0)
+        {
+            painel_tabulado.setSelectedIndex(index);
+        }
+        else
+        {
+            ServicoSetorJanela setor = new ServicoSetorJanela(this.user, width, this.painel_tabulado);
+            painel_tabulado.addTab("Cadastro de setores de serviços", null, setor);
+            painel_tabulado.setSelectedIndex(painel_tabulado.getTabCount()-1);
+        }
+    }
+    
     public void trocarUsuario() {
         if (JOptionPane.showConfirmDialog(null, "Deseja trocar de usuário?", "ATENÇÃO", JOptionPane.YES_NO_OPTION) == 0) {
             new LoginJanela().setVisible(true);
@@ -578,6 +594,8 @@ public class MenuPrincipalJanela extends JFrame implements ActionListener {
             abrirCadastroFormasPagamento();
         } else if (e.getSource() == menu_item_maquinas_cartoes) {
             abrirCadastroMaquinasCartao();
+        } else if (e.getSource() == menu_item_setor_servico) {
+            abrirCadastroSetorServicos();
         } else if (e.getSource() == menu_item_trocar_usuario) {
             trocarUsuario();
         } else if (e.getSource() == menu_item_sair) {

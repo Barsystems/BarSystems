@@ -24,7 +24,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import principal.VerificaMenuAberto;
+import utilidades.VerificaMenuAberto;
 import usuario.classe.UsuarioClasse;
 
 /**

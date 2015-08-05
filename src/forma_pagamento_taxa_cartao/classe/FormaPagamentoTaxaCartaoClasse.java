@@ -11,9 +11,18 @@ package forma_pagamento_taxa_cartao.classe;
  */
 public class FormaPagamentoTaxaCartaoClasse {
     
+    private Long id;
     private Long id_forma_pagamento;
     private Long id_maquina_cartao;
     private float taxa;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Long getId_forma_pagamento() {
         return id_forma_pagamento;
@@ -41,7 +50,7 @@ public class FormaPagamentoTaxaCartaoClasse {
 
     @Override
     public String toString() {
-        return "FormaPagamentoTaxaCartaoClasse{" + "id_forma_pagamento=" + id_forma_pagamento + ", id_maquina_cartao=" + id_maquina_cartao + ", taxa=" + taxa + '}';
+        return "FormaPagamentoTaxaCartaoClasse{" + "id_taxa_cartao=" + id + ", id_forma_pagamento=" + id_forma_pagamento + ", id_maquina_cartao=" + id_maquina_cartao + ", taxa=" + taxa + '}';
     }
     
 }
