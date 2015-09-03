@@ -35,14 +35,16 @@ public class FormaPagamentoTaxaCartaoDAO implements IFormaPagamentoTaxaCartaoDAO
     private static final String SQL_FIND_ALL = "SELECT forma_pagamento_taxa_cartao.id_taxa_cartao, "
             + "forma_pagamento_taxa_cartao.id_forma_pagamento_fk, forma_pagamento_taxa_cartao.id_maquina_cartao_fk, "
             + "forma_pagamento_taxa_cartao.taxa, forma_pagamento.nome, forma_pagamento_maquina_cartao.nome "
-            + "FROM forma_pagamento_taxa_cartao"
+            + "FROM forma_pagamento_taxa_cartao "
             + "INNER JOIN forma_pagamento ON forma_pagamento_taxa_cartao.id_forma_pagamento_fk = forma_pagamento.id_forma_pagamento "
             + "INNER JOIN forma_pagamento_maquina_cartao ON forma_pagamento_taxa_cartao.id_maquina_cartao_fk = forma_pagamento_maquina_cartao.id_maquina_cartao "
             + "WHERE forma_pagamento_taxa_cartao.excluido = 0 AND forma_pagamento.nome LIKE ? "
             + "OR forma_pagamento_taxa_cartao.excluido = 0 AND forma_pagamento_maquina_cartao.nome LIKE ? "
-            + "ORDER BY forma_pagamento.nome, forma_pagamento_maquina_cartao.nome";
+            + "ORDER BY forma_pagamento_maquina_cartao.nome, forma_pagamento.nome";
     
-    //private static final String SQL_VERIFICA_TAXA_CARTAO_REPETIDA_FORMA_PAGAMENTO = "SELECT nome FROM forma_pagamento_maquina_cartao  WHERE nome = ? AND excluido = 0";
+    private static final String SQL_VERIFICA_TAXA_CARTAO_REPETIDA = "SELECT id_forma_pagamento_fk, "
+            + "id_maquina_cartao_fk FROM forma_pagamento_taxa_cartao WHERE id_forma_pagamento_fk = ? AND "
+            + "id_maquina_cartao_fk = ? AND excluido = 0";
 
     @Override
     public int save(FormaPagamentoTaxaCartaoClasse classe) {
@@ -107,13 +109,16 @@ public class FormaPagamentoTaxaCartaoDAO implements IFormaPagamentoTaxaCartaoDAO
             conn = banco.getConexaoMySQL();
             ps = conn.prepareStatement(SQL_FIND_ALL);
             ps.setString(1, "%"+pesquisa+"%");
+            ps.setString(2, "%"+pesquisa+"%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 FormaPagamentoTaxaCartaoClasse taxa = new FormaPagamentoTaxaCartaoClasse();
-                taxa.setId(rs.getLong("id_taxa_cartao"));
-                taxa.setId_forma_pagamento(rs.getLong("id_forma_pagamento_fk"));
-                taxa.setId_maquina_cartao(rs.getLong("id_maquina_cartao_fk"));
-                taxa.setTaxa(rs.getFloat("taxa"));
+                taxa.setId(rs.getLong("forma_pagamento_taxa_cartao.id_taxa_cartao"));
+                taxa.setId_forma_pagamento(rs.getLong("forma_pagamento_taxa_cartao.id_forma_pagamento_fk"));
+                taxa.setForma_pagamento(rs.getString("forma_pagamento.nome"));
+                taxa.setId_maquina_cartao(rs.getLong("forma_pagamento_taxa_cartao.id_maquina_cartao_fk"));
+                taxa.setMaquina_cartao(rs.getString("forma_pagamento_maquina_cartao.nome"));
+                taxa.setTaxa(rs.getFloat("forma_pagamento_taxa_cartao.taxa"));
                 lista_taxa.add(taxa);
             }
             rs.close();
@@ -129,13 +134,24 @@ public class FormaPagamentoTaxaCartaoDAO implements IFormaPagamentoTaxaCartaoDAO
     }
 
     @Override
-    public boolean verificaTaxaCartaoRepetidaMaquina(String maquina) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public boolean verificaTaxaCartaoRepetidaFormaPagamento(String forma_pagamento) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean verificaTaxaCartaoRepetida(Long id_forma_pagamento, Long id_maquina) {
+        boolean flag = false;
+        try {
+            conn = banco.getConexaoMySQL();
+            ps = conn.prepareStatement(SQL_VERIFICA_TAXA_CARTAO_REPETIDA);
+            ps.setLong(1, id_forma_pagamento);
+            ps.setLong(2, id_maquina);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                flag = true;
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return flag;
     }
     
 }

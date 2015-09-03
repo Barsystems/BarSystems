@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import usuario.classe.UsuarioClasse;
-import usuario.comboBox.UsuarioComboBoxModel;
+import usuario.comboBox.UsuarioTipoComboBoxModel;
 import usuario.controller.UsuarioController;
 
 /**
@@ -100,7 +100,7 @@ public class UsuarioCadastrar extends JDialog implements ActionListener {
         comboTipo = new JComboBox();
         comboTipo.setFont(fonteGeral);
         comboTipo.setBounds(150, 150, 230, 30);
-        comboTipo.setModel(new UsuarioComboBoxModel());
+        comboTipo.setModel(new UsuarioTipoComboBoxModel());
         
         painel2.add(lblUsuario);
         painel2.add(txtUsuario);

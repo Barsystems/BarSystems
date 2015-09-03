@@ -39,7 +39,7 @@ public class ProdutoEditar extends JDialog implements ActionListener, KeyListene
     private JLabel lblTitulo, lblNome, lblSetor, lblValorCompra, lblPorcentagemVenda, lblValorVenda, lblValorComissao;
     private JTextField txtNome, txtValorCompra, txtPorcentagemVenda, txtValorVenda, txtValorComissao;
     private JComboBox comboSetor;
-    private JButton btnSalvar, btnLimpar, btnVoltar;
+    private JButton btnSalvar, btnVoltar;
     
     private Font fonteTitulo, fonteGeral;
     
@@ -53,7 +53,7 @@ public class ProdutoEditar extends JDialog implements ActionListener, KeyListene
         
         this.prod = prod;
         
-        setTitle("Novo cadastro");
+        setTitle("Editar cadastro");
         setLayout(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -168,21 +168,15 @@ public class ProdutoEditar extends JDialog implements ActionListener, KeyListene
         
         btnSalvar = new JButton("Salvar");
         btnSalvar.setFont(fonteGeral);
-        btnSalvar.setBounds(90, 20, 100, 30);
+        btnSalvar.setBounds(150, 20, 100, 30);
         btnSalvar.addActionListener(this);
-        
-        btnLimpar = new JButton("Limpar");
-        btnLimpar.setFont(fonteGeral);
-        btnLimpar.setBounds(200, 20, 100, 30);
-        btnLimpar.addActionListener(this);
         
         btnVoltar = new JButton("Sair");
         btnVoltar.setFont(fonteGeral);
-        btnVoltar.setBounds(310, 20, 100, 30);
+        btnVoltar.setBounds(260, 20, 100, 30);
         btnVoltar.addActionListener(this);
         
         painel3.add(btnSalvar);
-        painel3.add(btnLimpar);
         painel3.add(btnVoltar);
         
         add(painel1);

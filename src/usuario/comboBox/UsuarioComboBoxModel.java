@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
+import usuario.classe.UsuarioClasse;
 
 /**
  *
@@ -16,33 +17,25 @@ import javax.swing.ComboBoxModel;
  */
 public class UsuarioComboBoxModel extends AbstractListModel<Object> implements ComboBoxModel<Object> {
 
-    private List<Object> tipos;
+    private List<UsuarioClasse> classe;
     Object selectedTipo;
  
-    public UsuarioComboBoxModel() {
-        this.tipos = new ArrayList<>();
-        this.tipos.add("Administrador");
-        this.tipos.add("Normal");
-        if (this.tipos.size() > 0) {
-            setSelectedItem(this.tipos.get(0));
-        }
-    }
-    
-    public UsuarioComboBoxModel(List<Object> obj) {
-        this.tipos = obj;
-        if (this.tipos.size() > 0) {
-            setSelectedItem(this.tipos.get(0));
+    public UsuarioComboBoxModel(List<UsuarioClasse> lista) {
+        this.classe = new ArrayList<UsuarioClasse>();
+        this.classe.addAll(lista);
+        if (this.classe.size() > 0) {
+            setSelectedItem(this.classe.get(0));
         }
     }
     
     @Override
     public int getSize() {
-        return tipos.size();
+        return classe.size();
     }
 
     @Override
     public Object getElementAt(int index) {
-        return tipos.get(index);
+        return classe.get(index);
     }
 
     @Override
@@ -55,4 +48,5 @@ public class UsuarioComboBoxModel extends AbstractListModel<Object> implements C
     public Object getSelectedItem() {
         return selectedTipo;
     }    
+    
 }

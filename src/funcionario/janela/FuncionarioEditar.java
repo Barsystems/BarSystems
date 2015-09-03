@@ -308,6 +308,9 @@ public class FuncionarioEditar extends JDialog implements ActionListener {
             } else {
                 
                 TrocaVirgulaPorPonto troca = new TrocaVirgulaPorPonto();
+                if (txtSalario.getText().isEmpty()) {
+                    txtSalario.setText("0,00");
+                }
                 float salario = troca.trocaVirgulaPorPonto(txtSalario.getText());
                 
                 func.setNome(txtNome.getText());

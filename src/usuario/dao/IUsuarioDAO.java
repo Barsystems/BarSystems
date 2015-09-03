@@ -28,4 +28,10 @@ public interface IUsuarioDAO {
     
     boolean verificaUsuarioRepetido(String nome);
     
+    List<UsuarioClasse> findUsuarioResponsavelCentroCusto(Long id_centro_custo);
+    
+    int addResponsavelCentroCusto (Long id_centro_custo, Long id_usuario);
+    
+    int removeResponsavelCentroCusto (Long id_centro_custo, Long id_usuario);
+    
 }

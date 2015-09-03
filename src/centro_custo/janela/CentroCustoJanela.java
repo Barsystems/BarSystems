@@ -38,7 +38,7 @@ public class CentroCustoJanela extends JPanel implements ActionListener, KeyList
     private JTextField txtPesquisar;
     private JScrollPane scrollTabela;
     private JTable tabela;
-    private JButton btnNovo, btnEditar, btnExcluir, btnTransferirSaldo, btnSair;
+    private JButton btnNovo, btnEditar, btnExcluir, btnTransferirSaldo, btnResponsavel, btnSair;
     
     private Font fonteTitulo, fonteGeral;
     
@@ -115,18 +115,24 @@ public class CentroCustoJanela extends JPanel implements ActionListener, KeyList
         
         btnTransferirSaldo = new JButton("Transferir saldo");
         btnTransferirSaldo.setFont(fonteGeral);
-        btnTransferirSaldo.setBounds(390, 20, 150, 30);
+        btnTransferirSaldo.setBounds(390, 20, 140, 30);
         btnTransferirSaldo.addActionListener(this);
+        
+        btnResponsavel = new JButton("Gerenciar responsáveis");
+        btnResponsavel.setFont(fonteGeral);
+        btnResponsavel.setBounds(540, 20, 170, 30);
+        btnResponsavel.addActionListener(this);
         
         btnSair = new JButton("Sair");
         btnSair.setFont(fonteGeral);
-        btnSair.setBounds(550, 20, 110, 30);
+        btnSair.setBounds(720, 20, 110, 30);
         btnSair.addActionListener(this);
         
         painel3.add(btnNovo);
         painel3.add(btnEditar);
         painel3.add(btnExcluir);
         painel3.add(btnTransferirSaldo);
+        painel3.add(btnResponsavel);
         painel3.add(btnSair);
         
         add(painel1);
@@ -175,6 +181,12 @@ public class CentroCustoJanela extends JPanel implements ActionListener, KeyList
         }
     }
     
+    public void gerenciarResponsaveis() {
+        CentroCustoGerenciarResponsavel responsavel = new CentroCustoGerenciarResponsavel(centro.get(tabela.getSelectedRow()));
+        responsavel.setVisible(true);
+        
+    }
+    
     public void excluir() {
         CentroCustoClasse centro_custo = centro.get(tabela.getSelectedRow());
         CentroCustoExcluir excluir = new CentroCustoExcluir();
@@ -198,6 +210,8 @@ public class CentroCustoJanela extends JPanel implements ActionListener, KeyList
             excluir();
         } else if (source == btnTransferirSaldo) {
             transferirSaldo();
+        } else if (source == btnResponsavel) {
+            gerenciarResponsaveis();
         } else if (source == btnSair) {
             VerificaMenuAberto verifica = new VerificaMenuAberto();
             int index = verifica.verificaMenuAberto(painel_principal, "Cadastro de centros de custo");

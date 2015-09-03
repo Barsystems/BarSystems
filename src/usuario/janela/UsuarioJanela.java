@@ -132,10 +132,13 @@ public class UsuarioJanela extends JPanel implements ActionListener, KeyListener
     public void refreshTable() {
         user = new UsuarioController().findUsuario(txtPesquisar.getText());
         if (user != null) {
-            tabela.setModel(new UsuarioTableModel(user));
+            tabela.setModel(new UsuarioTableModel(user, 3));
             if (tabela.getRowCount() > 0) {
                 tabela.setRowSelectionInterval(0, 0);
                 tabela.scrollRectToVisible(new Rectangle(tabela.getCellRect(0, 0, true)));
+                tabela.getColumnModel().getColumn(0).setPreferredWidth(235);
+                tabela.getColumnModel().getColumn(1).setPreferredWidth(235);
+                tabela.getColumnModel().getColumn(2).setPreferredWidth(100);
             }
         }
     }

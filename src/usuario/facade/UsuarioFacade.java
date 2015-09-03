@@ -50,4 +50,16 @@ public class UsuarioFacade {
         return dao.verificaUsuarioRepetido(nome);
     }
     
+    public List<UsuarioClasse> findUsuarioResponsavelCentroCusto(Long id_centro_custo) {
+        return dao.findUsuarioResponsavelCentroCusto(id_centro_custo);
+    }
+    
+    public int addResponsavelCentroCusto (Long id_centro_custo, Long id_usuario) {
+        return dao.addResponsavelCentroCusto(id_centro_custo, id_usuario);
+    }
+    
+    public int removeResponsavelCentroCusto (Long id_centro_custo, Long id_usuario) {
+        return dao.removeResponsavelCentroCusto(id_centro_custo, id_usuario);
+    }
+    
 }

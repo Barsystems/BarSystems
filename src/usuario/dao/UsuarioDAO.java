@@ -23,6 +23,17 @@ public class UsuarioDAO implements IUsuarioDAO {
     private static final String SQL_VALIDA_USUARIO = "SELECT nome, senha FROM usuario WHERE nome = ? AND senha = ?";
     private static final String SQL_GET_USUARIO = "SELECT id_usuario, nome, senha, tipo FROM usuario WHERE excluido = 0 AND nome = ?";
     private static final String SQL_VERIFICA_USUARIO_REPETIDO = "SELECT nome FROM usuario WHERE nome = ? AND excluido = 0";
+    private static final String SQL_FIND_USUARIO_RESPONSAVEL_CENTRO_CUSTO = "SELECT usuario.id_usuario, usuario.nome, "
+            + "usuario.tipo, usuario.senha, centro_custo.id_centro_custo "
+            + "FROM centro_custo_responsavel "
+            + "INNER JOIN centro_custo ON centro_custo_responsavel.id_centro_custo_fk = centro_custo.id_centro_custo "
+            + "INNER JOIN usuario ON centro_custo_responsavel.id_usuario_fk = usuario.id_usuario "
+            + "WHERE centro_custo.id_centro_custo = ? AND usuario.excluido = 0 AND centro_custo.excluido = 0 "
+            + "ORDER BY usuario.tipo, usuario.tipo";
+    private static final String SQL_ADD_RESPONSAVEL_CENTRO_CUSTO = "INSERT INTO centro_custo_responsavel "
+            + "(id_centro_custo_fk, id_usuario_fk) VALUES (?, ?)";
+    private static final String SQL_REMOVE_RESPONSAVEL_CENTRO_CUSTO = "DELETE FROM centro_custo_responsavel "
+            + "WHERE id_centro_custo_fk = ? AND id_usuario_fk = ?";
     
     @Override
     public List<UsuarioClasse> findAll(String pesquisa) {
@@ -166,6 +177,70 @@ public class UsuarioDAO implements IUsuarioDAO {
             conn = banco.getConexaoMySQL();
             ps = conn.prepareStatement(SQL_REMOVE);
             ps.setLong(1, id);
+            result = ps.executeUpdate();
+            
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    @Override
+    public List<UsuarioClasse> findUsuarioResponsavelCentroCusto(Long id_centro_custo) {
+        List<UsuarioClasse> users = new ArrayList<UsuarioClasse>();
+        try {
+            conn = banco.getConexaoMySQL();
+            ps = conn.prepareStatement(SQL_FIND_USUARIO_RESPONSAVEL_CENTRO_CUSTO);
+            ps.setLong(1, id_centro_custo);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                UsuarioClasse user = new UsuarioClasse();
+                user.setId(rs.getLong("id_usuario"));
+                user.setNome(rs.getString("nome"));
+                user.setSenha(rs.getString("senha"));
+                user.setTipo(rs.getString("tipo"));
+                users.add(user);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getMessage();
+        }
+        
+        return users;
+    }
+
+    @Override
+    public int addResponsavelCentroCusto(Long id_centro_custo, Long id_usuario) {
+        int result = 0;
+        try {
+            conn = banco.getConexaoMySQL();
+            ps = conn.prepareStatement(SQL_ADD_RESPONSAVEL_CENTRO_CUSTO);
+            ps.setLong(1, id_centro_custo);
+            ps.setLong(2, id_usuario);
+            result = ps.executeUpdate();
+            
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    @Override
+    public int removeResponsavelCentroCusto(Long id_centro_custo, Long id_usuario) {
+        int result = 0;
+        try {
+            conn = banco.getConexaoMySQL();
+            ps = conn.prepareStatement(SQL_REMOVE_RESPONSAVEL_CENTRO_CUSTO);
+            ps.setLong(1, id_centro_custo);
+            ps.setLong(2, id_usuario);
             result = ps.executeUpdate();
             
             ps.close();

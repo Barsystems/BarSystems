@@ -37,6 +37,10 @@ public class FormaPagamentoController {
         return facade.findAll(pesquisa);
     }
     
+    public List<FormaPagamentoClasse> findFormaPagamentoTipoEspecifico(String pesquisa) {
+        return facade.findFormaPagamentoTipoEspecifico(pesquisa);
+    }
+    
     public boolean verificaFormaPagamentoRepetida(String nome) {
         return facade.verificaFormaPagamentoRepetida(nome);
     }

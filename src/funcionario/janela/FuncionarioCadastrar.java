@@ -292,6 +292,9 @@ public class FuncionarioCadastrar extends JDialog implements ActionListener {
             } else {
                 
                 TrocaVirgulaPorPonto troca = new TrocaVirgulaPorPonto();
+                if (txtSalario.getText().isEmpty()) {
+                    txtSalario.setText("0,00");
+                }
                 float salario = troca.trocaVirgulaPorPonto(txtSalario.getText());
                 
                 FuncionarioClasse func = new FuncionarioClasse();

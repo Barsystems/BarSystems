@@ -22,7 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import usuario.classe.UsuarioClasse;
-import usuario.comboBox.UsuarioComboBoxModel;
+import usuario.comboBox.UsuarioTipoComboBoxModel;
 import usuario.controller.UsuarioController;
 
 /**
@@ -48,7 +48,7 @@ public class UsuarioEditar extends JDialog implements MouseListener, ActionListe
         
         this.user = user;
         
-        setTitle("Alterar cadastro");
+        setTitle("Editar cadastro");
         setLayout(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -65,7 +65,7 @@ public class UsuarioEditar extends JDialog implements MouseListener, ActionListe
         painel1.setBounds(0, 0, 500, 60);
         
         lblTitulo = new JLabel();
-        lblTitulo.setText("NOVO CADASTRO");
+        lblTitulo.setText("EDITAR CADASTRO");
         lblTitulo.setHorizontalAlignment((int) CENTER_ALIGNMENT);
         lblTitulo.setFont(fonteTitulo);
         lblTitulo.setBounds(0, 0, 500, 60);
@@ -89,11 +89,11 @@ public class UsuarioEditar extends JDialog implements MouseListener, ActionListe
         lblTipo.setFont(fonteGeral);
         lblTipo.setBounds(30, 70, 110, 30);
         
-        comboTipo = new JComboBox(new UsuarioComboBoxModel());
+        comboTipo = new JComboBox(new UsuarioTipoComboBoxModel());
         comboTipo.setFont(fonteGeral);
         comboTipo.setBounds(150, 70, 230, 30);
         
-        comboTipo.setModel(new UsuarioComboBoxModel());
+        comboTipo.setModel(new UsuarioTipoComboBoxModel());
         comboTipo.setSelectedItem(user.getTipo());
         
         lblTrocarSenha = new JLabel("Trocar senha");

@@ -17,11 +17,15 @@ public class UsuarioTableModel extends AbstractTableModel {
 
     private static final int COL_NOME = 0;
     private static final int COL_TIPO = 1;
+    private static final int COL_COD = 2;
+    
+    private int numero_colunas;
     
     private List<UsuarioClasse> valores;
     
-    public UsuarioTableModel(List<UsuarioClasse> valores) {
+    public UsuarioTableModel(List<UsuarioClasse> valores, int numero_colunas) {
         this.valores = valores;
+        this.numero_colunas = numero_colunas;
     }
     
     @Override
@@ -31,7 +35,7 @@ public class UsuarioTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 2;
+        return numero_colunas;
     }
 
     @Override
@@ -39,8 +43,10 @@ public class UsuarioTableModel extends AbstractTableModel {
         UsuarioClasse user = valores.get(rowIndex);
         if (columnIndex == COL_NOME) {
             return user.getNome();
-        } else {
+        } else if (columnIndex == COL_TIPO) {
             return user.getTipo();
+        } else {
+            return user.getId();
         }
         
     }
@@ -51,6 +57,7 @@ public class UsuarioTableModel extends AbstractTableModel {
         switch (column) {
             case COL_NOME: coluna = "Nome do usuário"; break;
             case COL_TIPO: coluna = "Tipo do usuário"; break;
+            case COL_COD: coluna = "ID do usuário"; break;
             default: throw new IllegalArgumentException("Coluna inválida!");
         }
         return coluna;

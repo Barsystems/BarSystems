@@ -38,6 +38,10 @@ public class FormaPagamentoFacade {
         return dao.findAll(pesquisa);
     }
     
+    public List<FormaPagamentoClasse> findFormaPagamentoTipoEspecifico(String pesquisa) {
+        return dao.findFormaPagamentoTipoEspecifico(pesquisa);
+    }
+    
     public boolean verificaFormaPagamentoRepetida(String nome) {
         return dao.verificaFormaPagamentoRepetida(nome);
     }

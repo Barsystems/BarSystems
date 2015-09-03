@@ -49,7 +49,7 @@ public class LoginJanela extends JFrame implements ActionListener, KeyListener, 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
         try {
-            setIconImage(ImageIO.read(new File("resources/icon16.png")));
+            setIconImage(ImageIO.read(new File("resources/icon24.png")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -81,7 +81,7 @@ public class LoginJanela extends JFrame implements ActionListener, KeyListener, 
         
         txtNome = new JTextField();
         txtNome.setFont(fonteGeral);
-        txtNome.setBounds(160, 30, 200, 30);
+        txtNome.setBounds(160, 30, 210, 30);
         txtNome.addKeyListener(this);
         
         lblSenha = new JLabel("Senha do usuário");
@@ -90,7 +90,7 @@ public class LoginJanela extends JFrame implements ActionListener, KeyListener, 
         
         pTxtSenha = new JPasswordField();
         pTxtSenha.setFont(fonteGeral);
-        pTxtSenha.setBounds(160, 70, 200, 30);
+        pTxtSenha.setBounds(160, 70, 210, 30);
         pTxtSenha.addKeyListener(this);
         
         painel2.add(lblNome);
@@ -107,8 +107,9 @@ public class LoginJanela extends JFrame implements ActionListener, KeyListener, 
         btnEntrar.setBounds(160, 20, 100, 30);
         btnEntrar.addActionListener(this);
         
-        btnSair = new JButton("SAIR");
-        btnSair.setBounds(260, 20, 100, 30);
+        btnSair = new JButton("Sair");
+        btnSair.setFont(fonteGeral);
+        btnSair.setBounds(270, 20, 100, 30);
         btnSair.addActionListener(this);
         
         painel3.add(btnEntrar);

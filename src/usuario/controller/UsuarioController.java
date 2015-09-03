@@ -49,4 +49,16 @@ public class UsuarioController {
         return facade.verificaUsuarioRepetido(nome);
     }
     
+    public List<UsuarioClasse> findUsuarioResponsavelCentroCusto(Long id_centro_custo) {
+        return facade.findUsuarioResponsavelCentroCusto(id_centro_custo);
+    }
+    
+    public int addResponsavelCentroCusto (Long id_centro_custo, Long id_usuario) {
+        return facade.addResponsavelCentroCusto(id_centro_custo, id_usuario);
+    }
+    
+    public int removeResponsavelCentroCusto (Long id_centro_custo, Long id_usuario) {
+        return facade.removeResponsavelCentroCusto(id_centro_custo, id_usuario);
+    }
+    
 }

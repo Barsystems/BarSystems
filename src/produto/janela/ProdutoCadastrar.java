@@ -221,7 +221,6 @@ public class ProdutoCadastrar extends JDialog implements ActionListener, KeyList
         comboSetor.repaint();
         txtValorCompra.setText("");
         txtPorcentagemVenda.setText("");
-        txtPorcentagemVenda.setText("");
         txtValorVenda.setText("");
         txtValorComissao.setText("");
         

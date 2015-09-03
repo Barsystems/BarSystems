@@ -45,7 +45,7 @@ public class FuncionarioDAO implements IFuncionarioDAO {
             + " WHERE funcionario.excluido = 0 AND funcionario.nome LIKE ? ORDER BY funcionario.nome";
     
     private static final String SQL_VERIFICA_FUNCIONARIO_REPETIDO = "SELECT cpf FROM funcionario "
-            + "WHERE cpf = ? AND cpf != '   -   -   .  ' AND excluido = 0";
+            + "WHERE cpf = ? AND cpf != '   .   .   -  ' AND excluido = 0";
 
     @Override
     public int save(FuncionarioClasse func) {

@@ -22,6 +22,8 @@ public interface IFormaPagamentoDAO {
     
     List<FormaPagamentoClasse> findAll (String pesquisa);
     
+    List<FormaPagamentoClasse> findFormaPagamentoTipoEspecifico (String pesquisa);
+    
     boolean verificaFormaPagamentoRepetida (String nome);
     
 }

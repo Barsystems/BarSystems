@@ -6,10 +6,13 @@
 package menu_principal.janela;
 
 import centro_custo.janela.CentroCustoJanela;
+import centro_estoque.janela.CentroEstoqueJanela;
+import cliente.janela.ClienteJanela;
 import empresa.janela.EmpresaJanela;
 import financeiro_setor.janela.FinanceiroSetorJanela;
 import forma_pagamento.janela.FormaPagamentoJanela;
 import forma_pagamento_maquina_cartao.janela.FormaPagamentoMaquinaCartaoJanela;
+import forma_pagamento_taxa_cartao.janela.FormaPagamentoTaxaCartaoJanela;
 import fornecedor.janela.FornecedorJanela;
 import funcionario.janela.FuncionarioJanela;
 import funcionario_funcao.janela.FuncionarioFuncaoJanela;
@@ -18,6 +21,8 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -32,6 +37,7 @@ import login.janela.LoginJanela;
 import utilidades.VerificaMenuAberto;
 import produto.janela.ProdutoJanela;
 import produto_setor.janela.ProdutoSetorJanela;
+import servico.janela.ServicoJanela;
 import servico_setor.janela.ServicoSetorJanela;
 import usuario.classe.UsuarioClasse;
 import usuario.janela.UsuarioJanela;
@@ -72,6 +78,12 @@ public class MenuPrincipalJanela extends JFrame implements ActionListener {
         setLayout(null);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        try {
+            setIconImage(ImageIO.read(new File("resources/icon24.png")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         
         fonte = new Font("Tahoma", Font.PLAIN, 12);
         
@@ -212,10 +224,15 @@ public class MenuPrincipalJanela extends JFrame implements ActionListener {
         menu_item_maquinas_cartoes.setFont(fonte);
         menu_item_maquinas_cartoes.addActionListener(this);
         
+        menu_item_taxa_cartao = new JMenuItem("Taxas de cartão");
+        menu_item_taxa_cartao.setFont(fonte);
+        menu_item_taxa_cartao.addActionListener(this);
+        
         menu_financeiro.add(menu_item_centros_custo);
         menu_financeiro.add(menu_item_setor_financeiro);
         menu_financeiro.add(menu_item_forma_pagamento);
         menu_financeiro.add(menu_item_maquinas_cartoes);
+        menu_financeiro.add(menu_item_taxa_cartao);
         
         //-----------
         
@@ -293,6 +310,7 @@ public class MenuPrincipalJanela extends JFrame implements ActionListener {
         btnClientes.setIcon(new ImageIcon(getClass().getResource("/imagens/Cliente 16px.png")));
         btnClientes.setHorizontalTextPosition(SwingConstants.CENTER);   
         btnClientes.setVerticalTextPosition(SwingConstants.BOTTOM);
+        btnClientes.addActionListener(this);
         
         btnEmpresas = new JButton("Empresas");
         btnEmpresas.setBounds(115, 10, 100, 50);
@@ -441,7 +459,18 @@ public class MenuPrincipalJanela extends JFrame implements ActionListener {
     }
     
     public void abrirCadastroCentrosEstoque() {
-        
+        VerificaMenuAberto verifica = new VerificaMenuAberto();
+        int index = verifica.verificaMenuAberto(painel_tabulado, "Cadastro de centros de estoque");
+        if (index >= 0)
+        {
+            painel_tabulado.setSelectedIndex(index);
+        }
+        else
+        {
+            CentroEstoqueJanela forn = new CentroEstoqueJanela(this.user, width, this.painel_tabulado);
+            painel_tabulado.addTab("Cadastro de centros de estoque", null, forn);
+            painel_tabulado.setSelectedIndex(painel_tabulado.getTabCount()-1);
+        }
     }
     
     public void abrirCadastroFornecedores() {
@@ -460,7 +489,18 @@ public class MenuPrincipalJanela extends JFrame implements ActionListener {
     }
     
     public void abrirCadastroClientes() {
-        
+        VerificaMenuAberto verifica = new VerificaMenuAberto();
+        int index = verifica.verificaMenuAberto(painel_tabulado, "Cadastro de clientes");
+        if (index >= 0)
+        {
+            painel_tabulado.setSelectedIndex(index);
+        }
+        else
+        {
+            ClienteJanela cliente = new ClienteJanela(this.user, width, this.painel_tabulado);
+            painel_tabulado.addTab("Cadastro de clientes", null, cliente);
+            painel_tabulado.setSelectedIndex(painel_tabulado.getTabCount()-1);
+        }
     }
     
     public void abrirCadastroEmpresas() {
@@ -538,6 +578,21 @@ public class MenuPrincipalJanela extends JFrame implements ActionListener {
         }
     }
     
+    public void abrirConfiguracaoTaxasCartao() {
+        VerificaMenuAberto verifica = new VerificaMenuAberto();
+        int index = verifica.verificaMenuAberto(painel_tabulado, "Manutenção de taxas de cartão");
+        if (index >= 0)
+        {
+            painel_tabulado.setSelectedIndex(index);
+        }
+        else
+        {
+            FormaPagamentoTaxaCartaoJanela centro = new FormaPagamentoTaxaCartaoJanela(this.user, width, this.painel_tabulado);
+            painel_tabulado.addTab("Manutenção de taxas de cartão", null, centro);
+            painel_tabulado.setSelectedIndex(painel_tabulado.getTabCount()-1);
+        }
+    }
+    
     public void abrirCadastroSetorServicos() {
         VerificaMenuAberto verifica = new VerificaMenuAberto();
         int index = verifica.verificaMenuAberto(painel_tabulado, "Cadastro de setores de serviços");
@@ -549,6 +604,21 @@ public class MenuPrincipalJanela extends JFrame implements ActionListener {
         {
             ServicoSetorJanela setor = new ServicoSetorJanela(this.user, width, this.painel_tabulado);
             painel_tabulado.addTab("Cadastro de setores de serviços", null, setor);
+            painel_tabulado.setSelectedIndex(painel_tabulado.getTabCount()-1);
+        }
+    }
+    
+    public void abrirCadastroServicos() {
+        VerificaMenuAberto verifica = new VerificaMenuAberto();
+        int index = verifica.verificaMenuAberto(painel_tabulado, "Cadastro de serviços");
+        if (index >= 0)
+        {
+            painel_tabulado.setSelectedIndex(index);
+        }
+        else
+        {
+            ServicoJanela servico = new ServicoJanela(this.user, width, this.painel_tabulado);
+            painel_tabulado.addTab("Cadastro de serviços", null, servico);
             painel_tabulado.setSelectedIndex(painel_tabulado.getTabCount()-1);
         }
     }
@@ -594,12 +664,18 @@ public class MenuPrincipalJanela extends JFrame implements ActionListener {
             abrirCadastroFormasPagamento();
         } else if (e.getSource() == menu_item_maquinas_cartoes) {
             abrirCadastroMaquinasCartao();
+        } else if (e.getSource() == menu_item_taxa_cartao) {
+            abrirConfiguracaoTaxasCartao();
         } else if (e.getSource() == menu_item_setor_servico) {
             abrirCadastroSetorServicos();
+        } else if (e.getSource() == menu_item_servico) {
+            abrirCadastroServicos();
         } else if (e.getSource() == menu_item_trocar_usuario) {
             trocarUsuario();
         } else if (e.getSource() == menu_item_sair) {
             sair();
+        } else if (e.getSource() == btnClientes) {
+            abrirCadastroClientes();
         } else if (e.getSource() == btnEmpresas) {
             abrirCadastroEmpresas();
         } else if (e.getSource() == btnLogout) {
