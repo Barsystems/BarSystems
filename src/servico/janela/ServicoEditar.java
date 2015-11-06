@@ -130,6 +130,8 @@ public class ServicoEditar extends JDialog implements ActionListener {
         painel2.add(comboSetor);
         painel2.add(lblValorVenda);
         painel2.add(txtValorVenda);
+        painel2.add(lblValorComissao);
+        painel2.add(txtValorComissao);
         
         painel3 = new JPanel();
         painel3.setLayout(null);

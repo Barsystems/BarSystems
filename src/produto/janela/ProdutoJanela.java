@@ -137,6 +137,9 @@ public class ProdutoJanela extends JPanel implements ActionListener, KeyListener
             if (tabela.getRowCount() > 0) {
                 tabela.setRowSelectionInterval(0, 0);
                 tabela.scrollRectToVisible(new Rectangle(tabela.getCellRect(0, 0, true)));
+                tabela.getColumnModel().getColumn(0).setPreferredWidth(370);
+                tabela.getColumnModel().getColumn(1).setPreferredWidth(100);
+                tabela.getColumnModel().getColumn(2).setPreferredWidth(100);
             }
         }
     }

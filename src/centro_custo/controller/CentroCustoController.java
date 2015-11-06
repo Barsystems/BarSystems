@@ -49,4 +49,8 @@ public class CentroCustoController {
         return facade.aumentaSaldo(id, saldo);
     }
     
+    public List<CentroCustoClasse> findCentroCustoDoResponsavel(Long id_usuario) {
+        return facade.findCentroCustoDoResponsavel(id_usuario);
+    }
+    
 }

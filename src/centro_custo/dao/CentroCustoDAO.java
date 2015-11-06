@@ -39,6 +39,12 @@ public class CentroCustoDAO implements ICentroCustoDAO {
     private static final String SQL_DIMINUI_SALDO = "UPDATE centro_custo SET saldo = saldo - ? WHERE id_centro_custo = ?";
     
     private static final String SQL_AUMENTA_SALDO = "UPDATE centro_custo SET saldo = saldo + ? WHERE id_centro_custo = ?";
+    
+    private static final String SQL_FIND_CENTRO_CUSTO_DO_RESPONSAVEL = "SELECT centro_custo.id_centro_custo, "
+            + "centro_custo.nome, centro_custo.tipo, centro_custo.saldo, centro_custo_responsavel.id_usuario_fk "
+            + "FROM centro_custo "
+            + "INNER JOIN centro_custo_responsavel ON centro_custo.id_centro_custo = centro_custo_responsavel.id_centro_custo_fk "
+            + "WHERE centro_custo_responsavel.id_usuario_fk = ? ORDER BY centro_custo.tipo";
 
     @Override
     public int save(CentroCustoClasse centro) {
@@ -177,6 +183,33 @@ public class CentroCustoDAO implements ICentroCustoDAO {
             e.printStackTrace();
         }
         return result;
+    }
+    
+    @Override
+    public List<CentroCustoClasse> findCentroCustoDoResponsavel(Long id_usuario) {
+        List<CentroCustoClasse> lista = new ArrayList<CentroCustoClasse>();
+        try {
+            conn = banco.getConexaoMySQL();
+            ps = conn.prepareStatement(SQL_FIND_CENTRO_CUSTO_DO_RESPONSAVEL);
+            ps.setLong(1, id_usuario);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                CentroCustoClasse classe = new CentroCustoClasse();
+                classe.setId(rs.getLong("centro_custo.id_centro_custo"));
+                classe.setNome(rs.getString("centro_custo.nome"));
+                classe.setTipo(rs.getString("centro_custo.tipo"));
+                classe.setSaldo(rs.getFloat("centro_custo.saldo"));
+                
+                lista.add(classe);
+            }
+            
+            rs.close();
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return lista;
     }
     
 }

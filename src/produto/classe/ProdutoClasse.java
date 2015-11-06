@@ -18,6 +18,7 @@ public class ProdutoClasse {
     private float valor_comissao;
     private Long id_setor;
     private String setor;
+    private String tipo_medida;
 
     public Long getId() {
         return id;
@@ -75,9 +76,17 @@ public class ProdutoClasse {
         this.setor = setor;
     }
 
+    public String getTipo_medida() {
+        return tipo_medida;
+    }
+
+    public void setTipo_medida(String tipo_medida) {
+        this.tipo_medida = tipo_medida;
+    }    
+
     @Override
     public String toString() {
-        return "ProdutoClasse{" + "id=" + id + ", nome=" + nome + ", valor_compra=" + valor_compra + ", valor_venda=" + valor_venda + ", valor_comissao=" + valor_comissao + ", id_setor=" + id_setor + ", setor=" + setor + '}';
+        return "ProdutoClasse{" + "id=" + id + ", nome=" + nome + ", valor_compra=" + valor_compra + ", valor_venda=" + valor_venda + ", valor_comissao=" + valor_comissao + ", id_setor=" + id_setor + ", setor=" + setor + ", tipo_medida=" + tipo_medida + '}';
     }
     
 }

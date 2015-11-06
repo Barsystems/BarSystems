@@ -24,16 +24,16 @@ public class ProdutoDAO implements IProdutoDAO {
     PreparedStatement ps;
     ResultSet rs;
     
-    private static final String SQL_SAVE = "INSERT INTO produto (nome, id_setor_fk, valor_compra, valor_venda, valor_comissao) "
-            + "VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_SAVE = "INSERT INTO produto (nome, id_setor_fk, tipo_medida, valor_compra, valor_venda, "
+            + "valor_comissao) VALUES (?, ?, ?, ?, ?, ?)";
     
-    private static final String SQL_UPDATE = "UPDATE produto SET nome = ?, id_setor_fk = ?, valor_compra = ?, valor_venda = ? "
-            + "valor_comissao = ? WHERE id_produto = ?";
+    private static final String SQL_UPDATE = "UPDATE produto SET nome = ?, id_setor_fk = ?, tipo_medida = ?, valor_compra = ?, "
+            + "valor_venda = ?, valor_comissao = ? WHERE id_produto = ?";
     
     private static final String SQL_REMOVE = "UPDATE produto SET excluido = 1 WHERE id_produto = ?";
     
     private static final String SQL_FIND_ALL = "SELECT produto.id_produto, produto.nome, produto.id_setor_fk, "
-            + "produto.valor_compra, produto.valor_venda, produto.valor_comissao, produto_setor.nome "
+            + "produto.tipo_medida, produto.valor_compra, produto.valor_venda, produto.valor_comissao, produto_setor.nome "
             + "FROM produto "
             + "INNER JOIN produto_setor ON produto.id_setor_fk = produto_setor.id_setor "
             + "WHERE produto.excluido = 0 AND produto.nome LIKE ? ORDER BY produto.nome";
@@ -48,9 +48,10 @@ public class ProdutoDAO implements IProdutoDAO {
             ps = conn.prepareStatement(SQL_SAVE);
             ps.setString(1, produto.getNome());
             ps.setLong(2, produto.getId_setor());
-            ps.setFloat(3, produto.getValor_compra());
-            ps.setFloat(4, produto.getValor_venda());
-            ps.setFloat(5, produto.getValor_comissao());
+            ps.setString(3, produto.getTipo_medida());
+            ps.setFloat(4, produto.getValor_compra());
+            ps.setFloat(5, produto.getValor_venda());
+            ps.setFloat(6, produto.getValor_comissao());
             result = ps.executeUpdate();
             
             ps.close();
@@ -69,10 +70,11 @@ public class ProdutoDAO implements IProdutoDAO {
             ps = conn.prepareStatement(SQL_UPDATE);
             ps.setString(1, produto.getNome());
             ps.setLong(2, produto.getId_setor());
-            ps.setFloat(3, produto.getValor_compra());
-            ps.setFloat(4, produto.getValor_venda());
-            ps.setFloat(5, produto.getValor_comissao());
-            ps.setLong(6, produto.getId());
+            ps.setString (3, produto.getTipo_medida());
+            ps.setFloat(4, produto.getValor_compra());
+            ps.setFloat(5, produto.getValor_venda());
+            ps.setFloat(6, produto.getValor_comissao());
+            ps.setLong(7, produto.getId());
             result = ps.executeUpdate();
             
             ps.close();
@@ -113,6 +115,7 @@ public class ProdutoDAO implements IProdutoDAO {
                 produto.setId(rs.getLong("produto.id_produto"));
                 produto.setNome(rs.getString("produto.nome"));
                 produto.setId_setor(rs.getLong("produto.id_setor_fk"));
+                produto.setTipo_medida(rs.getString("produto.tipo_medida"));
                 produto.setSetor(rs.getString("produto_setor.nome"));
                 produto.setValor_compra(rs.getFloat("produto.valor_compra"));
                 produto.setValor_venda(rs.getFloat("produto.valor_venda"));

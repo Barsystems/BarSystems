@@ -50,4 +50,8 @@ public class CentroCustoFacade {
         return dao.aumentaSaldo(id, saldo);
     }
     
+    public List<CentroCustoClasse> findCentroCustoDoResponsavel(Long id_usuario) {
+        return dao.findCentroCustoDoResponsavel(id_usuario);
+    }
+    
 }

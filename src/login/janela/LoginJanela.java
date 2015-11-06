@@ -48,12 +48,6 @@ public class LoginJanela extends JFrame implements ActionListener, KeyListener, 
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-        try {
-            setIconImage(ImageIO.read(new File("resources/icon24.png")));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
         fonteTitulo = new Font("Tahoma", Font.BOLD, 18);
         fonteGeral = new Font("Tahoma", Font.PLAIN, 12);
         

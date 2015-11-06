@@ -46,7 +46,7 @@ public class EmpresaEditar extends JDialog implements ActionListener {
     private JTextArea txtObservacao;
     private JScrollPane scrollTextArea;
     private JComboBox comboPais;
-    private JButton btnSalvar, btnLimpar, btnVoltar;
+    private JButton btnSalvar, btnVoltar;
     
     private Font fonteTitulo, fonteGeral;
     

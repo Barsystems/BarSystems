@@ -5,6 +5,7 @@
  */
 package produto.table;
 
+import java.text.NumberFormat;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import produto.classe.ProdutoClasse;
@@ -41,9 +42,11 @@ public class ProdutoTableModel extends AbstractTableModel {
         if (columnIndex == COL_NOME) {
             return produto.getNome();
         } else if (columnIndex == COL_VALOR_COMPRA) {
-            return produto.getValor_compra();
+            NumberFormat nf = NumberFormat.getCurrencyInstance();
+            return nf.format(produto.getValor_compra());
         } else {
-            return produto.getValor_venda();
+            NumberFormat nf = NumberFormat.getCurrencyInstance();
+            return nf.format(produto.getValor_venda());
         }
         
     }

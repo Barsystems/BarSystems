@@ -28,4 +28,6 @@ public interface ICentroCustoDAO {
     
     int aumentaSaldo (Long id, float saldo);
     
+    List<CentroCustoClasse> findCentroCustoDoResponsavel(Long id_usuario);
+    
 }

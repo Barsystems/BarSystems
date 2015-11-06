@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import utilidades.TrocaVirgulaPorPonto;
 import produto.classe.ProdutoClasse;
+import produto.comboBox.ProdutoComboBoxTipoMedida;
 import produto.controller.ProdutoController;
 import produto_setor.classe.ProdutoSetorClasse;
 import produto_setor.comboBox.ProdutoSetorComboBox;
@@ -35,9 +36,9 @@ import produto_setor.controller.ProdutoSetorController;
 public class ProdutoCadastrar extends JDialog implements ActionListener, KeyListener {
     
     private JPanel painel1, painel2, painel3;
-    private JLabel lblTitulo, lblNome, lblSetor, lblValorCompra, lblPorcentagemVenda, lblValorVenda, lblValorComissao;
+    private JLabel lblTitulo, lblNome, lblSetor, lblTipoMedida, lblValorCompra, lblPorcentagemVenda, lblValorVenda, lblValorComissao;
     private JTextField txtNome, txtValorCompra, txtPorcentagemVenda, txtValorVenda, txtValorComissao;
-    private JComboBox comboSetor;
+    private JComboBox comboSetor, comboTipoMedida;
     private JButton btnSalvar, btnLimpar, btnVoltar;
     
     private Font fonteTitulo, fonteGeral;
@@ -51,7 +52,7 @@ public class ProdutoCadastrar extends JDialog implements ActionListener, KeyList
         setLayout(null);
         setResizable(false);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setSize(500, 450);
+        setSize(500, 490);
         setLocationRelativeTo(null);
         setModal(true);
         
@@ -74,7 +75,7 @@ public class ProdutoCadastrar extends JDialog implements ActionListener, KeyList
         painel2 = new JPanel();
         painel2.setLayout(null);
         painel2.setBackground(Color.WHITE);
-        painel2.setBounds(0, 60, 500, 290);
+        painel2.setBounds(0, 60, 500, 330);
         
         lblNome = new JLabel("Nome do produto");
         lblNome.setFont(fonteGeral);
@@ -96,45 +97,57 @@ public class ProdutoCadastrar extends JDialog implements ActionListener, KeyList
         comboSetor.setModel(new ProdutoSetorComboBox(setores));
         comboSetor.setRenderer(new ProdutoSetorComboBoxCellRenderer());
         
+        lblTipoMedida = new JLabel("Tipo de medida");
+        lblTipoMedida.setFont(fonteGeral);
+        lblTipoMedida.setBounds(30, 110, 110, 30);
+        
+        comboTipoMedida = new JComboBox();
+        comboTipoMedida.setFont(fonteGeral);
+        comboTipoMedida.setBounds(190, 110, 190, 30);
+        
+        comboTipoMedida.setModel(new ProdutoComboBoxTipoMedida());
+        
         lblValorCompra = new JLabel("Valor de compra");
         lblValorCompra.setFont(fonteGeral);
-        lblValorCompra.setBounds(30, 110, 110, 30);
+        lblValorCompra.setBounds(30, 150, 150, 30);
         
         txtValorCompra = new JTextField();
         txtValorCompra.setFont(fonteGeral);
-        txtValorCompra.setBounds(190, 110, 190, 30);
+        txtValorCompra.setBounds(190, 150, 190, 30);
         txtValorCompra.addKeyListener(this);
         
         lblPorcentagemVenda = new JLabel("Porcentagem de lucro");
         lblPorcentagemVenda.setFont(fonteGeral);
-        lblPorcentagemVenda.setBounds(30, 150, 150, 30);
+        lblPorcentagemVenda.setBounds(30, 190, 150, 30);
         
         txtPorcentagemVenda = new JTextField();
         txtPorcentagemVenda.setFont(fonteGeral);
-        txtPorcentagemVenda.setBounds(190, 150, 190, 30);
+        txtPorcentagemVenda.setBounds(190, 190, 190, 30);
         txtPorcentagemVenda.addKeyListener(this);
         
         lblValorVenda = new JLabel("Valor de venda");
         lblValorVenda.setFont(fonteGeral);
-        lblValorVenda.setBounds(30, 190, 110, 30);
+        lblValorVenda.setBounds(30, 230, 110, 30);
         
         txtValorVenda = new JTextField();
         txtValorVenda.setFont(fonteGeral);
-        txtValorVenda.setBounds(190, 190, 190, 30);
+        txtValorVenda.setBounds(190, 230, 190, 30);
         txtValorVenda.addKeyListener(this);
         
         lblValorComissao = new JLabel("Valor da comissão");
         lblValorComissao.setFont(fonteGeral);
-        lblValorComissao.setBounds(30, 230, 110, 30);
+        lblValorComissao.setBounds(30, 270, 110, 30);
         
         txtValorComissao = new JTextField();
         txtValorComissao.setFont(fonteGeral);
-        txtValorComissao.setBounds(190, 230, 190, 30);
+        txtValorComissao.setBounds(190, 270, 190, 30);
         
         painel2.add(lblNome);
         painel2.add(txtNome);
         painel2.add(lblSetor);
         painel2.add(comboSetor);
+        painel2.add(lblTipoMedida);
+        painel2.add(comboTipoMedida);
         painel2.add(lblValorCompra);
         painel2.add(txtValorCompra);
         painel2.add(lblPorcentagemVenda);
@@ -146,7 +159,7 @@ public class ProdutoCadastrar extends JDialog implements ActionListener, KeyList
         
         painel3 = new JPanel();
         painel3.setLayout(null);
-        painel3.setBounds(0, 350, 500, 100);
+        painel3.setBounds(0, 390, 500, 100);
         
         btnSalvar = new JButton("Salvar");
         btnSalvar.setFont(fonteGeral);
@@ -198,6 +211,7 @@ public class ProdutoCadastrar extends JDialog implements ActionListener, KeyList
                     ProdutoClasse prod = new ProdutoClasse();
                     prod.setNome(txtNome.getText());
                     prod.setId_setor(setores.get(comboSetor.getSelectedIndex()).getId());
+                    prod.setTipo_medida(comboTipoMedida.getSelectedItem().toString());
                     prod.setValor_compra(valor_compra);
                     prod.setValor_venda(valor_venda);
                     prod.setValor_comissao(valor_comissao);

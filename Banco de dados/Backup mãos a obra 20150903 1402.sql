@@ -155,27 +155,6 @@ INSERT INTO `caixa_movimentacao` (`id_caixa_movimentacao`,`id_caixa_fk`,`descric
 
 
 --
--- Definition of table `caixa_responsavel`
---
-
-DROP TABLE IF EXISTS `caixa_responsavel`;
-CREATE TABLE `caixa_responsavel` (
-  `id_centro_custo` int(10) unsigned NOT NULL,
-  `id_usuario` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`id_centro_custo`,`id_usuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `caixa_responsavel`
---
-
-/*!40000 ALTER TABLE `caixa_responsavel` DISABLE KEYS */;
-INSERT INTO `caixa_responsavel` (`id_centro_custo`,`id_usuario`) VALUES 
- (1,4);
-/*!40000 ALTER TABLE `caixa_responsavel` ENABLE KEYS */;
-
-
---
 -- Definition of table `centro_custo`
 --
 
@@ -187,7 +166,7 @@ CREATE TABLE `centro_custo` (
   `saldo` double NOT NULL DEFAULT '0',
   `excluido` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_centro_custo`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `centro_custo`
@@ -200,8 +179,35 @@ INSERT INTO `centro_custo` (`id_centro_custo`,`nome`,`tipo`,`saldo`,`excluido`) 
  (8,'Conta','Conta bancária',2300,0),
  (9,'Conta do Bradesco','Conta bancária',300,0),
  (10,'Caixa do marcos','Caixa',1040,0),
- (11,'Conta Banco do Brasil','Conta bancária',0,1);
+ (11,'Conta Banco do Brasil','Conta bancária',0,1),
+ (12,'Caixa 3','Caixa',0,0);
 /*!40000 ALTER TABLE `centro_custo` ENABLE KEYS */;
+
+
+--
+-- Definition of table `centro_custo_responsavel`
+--
+
+DROP TABLE IF EXISTS `centro_custo_responsavel`;
+CREATE TABLE `centro_custo_responsavel` (
+  `id_centro_custo_fk` int(10) unsigned NOT NULL,
+  `id_usuario_fk` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id_centro_custo_fk`,`id_usuario_fk`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `centro_custo_responsavel`
+--
+
+/*!40000 ALTER TABLE `centro_custo_responsavel` DISABLE KEYS */;
+INSERT INTO `centro_custo_responsavel` (`id_centro_custo_fk`,`id_usuario_fk`) VALUES 
+ (1,1),
+ (1,2),
+ (1,4),
+ (8,1),
+ (12,1),
+ (12,4);
+/*!40000 ALTER TABLE `centro_custo_responsavel` ENABLE KEYS */;
 
 
 --
@@ -212,23 +218,25 @@ DROP TABLE IF EXISTS `centro_estoque`;
 CREATE TABLE `centro_estoque` (
   `id_centro_estoque` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nome` varchar(30) NOT NULL DEFAULT '',
+  `ativo` tinyint(1) DEFAULT '1',
   `excluido` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_centro_estoque`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `centro_estoque`
 --
 
 /*!40000 ALTER TABLE `centro_estoque` DISABLE KEYS */;
-INSERT INTO `centro_estoque` (`id_centro_estoque`,`nome`,`excluido`) VALUES 
- (1,'Geladeira 1',0),
- (2,'Geladeira 2',0),
- (3,'Porao',0),
- (4,'abc',0),
- (5,'Porao 2',0),
- (6,'Porao 3',0),
- (7,'teste',1);
+INSERT INTO `centro_estoque` (`id_centro_estoque`,`nome`,`ativo`,`excluido`) VALUES 
+ (1,'Geladeira 1',1,0),
+ (2,'Geladeira 2',1,0),
+ (3,'Porao',1,0),
+ (4,'abc',1,1),
+ (5,'Porao 2',1,0),
+ (6,'Porao 32',0,0),
+ (7,'teste',1,1),
+ (8,'Teste!!! 123',0,1);
 /*!40000 ALTER TABLE `centro_estoque` ENABLE KEYS */;
 
 
@@ -275,30 +283,27 @@ CREATE TABLE `cliente` (
   `email` varchar(45) DEFAULT NULL,
   `cep` varchar(10) DEFAULT NULL,
   `endereco` varchar(45) DEFAULT NULL,
-  `numero` varchar(10) DEFAULT NULL,
-  `complemento` varchar(45) DEFAULT NULL,
   `bairro` varchar(45) DEFAULT NULL,
   `cidade` varchar(45) DEFAULT NULL,
   `estado` varchar(2) DEFAULT NULL,
-  `pais` varchar(30) DEFAULT NULL,
+  `id_pais_fk` varchar(30) DEFAULT NULL,
   `bloqueado` tinyint(1) DEFAULT '0',
   `observacao` text,
-  `cep_recebimento` varchar(10) DEFAULT NULL,
-  `endereco_recebimento` varchar(45) DEFAULT NULL,
-  `numero_recebimento` varchar(10) DEFAULT NULL,
-  `complemento_recebimento` varchar(45) DEFAULT NULL,
-  `bairro_recebimento` varchar(45) DEFAULT NULL,
-  `cidade_recebimento` varchar(45) DEFAULT NULL,
-  `estado_recebimento` varchar(2) DEFAULT NULL,
   `excluido` tinyint(4) DEFAULT '0',
   PRIMARY KEY (`id_cliente`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `cliente`
 --
 
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` (`id_cliente`,`nome`,`data_nascimento`,`rg`,`cpf`,`telefone`,`celular`,`email`,`cep`,`endereco`,`bairro`,`cidade`,`estado`,`id_pais_fk`,`bloqueado`,`observacao`,`excluido`) VALUES 
+ (1,'marcos',NULL,NULL,'441.729.778-98','19 36841615',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'26',0,NULL,0),
+ (2,'filipe',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'26',0,NULL,0),
+ (3,'luan',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'26',0,NULL,0),
+ (4,'Teste 1','12/31/2321','123123213','123.123.123-21','(12) 3123-1231','(12) 312312312','123','99999999','123','123','123456','SP','26',1,'teste aeeeee',1),
+ (5,'teste','  /  /    ','','123.123.123-22','(  )     -    ','(  )          ','','        ','','','','  ','26',0,'',1);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 
 
@@ -314,7 +319,8 @@ CREATE TABLE `compra` (
   `codigo_nota` text,
   `data` date NOT NULL,
   `id_funcionario_fk` int(10) unsigned DEFAULT NULL,
-  `valor` float NOT NULL,
+  `acrescimo` float NOT NULL,
+  `desconto` float DEFAULT '0',
   `excluido` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `id_forma_pagamento_fk` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_compra`) USING BTREE
@@ -684,7 +690,7 @@ CREATE TABLE `forma_pagamento_taxa_cartao` (
   `taxa` float NOT NULL DEFAULT '0',
   `excluido` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_taxa_cartao`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `forma_pagamento_taxa_cartao`
@@ -698,7 +704,8 @@ INSERT INTO `forma_pagamento_taxa_cartao` (`id_taxa_cartao`,`id_forma_pagamento_
  (4,5,2,1.3,0),
  (5,6,2,0,0),
  (6,7,2,1.2,0),
- (7,7,4,3,0);
+ (7,7,4,3,0),
+ (8,5,4,1,0);
 /*!40000 ALTER TABLE `forma_pagamento_taxa_cartao` ENABLE KEYS */;
 
 
@@ -790,7 +797,7 @@ CREATE TABLE `funcionario` (
   `id_pais_fk` int(10) unsigned DEFAULT NULL,
   `excluido` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_funcionario`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `funcionario`
@@ -798,7 +805,9 @@ CREATE TABLE `funcionario` (
 
 /*!40000 ALTER TABLE `funcionario` DISABLE KEYS */;
 INSERT INTO `funcionario` (`id_funcionario`,`nome`,`data_nascimento`,`cpf`,`rg`,`email`,`telefone`,`celular`,`id_funcao_fk`,`salario`,`cep`,`endereco`,`bairro`,`cidade`,`estado`,`id_pais_fk`,`excluido`) VALUES 
- (11,'Marcos César da Silva Mello','16/02/1996','441.729.778-98','444645482','marcos_smello@hotmail.com','(19) 3684-1615','(19) 992190452',3,2000,'13720000','Rua João Paulino de Carvalho 208','João de Souza','São José do Rio Pardo','SP',26,0);
+ (11,'Marcos César da Silva Mello','16/02/1996','441.729.778-98','444645482','marcos_smello@hotmail.com','(19) 3684-1615','(19) 992190452',3,2000,'13720000','Rua João Paulino de Carvalho 208','João de Souza','São José do Rio Pardo','SP',26,0),
+ (12,'teste','  /  /    ','   .   .   -  ','','','(  )     -    ','(  )          ',1,0,'        ','','','','  ',26,0),
+ (13,'teste 1','  /  /    ','   .   .   -  ','','','(  )     -    ','(  )          ',1,0,'        ','','','','  ',26,0);
 /*!40000 ALTER TABLE `funcionario` ENABLE KEYS */;
 
 
@@ -838,9 +847,9 @@ DROP TABLE IF EXISTS `ordem_servico`;
 CREATE TABLE `ordem_servico` (
   `id_ordem_servico` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `descricao` text NOT NULL,
-  `id_cliente` int(10) unsigned NOT NULL,
-  `id_usuario_atendente` int(10) unsigned NOT NULL,
-  `solicitante` varchar(30) NOT NULL,
+  `id_cliente_fk` int(10) unsigned NOT NULL,
+  `id_funcionario_fk` int(10) unsigned NOT NULL,
+  `solicitante` varchar(50) NOT NULL,
   `flag_materiais_instalados` tinyint(1) NOT NULL,
   `flag_servico_conferido` tinyint(1) NOT NULL,
   `flag_local_limpo` tinyint(1) NOT NULL,
@@ -854,7 +863,6 @@ CREATE TABLE `ordem_servico` (
   `desconto` float NOT NULL,
   `valor_total` float NOT NULL,
   `excluido` tinyint(1) NOT NULL,
-  `data_cadastro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_ordem_servico`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -1088,19 +1096,22 @@ INSERT INTO `produto_setor` (`id_setor`,`nome`,`excluido`) VALUES
 DROP TABLE IF EXISTS `servico`;
 CREATE TABLE `servico` (
   `id_servico` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nome` varchar(45) NOT NULL,
-  `id_tipo_fk` int(10) unsigned NOT NULL,
-  `valor` float NOT NULL,
+  `nome` varchar(70) NOT NULL,
+  `id_setor_fk` int(10) unsigned NOT NULL,
+  `valor_venda` float NOT NULL,
   `valor_comissao` float NOT NULL,
-  `excluido` varchar(45) NOT NULL DEFAULT '0',
+  `excluido` tinyint(3) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_servico`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `servico`
 --
 
 /*!40000 ALTER TABLE `servico` DISABLE KEYS */;
+INSERT INTO `servico` (`id_servico`,`nome`,`id_setor_fk`,`valor_venda`,`valor_comissao`,`excluido`) VALUES 
+ (1,'Teste',2,300,5,0),
+ (2,'Teste 1',1,200,10,1);
 /*!40000 ALTER TABLE `servico` ENABLE KEYS */;
 
 
