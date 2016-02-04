@@ -38,8 +38,10 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import orcamento_produto.classe.OrcamentoProdutoClasse;
-import orcamento_produto.janela.OrcamentoProdutoEscolherProduto;
+import produto.janela.ProdutoEscolher;
 import orcamento_produto.table.OrcamentoProdutoTableModel;
+import produto.classe.ProdutoClasse;
+import produto.controller.ProdutoController;
 import servico.classe.ServicoClasse;
 import servico.comboBox.ServicoComboBox;
 import servico.comboBox.ServicoComboBoxCellRenderer;
@@ -53,7 +55,7 @@ import utilidades.TrocaVirgulaPorPonto;
 public class OrcamentoCadastrar extends JDialog implements ActionListener, MouseListener {
     
     private JPanel painel1, painel2, painel3;
-    private JLabel lblTitulo, lblAlvoOrcamento, lblClienteEmpresa, lblServico, lblDescricaoProduto, lblValorServico1, lblValorServico2, lblValorProdutos1, lblValorProdutos2, lblDesconto1, lblDesconto2, lblValorTotal1, lblValorTotal2;
+    private JLabel lblTitulo, lblAlvoOrcamento, lblClienteEmpresa, lblServico, lblServico1, lblServico2, lblDiasServico1, lblDiasServico2, lblTaxaDeslocamento1, lblTaxaDeslocamento2, lblDescricaoProduto, lblValorServico1, lblValorServico2, lblValorProdutos1, lblValorProdutos2, lblDesconto1, lblDesconto2, lblValorTotal1, lblValorTotal2;
     private JRadioButton radioCliente, radioEmpresa;
     private ButtonGroup grupoRadio;
     private JComboBox comboClienteEmpresa, comboServico;
@@ -69,7 +71,7 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
     private List<OrcamentoProdutoClasse> lista_produtos_adicionados;
     
     private NumberFormat nf = NumberFormat.getCurrencyInstance();
-    private float valor_servico, valor_produtos, valor_desconto, valor_total;
+    private float valor_servico, dias_servico = 1, valor_produtos, valor_desconto, valor_total;
     
     public boolean cadastrou = false; //esta variável vai dizer para o form pai se foi cadastrado algum usuário. Se sim, atualiza a tabela na outra tela
     
@@ -145,6 +147,7 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
         comboServico = new JComboBox();
         comboServico.setFont(fonteGeral);
         comboServico.setBounds(250, 110, 430, 30);
+        comboServico.addActionListener(this);
         
         lista_servicos = new ServicoController().findServico("");
         comboServico.setModel(new ServicoComboBox(lista_servicos));
@@ -153,6 +156,26 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
         btnPesquisarServico = new JButton(new ImageIcon(getClass().getResource("/imagens/Pesquisar 16px.png")));
         btnPesquisarServico.setBounds(690, 110, 40, 30);
         btnPesquisarServico.addActionListener(this);
+        
+        lblServico1 = new JLabel("Valor do serviço por dia");
+        lblServico1.setFont(fonteGeral);
+        lblServico1.setBounds(470, 140, 130, 30);
+        
+        lblServico2 = new JLabel();
+        lblServico2.setFont(fonteNegrito);
+        lblServico2.setBounds(630, 140, 100, 30);
+        lblServico2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        lblServico2.addMouseListener(this);
+        
+        lblDiasServico1 = new JLabel("Qnt. de dias de serviço");
+        lblDiasServico1.setFont(fonteGeral);
+        lblDiasServico1.setBounds(470, 160, 150, 30);
+        
+        lblDiasServico2 = new JLabel("1");
+        lblDiasServico2.setFont(fonteNegrito);
+        lblDiasServico2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        lblDiasServico2.setBounds(630, 160, 30, 30);
+        lblDiasServico2.addMouseListener(this);
         
         lblDescricaoProduto = new JLabel("Produtos adicionados ao orçamento");
         lblDescricaoProduto.setFont(fonteGeral);
@@ -163,7 +186,10 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
         tabelaProduto.setRowHeight(25);
         tabelaProduto.getTableHeader().setReorderingAllowed(false);
         tabelaProduto.getTableHeader().setResizingAllowed(false);
-        refreshTable();
+        tabelaProduto.addMouseListener(this);
+        
+        lista_produtos_adicionados = new ArrayList<OrcamentoProdutoClasse>();
+        addProdutosVinculadosAServico();
         
         scrollTabelaProduto = new JScrollPane(tabelaProduto);
         scrollTabelaProduto.setBounds(30, 230, 650, 150);
@@ -185,7 +211,6 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
         lblValorServico2 = new JLabel();
         lblValorServico2.setFont(fonteNegrito);
         lblValorServico2.setBounds(90, 390, 100, 30);
-        lblValorServico2.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
         lblValorServico2.addMouseListener(this);
         refreshValorServico();
         
@@ -227,6 +252,10 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
         painel2.add(lblServico);
         painel2.add(comboServico);
         painel2.add(btnPesquisarServico);
+        painel2.add(lblServico1);
+        painel2.add(lblServico2);
+        painel2.add(lblDiasServico1);
+        painel2.add(lblDiasServico2);
         painel2.add(lblDescricaoProduto);
         painel2.add(scrollTabelaProduto);
         painel2.add(btnAddProduto);
@@ -264,7 +293,8 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
     
     public void refreshValorServico() {
         valor_servico = lista_servicos.get(comboServico.getSelectedIndex()).getValor_venda();
-        lblValorServico2.setText(nf.format(valor_servico));
+        lblServico2.setText(nf.format(valor_servico));
+        lblValorServico2.setText(nf.format(valor_servico * dias_servico));
     }
     
     public void defineValorServico() {
@@ -272,7 +302,27 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
         valor = JOptionPane.showInputDialog(null, "Defina o valor do serviço", "ATENÇÃO", JOptionPane.PLAIN_MESSAGE);
         if (valor != null) {
             valor_servico = new TrocaVirgulaPorPonto().trocaVirgulaPorPonto(valor);
-            lblValorServico2.setText(nf.format(valor_servico));
+            lblServico2.setText(nf.format(valor_servico));
+            lblValorServico2.setText(nf.format(valor_servico * dias_servico));
+        }
+    }
+    
+    public void defineDiasServico() {
+        String dias = null;
+        dias = JOptionPane.showInputDialog(null, "Defina a quantidade de dias do serviço", "ATENÇÃO", JOptionPane.PLAIN_MESSAGE);
+        if (dias != null) {
+            dias_servico = new TrocaVirgulaPorPonto().trocaVirgulaPorPonto(dias);
+            //AQUI EU VERIFICAREI SE A QUANTIDADE DIGITADA É INTEIRO OU DECIMAL
+            //SE FOR DECIMAL NÃO POSSO DEIXAR CONTINUAR
+            if (dias_servico % 1 != 0) {
+                //SE O RESTO DA DIVISÃO POR 1 FOR = 0, ENTÃO É UM NÚMERO INTEIRO
+                JOptionPane.showMessageDialog(null, "Defina uma quantidade de dias válida!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+            } else {
+                String dias1 = String.valueOf(dias_servico);
+                int index = dias1.indexOf(".");
+                dias1 = dias1.substring(0, index);
+                lblDiasServico2.setText(dias1);
+            }
         }
     }
     
@@ -289,19 +339,20 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
         valor = JOptionPane.showInputDialog(null, "Defina o valor do desconto", "ATENÇÃO", JOptionPane.PLAIN_MESSAGE);
         if (valor != null) {
             valor_desconto = new TrocaVirgulaPorPonto().trocaVirgulaPorPonto(valor);
+            if (valor_desconto < 0) {
+                valor_desconto = 0;
+                JOptionPane.showMessageDialog(null, "Não é possível conceder um desconto negativo! O desconto passou a ser R$ 0,00!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+            }
             lblDesconto2.setText(nf.format(valor_desconto));
         }
     }
     
     public void refreshValorTotal() {
-        lblValorTotal2.setText(nf.format(valor_servico+valor_produtos-valor_desconto));
+        valor_total = (valor_servico*dias_servico)+valor_produtos-valor_desconto;
+        lblValorTotal2.setText(nf.format(valor_total));
     }
     
-    public void refreshTable() {
-        if (lista_produtos_adicionados == null) {
-            lista_produtos_adicionados = new ArrayList<OrcamentoProdutoClasse>();
-        }
-        
+    public void refreshTable() {        
         tabelaProduto.setModel(new OrcamentoProdutoTableModel(lista_produtos_adicionados));
         if (tabelaProduto.getRowCount() > 0) {
             tabelaProduto.setRowSelectionInterval(0, 0);
@@ -448,20 +499,39 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
         }
     }
     
+    public void addProdutosVinculadosAServico() {
+        ProdutoController cont = new ProdutoController();
+        List<ProdutoClasse> lista_produtos_vinculados = cont.findProdutoVinculadoAServico(lista_servicos.get(comboServico.getSelectedIndex()).getId());
+        
+        lista_produtos_adicionados.clear();
+        for (int i = 0; i <lista_produtos_vinculados.size(); i++) {
+            OrcamentoProdutoClasse classe = new OrcamentoProdutoClasse();
+            classe.setId_produto(lista_produtos_vinculados.get(i).getId());
+            classe.setNome_produto(lista_produtos_vinculados.get(i).getNome());
+            classe.setTipo_medida(lista_produtos_vinculados.get(i).getTipo_medida());
+            classe.setQuantidade(1);
+            classe.setValor_cobrado(lista_produtos_vinculados.get(i).getValor_venda());
+            
+            lista_produtos_adicionados.add(classe);
+        }
+        
+        refreshTable();
+    }
+    
     public void addProduto() {
         boolean flag = false;
         
-        OrcamentoProdutoEscolherProduto escolher = new OrcamentoProdutoEscolherProduto();
+        ProdutoEscolher escolher = new ProdutoEscolher();
         escolher.setVisible(true);
         
         //VERIFICO SE JÁ EXISTE ESTE PRODUTO ADICIONADO NA TABELA
         //SE EXISTIR, O FLAG SERÁ TRUE, E ENTÃO EU SÓ SOMO A QUANTIDADE
-        if (escolher.escolheu == true) {
+        if (escolher.escolheu == true) {            
             if (tabelaProduto.getRowCount() > 0) {
                 for (int i = 0; i < lista_produtos_adicionados.size(); i++) {
-                    if (escolher.classe.getId_produto().equals(lista_produtos_adicionados.get(i).getId_produto()) == true) {
+                    if (escolher.classe.getId().equals(lista_produtos_adicionados.get(i).getId_produto()) == true) {
                         //COMO O PRODUTO EXISTE NA TABELA, ADICIONO AQUI MESMO A QUANTIDADE
-                        lista_produtos_adicionados.get(i).setQuantidade(lista_produtos_adicionados.get(i).getQuantidade() + escolher.classe.getQuantidade());
+                        lista_produtos_adicionados.get(i).setQuantidade(lista_produtos_adicionados.get(i).getQuantidade() + escolher.quantidade);
                         flag = true;
                     }
                 }
@@ -471,7 +541,14 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
             //LOGO, DEVO ADICIONAR E CARREGAR A TABELA NOVAMENTE
             //ADICIONO FORA DO FOR PARA QUE SEJA ADICIONADO APENAS UMA VEZ
             if (flag == false) {
-                lista_produtos_adicionados.add(escolher.classe); 
+                OrcamentoProdutoClasse classe = new OrcamentoProdutoClasse();
+                classe.setId_produto(escolher.classe.getId());
+                classe.setNome_produto(escolher.classe.getNome());
+                classe.setQuantidade(escolher.quantidade);
+                classe.setTipo_medida(escolher.classe.getTipo_medida());
+                classe.setValor_cobrado(escolher.classe.getValor_venda());
+                
+                lista_produtos_adicionados.add(classe); 
             }
             
             //POR FIM RECARREGO A TABELA E OS VALORES
@@ -492,7 +569,7 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
         } else {
             String quant = null;
             quant = JOptionPane.showInputDialog(null, "Defina a quantidade a retirar", "ATENÇÃO", JOptionPane.PLAIN_MESSAGE);
-            if (quant == null) {
+            if (quant.isEmpty() || quant == null) {
                 JOptionPane.showMessageDialog(null, "Não foi possível remover o produto pois foi definido um valor incorreto!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
             } else {
                 float quantidade = new TrocaVirgulaPorPonto().trocaVirgulaPorPonto(quant);
@@ -523,6 +600,42 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
         }
         
     }
+    
+    public void alteraValorProduto() {
+        boolean flag = true;
+        int coluna = tabelaProduto.getSelectedColumn();
+        if (coluna == 2) {
+            int linha = tabelaProduto.getSelectedRow();
+            String quant = null;
+            quant = JOptionPane.showInputDialog(null, "Defina a quantidade do produto", "ATENÇÃO", JOptionPane.PLAIN_MESSAGE);
+            if (quant == null || quant.isEmpty() || quant.equals("")) {
+                JOptionPane.showMessageDialog(null, "Quantidade inválida!", "Atenção", JOptionPane.WARNING_MESSAGE);
+                flag = false;
+            } else {
+                float quantidade = new TrocaVirgulaPorPonto().trocaVirgulaPorPonto(quant);
+                if (quantidade <= 0) {
+                    lista_produtos_adicionados.remove(linha);
+                } else {
+                    //AQUI EU VERIFICAREI SE A QUANTIDADE DIGITADA É INTEIRO OU DECIMAL
+                    //SE FOR DECIMAL E O PRODUTO FOR INTEIRO, NÃO POSSO DEIXAR CONTINUAR
+                    if (quantidade % 1 != 0 && lista_produtos_adicionados.get(linha).getTipo_medida().equals("Unidade")) {
+                        //SE O RESTO DA DIVISÃO POR 1 FOR = 0, ENTÃO É UM NÚMERO INTEIRO
+                        JOptionPane.showMessageDialog(null, "Este produto foi cadastrado como \"unidade\"! Defina uma quantidade válida!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+                        flag = false;
+                    } else {
+                        lista_produtos_adicionados.get(linha).setQuantidade(quantidade);
+                        lista_produtos_adicionados.set(linha, lista_produtos_adicionados.get(linha));
+                    }
+                }
+                
+                if (flag == true) {
+                    refreshTable();
+                    refreshValorProdutos();
+                    refreshValorTotal();
+                }
+            }
+        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -533,8 +646,17 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
             refreshEmpresas();
         } else if (source == btnPesquisarClienteEmpresa) {
             pesquisarClienteEmpresa();
+        } else if (source == comboServico) {
+            refreshValorServico();
+            addProdutosVinculadosAServico();
+            refreshValorProdutos();
+            refreshValorTotal();
         } else if (source == btnPesquisarServico) {
             pesquisarServico();
+            refreshValorServico();
+            addProdutosVinculadosAServico();
+            refreshValorProdutos();
+            refreshValorTotal();
         } else if (source == btnAddProduto) {
             addProduto();
         } else if (source == btnExcluirProduto) {
@@ -549,7 +671,15 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource() == lblValorServico2) {
+        if (e.getSource() == lblDiasServico2) {
+            defineDiasServico();
+            refreshValorServico();
+            refreshValorTotal();
+        } else if (e.getSource() == tabelaProduto) {
+            //if (e.getClickCount() == 2) {
+                alteraValorProduto();
+            //}
+        } else if (e.getSource() == lblServico2) {
             defineValorServico();
             refreshValorTotal();
         } else if (e.getSource() == lblDesconto2) {
@@ -570,8 +700,10 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
     
     @Override
     public void mouseEntered(MouseEvent e) {
-        if (e.getSource() == lblValorServico2) {
-            lblValorServico2.setForeground(Color.red);
+        if (e.getSource() == lblDiasServico2) {
+            lblDiasServico2.setForeground(Color.red);
+        } else if (e.getSource() == lblServico2) {
+            lblServico2.setForeground(Color.red);
         } else if (e.getSource() == lblDesconto2) {
             lblDesconto2.setForeground(Color.red);
         }
@@ -579,8 +711,10 @@ public class OrcamentoCadastrar extends JDialog implements ActionListener, Mouse
 
     @Override
     public void mouseExited(MouseEvent e) {
-        if (e.getSource() == lblValorServico2) {
-            lblValorServico2.setForeground(Color.black);
+        if (e.getSource() == lblDiasServico2) {
+            lblDiasServico2.setForeground(Color.black);
+        } else if (e.getSource() == lblServico2) {
+            lblServico2.setForeground(Color.black);
         } else if (e.getSource() == lblDesconto2) {
             lblDesconto2.setForeground(Color.black);
         }

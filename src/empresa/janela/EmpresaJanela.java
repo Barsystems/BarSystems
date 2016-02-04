@@ -77,18 +77,19 @@ public class EmpresaJanela extends JPanel implements KeyListener, ActionListener
         
         txtPesquisar = new JTextField();
         txtPesquisar.setFont(fonteGeral);
-        txtPesquisar.setBounds(170, 30, 430, 30);
+        txtPesquisar.setBounds(170, 30, 860, 30);
         txtPesquisar.addKeyListener(this);
         
         tabela = new JTable();
         tabela.setFont(fonteGeral);
         tabela.setRowHeight(25);
         tabela.getTableHeader().setReorderingAllowed(false);
-        tabela.getTableHeader().setResizingAllowed(false);
+        //tabela.getTableHeader().setResizingAllowed(false);
+        tabela.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         refreshTable();
         
         scrollTabela = new JScrollPane(tabela);
-        scrollTabela.setBounds(30, 70, 570, 250);
+        scrollTabela.setBounds(30, 70, 1000, 250);
         
         painel2.add(lblPesquisar);
         painel2.add(txtPesquisar);
@@ -137,6 +138,11 @@ public class EmpresaJanela extends JPanel implements KeyListener, ActionListener
                 tabela.setRowSelectionInterval(0, 0);
                 tabela.scrollRectToVisible(new Rectangle(tabela.getCellRect(0, 0, true)));
             }
+            
+            tabela.getColumnModel().getColumn(0).setPreferredWidth(330);
+            tabela.getColumnModel().getColumn(1).setPreferredWidth(230);
+            tabela.getColumnModel().getColumn(2).setPreferredWidth(250);
+            tabela.getColumnModel().getColumn(3).setPreferredWidth(80);
         }
     }
     

@@ -16,6 +16,8 @@ import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.text.ParseException;
 import java.util.List;
 import javax.swing.JButton;
@@ -38,7 +40,7 @@ import utilidades.TrocaVirgulaPorPonto;
  *
  * @author Marcos
  */
-public class FuncionarioCadastrar extends JDialog implements ActionListener {
+public class FuncionarioCadastrar extends JDialog implements ActionListener, KeyListener {
     
     private JPanel painel1, painel2, painel3;
     private JLabel lblTitulo, lblNome, lblNascimento, lblCpf, lblRg, lblEmail, lblTelefone, lblCelular, lblFuncao, lblSalario, 
@@ -161,6 +163,7 @@ public class FuncionarioCadastrar extends JDialog implements ActionListener {
         txtSalario = new JTextField();
         txtSalario.setFont(fonteGeral);
         txtSalario.setBounds(480, 150, 250, 30);
+        txtSalario.addKeyListener(this);
         
         lblCep = new JLabel("Cep");
         lblCep.setFont(fonteGeral);
@@ -361,6 +364,26 @@ public class FuncionarioCadastrar extends JDialog implements ActionListener {
         } else if (source == btnVoltar) {
             dispose();
         }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if (e.getSource() == txtSalario) {
+            String caracteresValidos = "1234567890,.";
+            if(caracteresValidos.contains(e.getKeyChar()+"") == false) {
+                e.consume();
+            }
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        
     }
     
 }

@@ -142,7 +142,7 @@ public class DadosEmpresaJanela extends JDialog implements ActionListener, Mouse
         lblTelefone.setFont(fonteGeral);
         lblTelefone.setBounds(30, 110, 60, 30);
         
-        txtTelefone = new JFormattedTextField(new MaskFormatter("(##) ####-####"));
+        txtTelefone = new JFormattedTextField(new MaskFormatter("(##) ####-####*"));
         txtTelefone.setText(classe.getTelefone());
         txtTelefone.setFont(fonteGeral);
         txtTelefone.setBounds(110, 110, 250, 30);

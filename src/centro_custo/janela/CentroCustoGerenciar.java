@@ -9,9 +9,11 @@ import caixa.janela.CaixaJanela;
 import centro_custo.classe.CentroCustoClasse;
 import centro_custo.controller.CentroCustoController;
 import conta_bancaria.janela.ContaBancariaJanela;
+import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
@@ -46,30 +48,38 @@ public class CentroCustoGerenciar extends JPanel implements ChangeListener {
         CentroCustoController cont = new CentroCustoController();
         lista_centros = cont.findCentroCustoDoResponsavel(this.user.getId());
         
-        lista_caixa = new ArrayList<CaixaJanela>();
-        lista_conta = new ArrayList<ContaBancariaJanela>();
-        
         painel_centros = new JTabbedPane();
         painel_centros.setFont(fonteGeral);
         painel_centros.setBounds(0, 0, width, height);
         painel_centros.addChangeListener(this);
         
-        for (int i = 0; i < lista_centros.size(); i++) {
-            if (lista_centros.get(i).getTipo().equals("Caixa")) {
-                CaixaJanela caixa = new CaixaJanela(this.user, width, lista_centros.get(i));
-                lista_caixa.add(caixa);
-                painel_centros.addTab(lista_centros.get(i).getNome(), null, caixa);
-            } else {
-                ContaBancariaJanela conta = new ContaBancariaJanela(this.user, width, lista_centros.get(i));
-                lista_conta.add(conta);
-                painel_centros.addTab(lista_centros.get(i).getNome(), null, conta);
-            }
-        }
+        lista_caixa = new ArrayList<CaixaJanela>();
+        lista_conta = new ArrayList<ContaBancariaJanela>();
         
-        add(painel_centros);
+        if (lista_centros.isEmpty()) {
+            JLabel lblMensagem = new JLabel("Este usuário não é responsável por nenhum centro de custo atualmente!");
+            lblMensagem.setFont(new Font("Tahoma", Font.BOLD, 12));
+            lblMensagem.setForeground(Color.red);
+            lblMensagem.setBounds(30, 20, 450, 30);
+            add(lblMensagem);
+        } else {
+            
+            for (int i = 0; i < lista_centros.size(); i++) {
+                if (lista_centros.get(i).getTipo().equals("Caixa")) {
+                    CaixaJanela caixa = new CaixaJanela(this.user, width, lista_centros.get(i));
+                    lista_caixa.add(caixa);
+                    painel_centros.addTab(lista_centros.get(i).getNome(), null, caixa);
+                } else {
+                    ContaBancariaJanela conta = new ContaBancariaJanela(this.user, width, lista_centros.get(i));
+                    lista_conta.add(conta);
+                    painel_centros.addTab(lista_centros.get(i).getNome(), null, conta);
+                }
+            }
+            add(painel_centros); 
+        }
     }
     
-    public void carregaMovimentacaoCentroEstoque() {
+    public void carregaMovimentacaoCentroCusto() {
         int index = painel_centros.getSelectedIndex();
         if (lista_centros.get(index).getTipo().equals("Caixa")) {
             lista_caixa.get(index).refreshTable();
@@ -81,7 +91,7 @@ public class CentroCustoGerenciar extends JPanel implements ChangeListener {
     @Override
     public void stateChanged(ChangeEvent e) {
         if (e.getSource() == painel_centros) {
-            carregaMovimentacaoCentroEstoque();
+            carregaMovimentacaoCentroCusto();
         }
     }
     

@@ -86,7 +86,7 @@ public class ProdutoJanela extends JPanel implements ActionListener, KeyListener
         tabela.setRowHeight(25);
         tabela.getTableHeader().setReorderingAllowed(false);
         tabela.getTableHeader().setResizingAllowed(false);
-        refreshTable();
+        refreshTable(0);
         
         scrollTabela = new JScrollPane(tabela);
         scrollTabela.setBounds(30, 70, 570, 250);
@@ -130,17 +130,18 @@ public class ProdutoJanela extends JPanel implements ActionListener, KeyListener
         
     }
     
-    public void refreshTable() {
+    public void refreshTable(int linha) {
         produto = new ProdutoController().findProduto(txtPesquisar.getText());
         if (produto != null) {
-            tabela.setModel(new ProdutoTableModel(produto));
-            if (tabela.getRowCount() > 0) {
-                tabela.setRowSelectionInterval(0, 0);
-                tabela.scrollRectToVisible(new Rectangle(tabela.getCellRect(0, 0, true)));
-                tabela.getColumnModel().getColumn(0).setPreferredWidth(370);
-                tabela.getColumnModel().getColumn(1).setPreferredWidth(100);
-                tabela.getColumnModel().getColumn(2).setPreferredWidth(100);
+            tabela.setModel(new ProdutoTableModel(produto, 3));
+            if (tabela.getRowCount() > 0 && linha >= 0) {
+                tabela.setRowSelectionInterval(linha, linha);
+                tabela.scrollRectToVisible(new Rectangle(tabela.getCellRect(linha, linha, true)));
             }
+            
+            tabela.getColumnModel().getColumn(0).setPreferredWidth(370);
+            tabela.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tabela.getColumnModel().getColumn(2).setPreferredWidth(100);
         }
     }
     
@@ -148,7 +149,14 @@ public class ProdutoJanela extends JPanel implements ActionListener, KeyListener
         ProdutoCadastrar cadastrar = new ProdutoCadastrar();
         cadastrar.setVisible(true);
         if(cadastrar.cadastrou == true) {
-            refreshTable();
+            ProdutoClasse prod = produto.get(tabela.getSelectedRow());
+            refreshTable(-1);
+            for (int i = 0; i < produto.size(); i++) {
+                if (produto.get(i).getNome().equals(prod.getNome())) {
+                    tabela.setRowSelectionInterval(i, i);
+                    tabela.scrollRectToVisible(new Rectangle(tabela.getCellRect(i, i, true)));
+                }
+            }
         }
     }
     
@@ -156,7 +164,7 @@ public class ProdutoJanela extends JPanel implements ActionListener, KeyListener
         ProdutoEditar editar = new ProdutoEditar(produto.get(tabela.getSelectedRow()));
         editar.setVisible(true);
         if (editar.editou == true) {
-            refreshTable();
+            refreshTable(tabela.getSelectedRow());
         }
     }
     
@@ -166,7 +174,11 @@ public class ProdutoJanela extends JPanel implements ActionListener, KeyListener
         boolean result = excluir.excluir(prod);
         if (result == true) {
             JOptionPane.showMessageDialog(null, "Produto "+prod.getNome()+ " excluído com sucesso!", "ATENÇÃO", JOptionPane.INFORMATION_MESSAGE);
-            refreshTable();
+            int index = tabela.getSelectedRow();
+            if (index == tabela.getRowCount()-1) {
+                index = index - 1;
+            }
+            refreshTable(index);
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possível excluir o produto "+prod.getNome()+"!", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
         }
@@ -203,7 +215,7 @@ public class ProdutoJanela extends JPanel implements ActionListener, KeyListener
         int key = e.getKeyCode();
         if (e.getSource() == txtPesquisar) {
             if (key != 38 && key != 40 && key != 112 && key != 113 && key != 114 && key != 115 && key != 116 && key != 27) {
-                refreshTable();
+                refreshTable(tabela.getSelectedRow());
             }
         }
     }

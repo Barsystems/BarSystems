@@ -17,7 +17,8 @@ public class EmpresaTableModel extends AbstractTableModel {
 
     private static final int COL_RAZAO_SOCIAL = 0;
     private static final int COL_NOME_FANTASIA = 1;
-    private static final int COL_TELEFONE = 2;
+    private static final int COL_EMAIL = 2;
+    private static final int COL_COD = 3;
     
     private List<EmpresaClasse> valores;
     
@@ -32,7 +33,7 @@ public class EmpresaTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -42,8 +43,10 @@ public class EmpresaTableModel extends AbstractTableModel {
             return empresa.getRazao_social();
         } else if (columnIndex == COL_NOME_FANTASIA) {
             return empresa.getNome_fantasia();
+        } else if (columnIndex == COL_EMAIL) {
+            return empresa.getEmail();
         } else {
-            return empresa.getTelefone();
+            return empresa.getId();
         }
         
     }
@@ -54,7 +57,8 @@ public class EmpresaTableModel extends AbstractTableModel {
         switch (column) {
             case COL_RAZAO_SOCIAL: coluna = "Razão social"; break;
             case COL_NOME_FANTASIA: coluna = "Nome fantasia"; break;
-            case COL_TELEFONE: coluna = "Telefone da empresa"; break;
+            case COL_EMAIL: coluna = "Email da empresa"; break;
+            case COL_COD: coluna = "ID da empresa"; break;
             default: throw new IllegalArgumentException("Coluna inválida!");
         }
         return coluna;

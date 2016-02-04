@@ -3,10 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Marcos/Desktop/BarSystems/src/orcamento/janela/OrcamentoCadastrar.java</file>
-            <file>file:/C:/Users/Marcos/Desktop/BarSystems/src/orcamento/janela/OrcamentoJanela.java</file>
-            <file>file:/C:/Users/Marcos/Desktop/BarSystems/src/orcamento_produto/janela/OrcamentoProdutoEscolherProduto.java</file>
-            <file>file:/C:/Users/Marcos/Desktop/BarSystems/src/orcamento/comboBox/OrcamentoComboBoxPesquisar.java</file>
+            <file>file:/C:/Users/Marcos/Desktop/BarSystems/src/empresa/janela/EmpresaJanela.java</file>
+            <file>file:/C:/Users/Marcos/Desktop/BarSystems/src/cliente/janela/ClienteJanela.java</file>
         </group>
     </open-files>
 </project-private>

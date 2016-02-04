@@ -38,7 +38,7 @@ public class ServicoJanela extends JPanel implements ActionListener, KeyListener
     private JTextField txtPesquisar;
     private JScrollPane scrollTabela;
     private JTable tabela;
-    private JButton btnNovo, btnEditar, btnExcluir, btnSair;
+    private JButton btnNovo, btnEditar, btnExcluir, btnVincularAServico, btnSair;
     
     private Font fonteTitulo, fonteGeral;
     
@@ -114,14 +114,20 @@ public class ServicoJanela extends JPanel implements ActionListener, KeyListener
         btnExcluir.setBounds(270, 20, 110, 30);
         btnExcluir.addActionListener(this);
         
+        btnVincularAServico = new JButton("Vincular produtos");
+        btnVincularAServico.setFont(fonteGeral);
+        btnVincularAServico.setBounds(390, 20, 150, 30);
+        btnVincularAServico.addActionListener(this);
+        
         btnSair = new JButton("Sair");
         btnSair.setFont(fonteGeral);
-        btnSair.setBounds(390, 20, 110, 30);
+        btnSair.setBounds(550, 20, 110, 30);
         btnSair.addActionListener(this);
         
         painel3.add(btnNovo);
         painel3.add(btnEditar);
         painel3.add(btnExcluir);
+        painel3.add(btnVincularAServico);
         painel3.add(btnSair);
         
         add(painel1);
@@ -168,6 +174,10 @@ public class ServicoJanela extends JPanel implements ActionListener, KeyListener
             JOptionPane.showMessageDialog(null, "Não foi possível excluir o serviço "+classe.getNome()+"!", "ATENÇÃO", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    public void vincularProdutos() {
+        new ServicoVincularProdutos(lista.get(tabela.getSelectedRow())).setVisible(true);
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -178,6 +188,8 @@ public class ServicoJanela extends JPanel implements ActionListener, KeyListener
             editar();
         } else if (source == btnExcluir) {
             excluir();
+        } else if (source == btnVincularAServico) {
+            vincularProdutos();
         } else if (source == btnSair) {
             VerificaMenuAberto verifica = new VerificaMenuAberto();
             int index = verifica.verificaMenuAberto(painel_principal, "Cadastro de serviços");

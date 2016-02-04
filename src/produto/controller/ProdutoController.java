@@ -41,4 +41,16 @@ public class ProdutoController {
         return facade.verificaProdutoRepetido(nome);
     }
     
+    public List<ProdutoClasse> findProdutoVinculadoAServico(Long id_servico) {
+        return facade.findProdutoVinculadoAServico(id_servico);
+    }
+    
+    public int addVinculacaoProdutoAServico(Long id_servico, Long id_produto) {
+        return facade.addVinculacaoProdutoAServico(id_servico, id_produto);
+    }
+    
+    public int removeVinculacaoProdutoAServico(Long id_servico, Long id_produto) {
+        return facade.removeVinculacaoProdutoAServico(id_servico, id_produto);
+    }
+    
 }

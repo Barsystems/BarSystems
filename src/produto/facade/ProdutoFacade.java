@@ -42,4 +42,16 @@ public class ProdutoFacade {
         return dao.verificaProdutoRepetido(nome);
     }
     
+    public List<ProdutoClasse> findProdutoVinculadoAServico(Long id_servico) {
+        return dao.findProdutoVinculadoAServico(id_servico);
+    }
+    
+    public int addVinculacaoProdutoAServico(Long id_servico, Long id_produto) {
+        return dao.addVinculacaoProdutoAServico(id_servico, id_produto);
+    }
+    
+    public int removeVinculacaoProdutoAServico(Long id_servico, Long id_produto) {
+        return dao.removeVinculacaoProdutoAServico(id_servico, id_produto);
+    }
+    
 }

@@ -40,6 +40,22 @@ public class ProdutoDAO implements IProdutoDAO {
     
     private static final String SQL_VERIFICA_PRODUTO_REPETIDO = "SELECT nome FROM produto WHERE nome = ? AND excluido = 0";
 
+    private static final String SQL_FIND_PRODUTO_VINCULADO_A_SERVICO = "SELECT servico.id_servico, produto.id_produto, "
+            + "produto.nome, produto.id_setor_fk, produto.tipo_medida, produto.valor_compra, produto.valor_venda, "
+            + "produto.valor_comissao, produto_setor.nome "
+            + "FROM servico_produtos_vinculados "
+            + "INNER JOIN servico ON servico_produtos_vinculados.id_servico_fk = servico.id_servico "
+            + "INNER JOIN produto ON servico_produtos_vinculados.id_produto_fk = produto.id_produto "
+            + "INNER JOIN produto_setor ON produto.id_setor_fk = produto_setor.id_setor "
+            + "WHERE servico.id_servico = ? AND servico.excluido = 0 AND produto.excluido = 0 "
+            + "ORDER BY produto.nome";
+    
+    private static final String SQL_ADD_VINCULACAO_PRODUTO_A_SERVICO = "INSERT INTO servico_produtos_vinculados "
+            + "(id_servico_fk, id_produto_fk) VALUES (?, ?)";
+    
+    private static final String SQL_REMOVE_VINCULACAO_PRODUTO_A_SERVICO = "DELETE FROM servico_produtos_vinculados "
+            + "WHERE id_servico_fk = ? AND id_produto_fk = ?";
+    
     @Override
     public int save(ProdutoClasse produto) {
         int result = 0;
@@ -153,6 +169,74 @@ public class ProdutoDAO implements IProdutoDAO {
             e.printStackTrace();
         }
         return flag;
+    }
+    
+    @Override
+    public List<ProdutoClasse> findProdutoVinculadoAServico(Long id_servico) {
+        List<ProdutoClasse> lista = new ArrayList<ProdutoClasse>();
+        try {
+            conn = banco.getConexaoMySQL();
+            ps = conn.prepareStatement(SQL_FIND_PRODUTO_VINCULADO_A_SERVICO);
+            ps.setLong(1, id_servico);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                ProdutoClasse classe = new ProdutoClasse();
+                classe.setId(rs.getLong("produto.id_produto"));
+                classe.setNome(rs.getString("produto.nome"));
+                classe.setId_setor(rs.getLong("produto.id_setor_fk"));
+                classe.setSetor(rs.getString("produto_setor.nome"));
+                classe.setTipo_medida(rs.getString("produto.tipo_medida"));
+                classe.setValor_compra(rs.getFloat("produto.valor_compra"));
+                classe.setValor_venda(rs.getFloat("produto.valor_venda"));
+                classe.setValor_comissao(rs.getFloat("produto.valor_comissao"));
+                lista.add(classe);
+            }
+            rs.close();
+            ps.close();
+            conn.close();
+        } 
+        catch (Exception e) {
+            e.printStackTrace();
+            e.getMessage();
+        }
+        
+        return lista;
+    }
+
+    @Override
+    public int addVinculacaoProdutoAServico(Long id_servico, Long id_produto) {
+        int result = 0;
+        try {
+            conn = banco.getConexaoMySQL();
+            ps = conn.prepareStatement(SQL_ADD_VINCULACAO_PRODUTO_A_SERVICO);
+            ps.setLong(1, id_servico);
+            ps.setLong(2, id_produto);
+            result = ps.executeUpdate();
+            
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+    
+    @Override
+    public int removeVinculacaoProdutoAServico(Long id_servico, Long id_produto) {
+        int result = 0;
+        try {
+            conn = banco.getConexaoMySQL();
+            ps = conn.prepareStatement(SQL_REMOVE_VINCULACAO_PRODUTO_A_SERVICO);
+            ps.setLong(1, id_servico);
+            ps.setLong(2, id_produto);
+            result = ps.executeUpdate();
+            
+            ps.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
     
 }

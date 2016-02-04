@@ -38,8 +38,8 @@ public class ServicoDAO implements IServicoDAO {
             + "INNER JOIN servico_setor ON servico.id_setor_fk = servico_setor.id_setor "
             + "WHERE servico.excluido = 0 AND servico.nome LIKE ? ORDER BY servico.nome";
     
-    private static final String SQL_VERIFICA_SERVICO_REPETIDO = "SELECT nome FROM servico WHERE nome = ? AND excluido = 0";
-
+    private static final String SQL_VERIFICA_SERVICO_REPETIDO = "SELECT nome FROM servico WHERE nome = ? AND excluido = 0";  
+    
     @Override
     public int save(ServicoClasse classe) {
         int result = 0;

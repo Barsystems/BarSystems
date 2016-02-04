@@ -193,8 +193,19 @@ public class ProdutoCadastrar extends JDialog implements ActionListener, KeyList
             JOptionPane.showMessageDialog(null, "O nome do produto não pode ter mais que 70 caracteres!", "Atenção", JOptionPane.WARNING_MESSAGE);
         } else {
             TrocaVirgulaPorPonto troca = new TrocaVirgulaPorPonto();
+            if (txtValorCompra.getText().isEmpty()) {
+                txtValorCompra.setText("0,00");
+            }
             float valor_compra = troca.trocaVirgulaPorPonto(txtValorCompra.getText());
+            
+            if (txtValorVenda.getText().isEmpty()) {
+                txtValorVenda.setText("0,00");
+            }
             float valor_venda = troca.trocaVirgulaPorPonto(txtValorVenda.getText());
+            
+            if (txtValorComissao.getText().isEmpty()) {
+                txtValorComissao.setText("0,00");
+            }
             float valor_comissao = troca.trocaVirgulaPorPonto(txtValorComissao.getText());
             
             if (valor_venda < valor_compra) {

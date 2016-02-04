@@ -50,9 +50,9 @@ public class CentroCustoGerenciarResponsavel extends JDialog implements ActionLi
     private List<UsuarioClasse> lista_usuario;
     private List<UsuarioClasse> lista_usuario_responsavel;
     
-    public CentroCustoGerenciarResponsavel(CentroCustoClasse CentroCstoClasse) {
+    public CentroCustoGerenciarResponsavel(CentroCustoClasse CentroCustoClasse) {
         
-        this.CentroCustoClasse = CentroCstoClasse;
+        this.CentroCustoClasse = CentroCustoClasse;
         
         setTitle("Gerenciar responsáveis");
         setLayout(null);

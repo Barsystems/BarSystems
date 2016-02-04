@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package orcamento_produto.janela;
+package produto.janela;
 
 import java.awt.Color;
 import static java.awt.Component.CENTER_ALIGNMENT;
@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import orcamento_produto.classe.OrcamentoProdutoClasse;
 import produto.classe.ProdutoClasse;
 import produto.comboBox.ProdutoComboBox;
 import produto.comboBox.ProdutoComboBoxCellRenderer;
@@ -31,7 +30,7 @@ import utilidades.TrocaVirgulaPorPonto;
  *
  * @author Marcos
  */
-public class OrcamentoProdutoEscolherProduto extends JDialog implements ActionListener {
+public class ProdutoEscolher extends JDialog implements ActionListener {
     
     private JPanel painel1, painel2, painel3;
     private JLabel lblTitulo, lblProduto, lblQuantidade;
@@ -43,9 +42,10 @@ public class OrcamentoProdutoEscolherProduto extends JDialog implements ActionLi
     private Font fonteTitulo, fonteGeral;
     
     public boolean escolheu = false;
-    public OrcamentoProdutoClasse classe = new OrcamentoProdutoClasse();
+    public ProdutoClasse classe = new ProdutoClasse();
+    public float quantidade = 0;
     
-    public OrcamentoProdutoEscolherProduto() {
+    public ProdutoEscolher() {
         setTitle("Escolher produto");
         setLayout(null);
         setResizable(false);
@@ -157,29 +157,36 @@ public class OrcamentoProdutoEscolherProduto extends JDialog implements ActionLi
         if (txtQuantidade.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "O campo quantidade não pode ficar vazio!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
             txtQuantidade.grabFocus();
-        }else {
-            boolean flag = true;
-            int index = comboProduto.getSelectedIndex();
-            
-            float quantidade = new TrocaVirgulaPorPonto().trocaVirgulaPorPonto(txtQuantidade.getText());
-            if (lista_produto.get(index).getTipo_medida().equals("Unidade")) {
-                //SE O RESTO DA DIVISÃO POR 1 FOR = 0, ENTÃO É UM NÚMERO INTEIRO
-                if (quantidade % 1 != 0) {
-                    JOptionPane.showMessageDialog(null, "Este produto foi cadastrado como \"unidade\"! Defina uma quantidade válida!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
-                    txtQuantidade.grabFocus();
-                    flag = false;
-                }
-            }
-            
-            if (flag == true) {
-                classe.setId_produto(lista_produto.get(index).getId());
-                classe.setNome_produto(lista_produto.get(index).getNome());
-                classe.setValor_cobrado(lista_produto.get(index).getValor_venda());
-                classe.setQuantidade(quantidade);
-                classe.setTipo_medida(lista_produto.get(index).getTipo_medida());
+        } else {
+            quantidade = new TrocaVirgulaPorPonto().trocaVirgulaPorPonto(txtQuantidade.getText());
+            if (quantidade <= 0) {
+                JOptionPane.showMessageDialog(null, "Defina uma quantidade válida!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+            } else {
+                boolean flag = true;
+                int index = comboProduto.getSelectedIndex();
 
-                escolheu = true;
-                dispose();
+                if (lista_produto.get(index).getTipo_medida().equals("Unidade")) {
+                    //SE O RESTO DA DIVISÃO POR 1 FOR = 0, ENTÃO É UM NÚMERO INTEIRO
+                    if (quantidade % 1 != 0) {
+                        JOptionPane.showMessageDialog(null, "Este produto foi cadastrado como \"unidade\"! Defina uma quantidade válida!", "ATENÇÃO", JOptionPane.WARNING_MESSAGE);
+                        txtQuantidade.grabFocus();
+                        flag = false;
+                    }
+                }
+
+                if (flag == true) {
+                    classe.setId(lista_produto.get(index).getId());
+                    classe.setNome(lista_produto.get(index).getNome());
+                    classe.setId_setor(lista_produto.get(index).getId_setor());
+                    classe.setSetor(lista_produto.get(index).getSetor());
+                    classe.setValor_compra(lista_produto.get(index).getValor_compra());
+                    classe.setValor_venda(lista_produto.get(index).getValor_venda());
+                    classe.setValor_comissao(lista_produto.get(index).getValor_comissao());
+                    classe.setTipo_medida(lista_produto.get(index).getTipo_medida());
+
+                    escolheu = true;
+                    dispose();
+                }
             }
         }
     }

@@ -24,4 +24,10 @@ public interface IProdutoDAO {
     
     boolean verificaProdutoRepetido(String nome);
     
+    List<ProdutoClasse> findProdutoVinculadoAServico(Long id_servico);
+    
+    int addVinculacaoProdutoAServico(Long id_servico, Long id_produto);
+    
+    int removeVinculacaoProdutoAServico(Long id_servico, Long id_produto);
+    
 }

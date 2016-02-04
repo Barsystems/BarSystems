@@ -132,7 +132,7 @@ public class ProdutoEditar extends JDialog implements ActionListener, KeyListene
         
         lblPorcentagemVenda = new JLabel("Porcentagem de lucro");
         lblPorcentagemVenda.setFont(fonteGeral);
-        lblPorcentagemVenda.setBounds(30, 190, 110, 30);
+        lblPorcentagemVenda.setBounds(30, 190, 130, 30);
         
         txtPorcentagemVenda = new JTextField();
         txtPorcentagemVenda.setFont(fonteGeral);
@@ -224,6 +224,7 @@ public class ProdutoEditar extends JDialog implements ActionListener, KeyListene
                 } else {                
                     prod.setNome(txtNome.getText());
                     prod.setId_setor(setores.get(comboSetor.getSelectedIndex()).getId());
+                    prod.setTipo_medida(comboTipoMedida.getSelectedItem().toString());
                     prod.setValor_compra(valor_compra);
                     prod.setValor_venda(valor_venda);
                     prod.setValor_comissao(valor_comissao);

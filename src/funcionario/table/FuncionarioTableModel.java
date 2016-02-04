@@ -18,6 +18,7 @@ public class FuncionarioTableModel extends AbstractTableModel {
     private static final int COL_NOME = 0;
     private static final int COL_FUNCAO = 1;
     private static final int COL_TELEFONE = 2;
+    private static final int COL_CODIGO = 3;
     
     private List<FuncionarioClasse> valores;
     
@@ -32,7 +33,7 @@ public class FuncionarioTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return 4;
     }
 
     @Override
@@ -42,8 +43,10 @@ public class FuncionarioTableModel extends AbstractTableModel {
             return user.getNome();
         } else if (columnIndex == COL_FUNCAO) {
             return user.getFuncao();
-        } else {
+        } else if (columnIndex == COL_TELEFONE) {
             return user.getTelefone();
+        } else {
+            return user.getId();
         }
     }
     
@@ -54,6 +57,7 @@ public class FuncionarioTableModel extends AbstractTableModel {
             case COL_NOME: coluna = "Nome do funcionário"; break;
             case COL_FUNCAO: coluna = "Função do funcionário"; break;
             case COL_TELEFONE: coluna = "Telefone do funcionário"; break;
+            case COL_CODIGO: coluna = "ID do funcionário"; break;
             default: throw new IllegalArgumentException("Coluna inválida!");
         }
         return coluna;

@@ -20,10 +20,13 @@ public class ProdutoTableModel extends AbstractTableModel {
     private static final int COL_VALOR_COMPRA = 1;
     private static final int COL_VALOR_VENDA = 2;
     
+    private int numero_colunas;
+    
     private List<ProdutoClasse> valores;
     
-    public ProdutoTableModel(List<ProdutoClasse> valores) {
+    public ProdutoTableModel(List<ProdutoClasse> valores, int numero_colunas) {
         this.valores = valores;
+        this.numero_colunas = numero_colunas;
     }
     
     @Override
@@ -33,7 +36,7 @@ public class ProdutoTableModel extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-        return 3;
+        return numero_colunas;
     }
 
     @Override
